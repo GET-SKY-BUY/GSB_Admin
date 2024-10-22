@@ -1,0 +1,69 @@
+
+.Employee {
+    padding: 10px;
+    width: 95%;
+    margin: 50px auto;
+    background-color: #fff;
+    box-shadow: 0 0 6px rgb(175, 175, 175);
+}
+
+.TItttt {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Titl {
+    padding: 10px;
+}
+
+.Titl button {
+    padding: 6px 12px;
+    font-size: 15px;
+    background-color: transparent;
+    border: 1px;
+    cursor: pointer;
+}
+
+.Titl button:hover,
+.Titl button:focus {
+    text-decoration: underline;
+}
+
+.A1 {
+    background-color: #e2e2e2;
+}
+
+.A1 button {
+    font-weight: bold;
+}
+
+.Table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #aaa;
+}
+
+thead tr th,
+.Dataaa tr td {
+    font-size: 14px;
+    padding: 10px 2px;
+    border: 1px solid #aaa;
+    text-align: center;
+}
+
+@media screen and (max-width: 676px) {
+    .Table {
+        font-size: 12px;
+    }
+
+    thead tr th:nth-last-child(1),
+    .Dataaa tr td:nth-last-child(1) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 556px) {
+    .Table {
+        font-size: 12px;
+    }
+}

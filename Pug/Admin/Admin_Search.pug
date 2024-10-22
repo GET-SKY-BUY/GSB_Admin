@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Search | GET SKY BUY</title>
+    
+    <meta name="robots" content="nofollow, noindex">
+    <link rel="shortcut icon" href="/files/img/favicon.ico" type="image/x-icon">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+     
+    <link rel="stylesheet" href="/files/css/Admin_Search.css">
+</head>
+<body>
+
+    include ./Admin_Header.pug
+
+
+
+
+
+    <div class="Employee">
+        <div class="TItttt">
+
+            <div class="Titl">
+                <button type="button" onclick="window.location.replace('/admin');">Add Employee</button>
+            </div>
+            <div class="Titl A1">
+                <button type="button" onclick="window.location.replace('/admin/assistant/search');">Search Employee</button>
+            </div>
+            <div class="Titl">
+                <button type="button" onclick="window.location.replace('/admin/assistant/update');">Update Employee</button>
+            </div>
+            <div class="Titl">
+                <button type="button" onclick="window.location.replace('/admin/assistant/List');">List Employee</button>
+            </div>
+        </div>
+        <div class="line"></div>
+        
+        <div class="con">
+            <div class="Close">
+                <h3>Update Employee</h3>
+            </div>
+            
+        </div>
+        <div class="line"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="Tan">
+            
+            <div class="Div_Input">
+                
+                <!-- <input id="Acode" class="InputText" title="Acode" type="text" spellcheck="false" placeholder=" "> -->
+                <select  id="Assistant_Type" class="InputText">
+                    <option value="All" selected>---- Select Option ----</option>
+                    <option value="Seller Assistant">Seller Assistant</option>
+                    <option value="Product Assistant">Product Assistant</option>
+                    <option value="Order Assistant">Order Assistant</option>
+                    <option value="Delivery Assistant">Delivery Assistant</option>
+                    <option value="Contact us Assistant">Contact us Assistant</option>
+                    <option value="Payment Assistant">Payment Assistant</option>
+                    <option value="Complaint Assistant">Complaint Assistant</option>
+                    <option value="Analytics Assistant">Analytics Assistant</option>
+                </select>
+                <label class="Div_Input_Label" id="Assistant_Type_Label" for="Assistant_Type">Assistant Type</label>
+            </div>
+            <div class="Div_Input">
+                <select  id="Search_Type" class="InputText">
+                    <option value="All" selected>---- Select Option ----</option>
+                    <option value="Email">Email</option>
+                    <option value="Mobile">Mobile</option>
+                    <option value="ID">ID</option>
+                </select>
+                <label class="Div_Input_Label" id="Assistant_Type_Label" for="Assistant_Type">Search Type</label>
+            </div>
+
+            <div class="Div_Input">
+                <input id="Email_Mobile_ID" class="InputText" title="Email/Mobile/ID" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Email_Mobile_ID_Label" for="Email_Mobile_ID">Email/Mobile/ID</label>
+            </div>
+
+            <div>
+                <button id="Submitbtn" onclick="Submit();" #{Btn}>Search</button>
+            </div>
+
+            <h3>List</h3>
+            
+            <table class="Table" id="Table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Assistant</th>
+                        <th>Ban/Verified</th>
+                    </tr>
+                </thead>
+                <tbody class="Dataaa" id="Dataaa">
+                    
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+    <script src="/files/js/Message.js"></script>
+    <script src="/files/js/Admin_Search.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistant List | GET SKY BUY</title>
+    
+    <meta name="robots" content="nofollow, noindex">
+    <link rel="shortcut icon" href="/files/img/favicon.ico" type="image/x-icon">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+     
+    <link rel="stylesheet" href="/files/css/Admin_List.css">
+</head>
+<body>
+
+    include ./Admin_Header.pug
+    <div class="Employee">
+        <div class="TItttt">
+            <div class="Titl">
+                <button type="button" onclick="window.location.replace('/admin');">Add Employee</button>
+            </div>
+            <div class="Titl">
+                <button type="button" onclick="window.location.replace('/admin/assistant/search');">Search Employee</button>
+            </div>
+            <div class="Titl">
+                <button type="button" onclick="window.location.replace('/admin/assistant/update');">Update Employee</button>
+            </div>
+            <div class="Titl A1">
+                <button type="button" onclick="window.location.replace('/admin/assistant/List');">List Employee</button>
+            </div>
+        </div>
+        <div class="line"></div>
+        
+        <div class="con">
+            <div class="Close">
+                <h3>List of Employee</h3>
+            </div>
+        </div>
+        <div class="line"></div>
+
+        <div class="Tan">
+            <table class="Table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Assistant</th>
+                        <th>Ban/Verified</th>
+                    </tr>
+                </thead>
+                <tbody class="Dataaa">
+                    | !{Data}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

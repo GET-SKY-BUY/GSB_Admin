@@ -1,7 +1,7 @@
 require('dotenv').config();
 const ADMIN_PASS = process.env.ADMIN_PASS;
 const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
-const { Admin_User } = require('../Models.js');
+const { Admin_User , Assistants } = require('../Models.js');
 
 const { Valid_Email, Valid_Password } = require('../utils/Validations.js');
 const Send_Mail = require('../utils/Send_Mail.js');
@@ -11,25 +11,6 @@ async function call(){
     return await Admin_User.findById("GSB_ADMIN_RICK");
 };
 
-
-const Cookie_Options_OTP = {
-    domain: process.env.PROJECT_DOMAIN,
-    path: "/",
-    httpOnly: true,
-    maxAge: 1000 * 60 * 5,
-    secure: process.env.NODE_ENV === 'production',
-    signed: true,
-    sameSite: "strict",
-};
-const Cookie_Options_Final = {
-    domain: process.env.PROJECT_DOMAIN,
-    path: "/",
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24,
-    secure: process.env.NODE_ENV === 'production',
-    signed: true,
-    sameSite: "strict",
-};
 
 
 
@@ -112,8 +93,35 @@ const ADMIN_HOME = async (req, res, next) => {
     };
 };
 
+const ADMIN_ASSISTANT_LIST = async (req, res, next) => {
+    try {
+        let Data = await Assistants.find({});
+        let dc = "";
+        for (let W = 0; W < Data.length; W++) {
+            const User = Data[W];
+            let str = `
+            <tr>
+                <td><a href="/admin/update/${User._id}">${User._id}</a></td>
+                <td>${User.Basic_Details.Name}</td>
+                <td>${User.Basic_Details.Mobile}</td>
+                <td>${User.Employee_Type}</td>
+                <td>${User.Ban}/${User.Verified}</td>
+            </tr>
+            `;
+            dc = str + dc;
+        };
+        return res.status(200).render("Admin_Assistant_List",{
+            Data: dc
+        });
+        
+    }catch (error) {
+        next(error);
+    };
+}
+
 module.exports = {
     GET_LOGIN_PAGE,
     GET_LOGIN_OTP_PAGE,
     ADMIN_HOME,
+    ADMIN_ASSISTANT_LIST,
 };
