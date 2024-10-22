@@ -21,22 +21,19 @@ function ShowClick(n) {
 async function Login() {
     document.getElementById("Next_Btn").disabled = true;
     
-    if (!Valid_Email(document.getElementById("Email").value)) {
+
+    if (document.getElementById("OTP").value == "" || document.getElementById("OTP").value.length != 6) {
         document.getElementById("Next_Btn").disabled = false;
-        Message("Enter correct email","Warning");
-    }else if (!Valid_Password(document.getElementById("Create_Password").value)) {
-        document.getElementById("Next_Btn").disabled = false;
-        Message("Password must be 8 character, numbers, alphabets and symbols.","Warning");
+        Message("Enter correct OTP","Warning");
     }else {
         document.getElementById("Loading").style.display = "flex";
-        await fetch("/admin/login",{
+        await fetch("/admin/login-verify-otp",{
             method:"POST",
             headers: {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                Email:document.getElementById("Email").value,
-                Password:document.getElementById("Create_Password").value,
+                OTP:document.getElementById("OTP").value,
             })
         }).then(res=>{
             document.getElementById("Loading").style.display = "none";
@@ -53,9 +50,8 @@ async function Login() {
         }).then(data=>{
             Message(data.Message,"Success");
             setTimeout(() => {
-                window.location.href = "/admin/login/otp";
+                location.reload();
             }, 1000);
-        
         }).catch(err=>{
             Message(err.Message,"Warning");
         });

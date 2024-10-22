@@ -159,7 +159,7 @@ const Admin_OTP = async (req, res, next) => {
                 Message: "Unathorized access."
             });
         };
-        if(Got_User.Token !== Check_OTP.Token){
+        if(Got_User.Auth.Token !== Check_OTP.Token){
             return res.status(401).json({
                 Status: "Failed",
                 Message: "Unathorized access."
@@ -197,10 +197,10 @@ const Admin_OTP = async (req, res, next) => {
 
 
         let Status = await Send_Mail({
-            from: "Admin - OTP" + "<" + process.env.MAIL_ID + ">",
+            from: "Admin - Login" + "<" + process.env.MAIL_ID + ">",
             to: Got_User.Email,
-            subject: "OTP Verification - Admin",
-            html: `Hello Rick, <br>Your OTP is ${OTP}. <br><br>It is valid for 5 minutes.`,
+            subject: "Admin - Logged in",
+            html: `Hello Rick, <br>You have just logged in, if not done by you please change your password.`,
         });
         if(!Status){
             return res.status(500).json({

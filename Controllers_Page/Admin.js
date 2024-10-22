@@ -35,13 +35,14 @@ const Cookie_Options_Final = {
 
 const GET_LOGIN_PAGE = async (req, res, next) => {
     try{
+        const Got_User = await call();
         const ADMIN_TOKEN = req.signedCookies.ADMIN_TOKEN;
         const Check = Verify_Token(ADMIN_TOKEN);
         if(Check){
             if(Check.Admin){
                 if(Got_User.Token == Check.Token){
                     if(Got_User._id === Check.ID){
-                        return res.status(400).redirec("/admin");
+                        return res.status(400).redirect("/admin");
                     };
                 };
             };
@@ -53,6 +54,28 @@ const GET_LOGIN_PAGE = async (req, res, next) => {
     }
 };
 
+const GET_LOGIN_OTP_PAGE = async (req, res, next) => {
+    try{
+        const Got_User = await call();
+        const ADMIN_TOKEN = req.signedCookies.ADMIN_TOKEN;
+        const Check = Verify_Token(ADMIN_TOKEN);
+        if(Check){
+            if(Check.Admin){
+                if(Got_User.Token == Check.Token){
+                    if(Got_User._id === Check.ID){
+                        return res.status(400).redirect("/admin");
+                    };
+                };
+            };
+        };
+        return res.status(200).render("Admin_Login_OTP");
+
+    }catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     GET_LOGIN_PAGE,
-}
+    GET_LOGIN_OTP_PAGE
+};

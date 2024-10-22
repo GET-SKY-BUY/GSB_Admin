@@ -10,11 +10,12 @@ Admin.use(cookieParser(process.env.COOKIE_SECRET));
 
 
 const { Admin_Login , Admin_OTP }= require('../Controllers/Admin.js');
-const { GET_LOGIN_PAGE }= require('../Controllers_Page/Admin.js');
+const { GET_LOGIN_PAGE , GET_LOGIN_OTP_PAGE }= require('../Controllers_Page/Admin.js');
 
 // Admin Authentication Routes
 Admin.get("/login", GET_LOGIN_PAGE);
 Admin.post("/login", Admin_Login);
+Admin.get("/login/otp", GET_LOGIN_OTP_PAGE);
 Admin.post("/login-verify-otp", Admin_OTP);
 
 // Admin Assistant Routes
