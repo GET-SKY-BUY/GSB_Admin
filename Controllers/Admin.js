@@ -21,6 +21,15 @@ const Cookie_Options_OTP = {
     signed: true,
     sameSite: "strict",
 };
+const Cookie_Options_Final = {
+    domain: process.env.PROJECT_DOMAIN,
+    path: "/",
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24,
+    secure: process.env.NODE_ENV === 'production',
+    signed: true,
+    sameSite: "strict",
+};
 
 const Admin_Login = async (req, res, next) => {
 
@@ -89,13 +98,145 @@ const Admin_Login = async (req, res, next) => {
         Got_User.Auth.OTP = OTP;
         
         await Got_User.save().then(() => {
-            res.cookie("ADMIN_TOKEN",JWT_TOKEN,Cookie_Options_OTP);
+            res.cookie("OTP_TOKEN",JWT_TOKEN,Cookie_Options_OTP);
+            return res.status(200).json({
+                Status: "Success",
+                Message: "OTP Sent.",
+            });
+        });
+    } catch (error) {
+        next(error);
+    };
+};
+
+const Admin_OTP = async (req, res, next) => {
+    try {
+        const Got_User = await call();
+        const ADMIN_TOKEN = req.signedCookies.ADMIN_TOKEN;
+        const Check = Verify_Token(ADMIN_TOKEN);
+        if(Check){
+            if(Check.Admin){
+                if(Got_User.Token == Check.Token){
+                    if(Got_User._id === Check.ID){
+                        return res.status(400).json({
+                            Status: "Failed",
+                            Message: "Already Logged In."
+                        });
+                    };
+                };
+            };
+        };
+
+
+        const { OTP } = req.body;
+        if(!OTP){
+            return res.status(400).json({
+                Status: "Failed",
+                Message: "Invalid OTP."
+            });
+        };
+        if(OTP.length !== 6){
+            return res.status(400).json({
+                Status: "Failed",
+                Message: "Invalid OTP."
+            });
+        };
+
+
+        const OTP_TOKEN = req.signedCookies.OTP_TOKEN;
+        const Check_OTP = Verify_Token(OTP_TOKEN);
+        if(!Check_OTP){
+            return res.status(401).json({
+                Status: "Failed",
+                Message: "Unathorized access."
+            });
+        };
+        if(Check_OTP.Admin){
+            return res.status(401).json({
+                Status: "Failed",
+                Message: "Unathorized access."
+            });
+        };
+        if(Got_User.Token !== Check_OTP.Token){
+            return res.status(401).json({
+                Status: "Failed",
+                Message: "Unathorized access."
+            });
+        };
+        if(Got_User._id !== Check_OTP.ID){
+            return res.status(401).json({
+                Status: "Failed",
+                Message: "Unathorized access."
+            });
+        };
+        if(Got_User.Auth.OTP !== OTP){
+            return res.status(400).json({
+                Status: "Failed",
+                Message: "Invalid OTP."
+            });
+        };
+        if(Got_User.Auth.OTP_Expiry < Date.now()){
+            return res.status(400).json({
+                Status: "Failed",
+                Message: "OTP Expired."
+            });
+        };
+        if(Got_User.Auth.Token != Check_OTP.Token){
+            return res.status(400).json({
+                Status: "Failed",
+                Message: "Invalid Token."
+            });
+        };
+
+        
+        const Token = Get_Token();
+
+
+
+
+        let Status = await Send_Mail({
+            from: "Admin - OTP" + "<" + process.env.MAIL_ID + ">",
+            to: Got_User.Email,
+            subject: "OTP Verification - Admin",
+            html: `Hello Rick, <br>Your OTP is ${OTP}. <br><br>It is valid for 5 minutes.`,
+        });
+        if(!Status){
+            return res.status(500).json({
+                Status: "Failed",
+                Message: "Internal Server Error."
+            });
+        };
+
+        
+
+        
+        const JWT_TOKEN = Generate_Token({
+            ID: "GSB_ADMIN_RICK",
+            Admin: true,
+            Token: Token,
+        });
+
+        Got_User.Token = Token;
+        Got_User.Auth.Token = "";
+        Got_User.Auth.OTP_Expiry = 0;
+        Got_User.Auth.OTP = "";
+        
+        await Got_User.save().then(() => {
+            res.clearCookie("OTP_TOKEN",{
+                domain: process.env.PROJECT_DOMAIN,
+                path: "/",
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                signed: true,
+                sameSite: "strict",
+            });
+            res.cookie("ADMIN_TOKEN",JWT_TOKEN,Cookie_Options_Final);
             return res.status(200).json({
                 Status: "Success",
                 Message: "Logged In.",
-            })
-
+            });
         });
+
     } catch (error) {
         next(error);
     };
