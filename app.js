@@ -34,13 +34,16 @@ app.set('views', [
     // path.join(__dirname, './Pug/Profile'),
 ]);
 
-
+// Setup static files
 app.use("/files", express.static(path.join(__dirname, './Public')));
 
-
+// Home route
 app.get("/", (req, res) => {
     res.status(200).render("Home");
 });
+
+// Admin Route
+app.get("/admin", require('./Routes/Admin.js'));
 
 // Project URL
 const Project_URL = `${Protocol}://${process.env.PROJECT_DOMAIN}`;
@@ -77,6 +80,7 @@ app.use(cors(
     {
         origin: [
             Project_URL,
+            "http://localhost:3000",
             "http://localhost:80",
             "https://www.google.com",
             "https://google.com",

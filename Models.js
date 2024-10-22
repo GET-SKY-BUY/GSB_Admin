@@ -114,13 +114,46 @@ const UserSchema = new Schema({
     },
 });
 
+
+const Admin_User_Schema = new Schema({
+    _id:{
+        type: String,
+    },
+    Email:{
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true,
+    },
+    Token:{
+        type: String,
+        required: true,
+        trim: true,
+    },
+    Auth:{
+        OTP:{
+            type: String,
+            trim:true,
+        },
+        OTP_Expiry:{
+            type: Date,
+        },
+        Token:{
+            type: String,
+            trim:true,
+        }
+    }
+})
+
 const User = Model("User", UserSchema);
+const Admin_User = Model("Admin", Admin_User_Schema);
 
 
 
 
 
 module.exports = {
-    User
+    User,
+    Admin_User,
 }
 
