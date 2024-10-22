@@ -433,9 +433,75 @@ const Admin_Search_Assistant = async ( req , res , next ) => {
 };
 
 
+const Admin_Assistant_Update = async ( req , res , next ) => {
+    try{
+
+
+        
+        let jk = 0;
+        let Found;
+        let Data = await Assistants.find({});
+
+        for (let i = 0; i < Data.length; i++) {
+            const User = Data[i];
+
+            if (User._id == req.body.ID) {
+                jk = 1;
+                Found = User;
+                break;
+            }else{
+                jk = 0
+            };
+        };
+        if (jk == 1) {
+            let bb = req.body;
+            let Update = {
+                Employee_Type:bb.Assistant_Type,
+                Basic_Details:{
+                    Name: bb.Name,
+                    Mobile: bb.Mobile_Number,
+                    WhatsApp: bb.WA_Number,
+                },
+                Email:bb.Email,
+                Bank: {
+                    Bank_Name:bb.Bank_Name,
+                    Benificiary_Name:bb.Benificiary_Name,
+                    Account_Number:bb.Account_Number,
+                    IFSC: bb.IFSC_Code,
+                    UPI:bb.UPI_Number,
+                },
+                Address: {
+                    Locality: bb.Locality,
+                    City_Town: bb.City_Town,
+                    PIN: bb.PIN,
+                    Dist: bb.District,
+                    State: bb.State,
+                    Country: bb.Country,
+                },
+                Age:bb.Age,
+                Gender:bb.Gender,
+                Ban:bb.Ban,
+                Verified:bb.Verified,
+            };
+            await Assistants.updateOne({_id:req.body.ID},Update).then(()=>{
+                res.status(200).json({Success:true,Message:"Successfully edited."});
+            });
+        }else{
+            return res.status(400).json({Success:false, Message:"User Not Found"});
+        };
+
+
+    }catch(error){
+        next(error);
+    }
+
+};
+
+
 module.exports = {
     Admin_Login,
     Admin_OTP,
     Admin_Assistant_Add,
     Admin_Search_Assistant,
+    Admin_Assistant_Update,
 };

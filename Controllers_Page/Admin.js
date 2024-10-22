@@ -127,10 +127,69 @@ const ADMIN_ASSISTANT_SEARCH = async (req, res, next) => {
     };
 };
 
+const ADMIN_ASSISTANT_UPDATE = async (req, res, next) => {
+    try {
+
+        let Data = await Assistants.find({});
+        let ID = req.params.ID;
+        let iu = 0;
+        let bb = 0;
+        for (let q = 0; q < Data.length; q++) {
+            const User = Data[q];
+            if (User._id == ID) {
+                iu = 1
+                bb = User;
+                break;
+            }else{
+                iu = 0;
+            }
+        };
+        if (iu == 1) {
+            let PPPP = {
+                id:bb._id,
+                Assistant_Type:bb.Employee_Type,
+                Acode:bb.Acode,
+                Name: bb.Basic_Details.Name,
+                Mobile: bb.Basic_Details.Mobile,
+                WhatsApp: bb.Basic_Details.WhatsApp,
+                Bank_Name: bb.Bank.Bank_Name,
+                Benificiary_Name: bb.Bank.Benificiary_Name,
+                Account_Number: bb.Bank.Account_Number,
+                IFSC: bb.Bank.IFSC,
+                UPI: bb.Bank.UPI,
+                Gender: bb.Basic_Details.Gender,
+                Age: bb.Basic_Details.Age,
+                Email:bb.Email,
+                Age:bb.Age,
+                Gender:bb.Gender,
+                Locality: bb.Address.Locality,
+                City: bb.Address.City_Town,
+                PIN: bb.Address.PIN,
+                Dist: bb.Address.Dist,
+                State: bb.Address.State,
+                Country: bb.Address.Country,
+                createdAt: bb.createdAt,
+                Ban:bb.Ban,
+                Verified:bb.Verified,
+            };
+            res.status(200).render("Admin_Update", PPPP);
+        }else{
+            res.status(200).render("Admin_Update", {
+                id:"User Not Found",
+                Btn:"disabled",
+                Assistant_Type:"User Not Found",
+            });
+        };
+    }catch(error){
+        next(error);
+    };
+};
+
 module.exports = {
     GET_LOGIN_PAGE,
     GET_LOGIN_OTP_PAGE,
     ADMIN_HOME,
     ADMIN_ASSISTANT_LIST,
     ADMIN_ASSISTANT_SEARCH,
+    ADMIN_ASSISTANT_UPDATE,
 };
