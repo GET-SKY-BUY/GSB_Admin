@@ -1,5 +1,6 @@
 require('dotenv').config();
 const mongoose = require("mongoose");
+const { type } = require('os');
 const URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_SUBDOMAIN}.mongodb.net/${process.env.DB_NAME}`;
 mongoose.connect(URL);
 const db = mongoose.connection;
@@ -157,6 +158,7 @@ const Admin_Assistant_Schema = new Schema({
     Employee_Work_Alloted:{type:Object, default:[]},
     Employee_Work_Done:{type:Object},
     Email:{
+        unique:true,
         type: String,
         required: true,
         trim:true,
@@ -186,7 +188,17 @@ const Admin_Assistant_Schema = new Schema({
 
     LoggedIn:{type:Object},
     Payment:{type:Object, default:[]},
-    Auth:{type:Object},
+    Auth:{
+        OTP: {
+            type: String,
+        },
+        Token:{
+            type: String,
+        },
+        OTP_Expiry:{
+            type: Date,
+        },
+    },
     Bank:{type:Object},
     Age:{type:String},
     Gender:{type:String},
@@ -196,7 +208,7 @@ const Admin_Assistant_Schema = new Schema({
 
 const User = Model("User", UserSchema);
 const Admin_User = Model("Admin", Admin_User_Schema);
-const Assistant = Model("Assistant", Admin_Assistant_Schema);
+const Assistants = Model("Assistants", Admin_Assistant_Schema);
 
 
 
@@ -205,6 +217,6 @@ const Assistant = Model("Assistant", Admin_Assistant_Schema);
 module.exports = {
     User,
     Admin_User,
-    Assistant,
+    Assistants,
 }
 

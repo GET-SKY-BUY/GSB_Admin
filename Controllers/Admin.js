@@ -1,8 +1,8 @@
 require('dotenv').config();
 const ADMIN_PASS = process.env.ADMIN_PASS;
 const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
-const { Admin_User } = require('../Models.js');
-
+const { Admin_User , Assistants } = require('../Models.js');
+const { Password_Hash } = require("../utils/Password.js");
 const { Valid_Email, Valid_Password } = require('../utils/Validations.js');
 const Send_Mail = require('../utils/Send_Mail.js');
 const { Get_Token , Get_OTP } = require('../utils/Auth.js');
@@ -243,14 +243,60 @@ const Admin_OTP = async (req, res, next) => {
 
 const Admin_Assistant_Add = async (req, res, next) => {
     try {
-
-        console.log("Admin_Assistant_Add");
-        return res.status(200).json({
-            Status: "Success",
-            Message: "Assistant Added.",
+        let bb = req.body;
+        let Password1 = await Password_Hash(bb.Password);
+        
+        let Update = {
+            _id: String(Date.now()),
+            Employee_Type:bb.Assistant_Type,
+            Basic_Details:{
+                Name: bb.Name,
+                Mobile: bb.Mobile_Number,
+                WhatsApp: bb.WA_Number,
+            },
+            Email:bb.Email,
+            Employee_Work_Alloted: [],
+            Employee_Work_Done: [],
+            LoggedIn: [],
+            Payment: [],
+            Bank: {
+                Bank_Name:bb.Bank_Name,
+                Benificiary_Name:bb.Benificiary_Name,
+                Account_Number:bb.Account_Number,
+                IFSC: bb.IFSC_Code,
+                UPI:bb.UPI_Number,
+            },
+            Address: {
+                Locality: bb.Locality,
+                City_Town: bb.City_Town,
+                PIN: bb.PIN,
+                Dist: bb.District,
+                State: bb.State,
+                Country: bb.Country,
+            },
+            createdAt: Date(),
+            Auth: {
+                OTP:"",
+                Token:"",
+                OTP_Expiry:0,
+            },
+            Age:bb.Age,
+            Gender:bb.Gender,
+            Ban:"No",
+            Verified:"Yes",
+            Acode:bb.Acode,
+            Password:Password1,
+        };
+        let insert = new Assistants(Update);
+        await insert.save().then(()=>{
+            return res.status(200).json({
+                Status: "Success",
+                Message: "Assistant Added.",
+            });
+        }).catch(e=>{
+            console.log(e);
+            res.status(500).json({Success:false, Message:"Unable to add new employee."});
         });
-        
-        
     } catch (error) {
         next(error);
     }
