@@ -117,11 +117,20 @@ const ADMIN_ASSISTANT_LIST = async (req, res, next) => {
     }catch (error) {
         next(error);
     };
-}
+};
+
+const ADMIN_ASSISTANT_SEARCH = async (req, res, next) => {
+    try {
+        return res.status(200).render("Admin_Search");
+    }catch (error) {
+        next(error);
+    };
+};
 
 module.exports = {
     GET_LOGIN_PAGE,
     GET_LOGIN_OTP_PAGE,
     ADMIN_HOME,
     ADMIN_ASSISTANT_LIST,
+    ADMIN_ASSISTANT_SEARCH,
 };

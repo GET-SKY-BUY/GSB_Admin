@@ -6,6 +6,7 @@ const { Password_Hash } = require("../utils/Password.js");
 const { Valid_Email, Valid_Password } = require('../utils/Validations.js');
 const Send_Mail = require('../utils/Send_Mail.js');
 const { Get_Token , Get_OTP } = require('../utils/Auth.js');
+const { rmSync } = require('fs');
 
 async function call(){
     return await Admin_User.findById("GSB_ADMIN_RICK");
@@ -302,9 +303,139 @@ const Admin_Assistant_Add = async (req, res, next) => {
     }
 };
 
+const Admin_Search_Assistant = async ( req , res , next ) => {
+    try {
+
+        
+        let Data = await Assistants.find({});
+        let dc = " ";
+
+        let Assistant_Type = req.body.Assistant_Type;
+        let Search_Type = req.body.Search_Type;
+        let Email_Mobile_ID = req.body.Email_Mobile_ID;
+        for (let nm = 0; nm < Data.length; nm++) {
+            const User = Data[nm];
+            if(Assistant_Type == "All"){
+                if (Search_Type == "Email" && Email_Mobile_ID == User.Email) {
+                    
+    
+
+                    
+                    let str = `
+                        <tr>
+                            <td><a href="/admin/update/${User._id}">${User._id}</a></td>
+                            <td>${User.Basic_Details.Name}</td>
+                            <td>${User.Basic_Details.Mobile}</td>
+                            <td>${User.Employee_Type}</td>
+                            <td>${User.Ban}/${User.Verified}</td>
+                        </tr>
+                    `;
+
+                    dc = str + dc;
+                    
+                    
+                    
+                }else if (Search_Type == "Mobile" && Email_Mobile_ID == User.Basic_Details.Mobile) {
+                    
+                    let str = `
+                        <tr>
+                            <td><a href="/admin/update/${User._id}">${User._id}</a></td>
+                            <td>${User.Basic_Details.Name}</td>
+                            <td>${User.Basic_Details.Mobile}</td>
+                            <td>${User.Employee_Type}</td>
+                            <td>${User.Ban}/${User.Verified}</td>
+                        </tr>
+                    `;
+
+                    dc = str + dc;
+                    
+                }else if (Search_Type == "ID" && Email_Mobile_ID == User._id) {
+                    
+                    let str = `
+                        <tr>
+                            <td><a href="/admin/update/${User._id}">${User._id}</a></td>
+                            <td>${User.Basic_Details.Name}</td>
+                            <td>${User.Basic_Details.Mobile}</td>
+                            <td>${User.Employee_Type}</td>
+                            <td>${User.Ban}/${User.Verified}</td>
+                        </tr>
+                    `;
+
+                    dc = str + dc;
+                    
+                }
+                
+                
+            }else{
+                if (Assistant_Type == User.Employee_Type && Search_Type == "Email" && Email_Mobile_ID == User.Email) {
+                    
+    
+
+                    
+                    let str = `
+                        <tr>
+                            <td><a href="/admin/update/${User._id}">${User._id}</a></td>
+                            <td>${User.Basic_Details.Name}</td>
+                            <td>${User.Basic_Details.Mobile}</td>
+                            <td>${User.Employee_Type}</td>
+                            <td>${User.Ban}/${User.Verified}</td>
+                        </tr>
+                    `;
+
+                    dc = str + dc;
+                    
+                    
+                    
+                }else if (Assistant_Type == User.Employee_Type && Search_Type == "Mobile" && Email_Mobile_ID == User.Basic_Details.Mobile) {
+                    
+                    let str = `
+                        <tr>
+                            <td><a href="/admin/update/${User._id}">${User._id}</a></td>
+                            <td>${User.Basic_Details.Name}</td>
+                            <td>${User.Basic_Details.Mobile}</td>
+                            <td>${User.Employee_Type}</td>
+                            <td>${User.Ban}/${User.Verified}</td>
+                        </tr>
+                    `;
+
+                    dc = str + dc;
+                    
+                }else if (Assistant_Type == User.Employee_Type && Search_Type == "ID" && Email_Mobile_ID == User._id) {
+                    
+                    let str = `
+                        <tr>
+                            <td><a href="/admin/update/${User._id}">${User._id}</a></td>
+                            <td>${User.Basic_Details.Name}</td>
+                            <td>${User.Basic_Details.Mobile}</td>
+                            <td>${User.Employee_Type}</td>
+                            <td>${User.Ban}/${User.Verified}</td>
+                        </tr>
+                    `;
+
+                    dc = str + dc;
+                    
+                }
+                
+                
+            }
+        }
+        if(dc == " "){
+            res.status(400).json({Success:"Failed", Message:"User Not Found"});
+        }else{
+            res.status(200).json({Success: "Success" , Data:dc, Searched: Email_Mobile_ID});
+            
+        }
+        
+
+    } catch (error) {
+        next(error);
+    };
+};
+
 
 module.exports = {
     Admin_Login,
     Admin_OTP,
     Admin_Assistant_Add,
+    Admin_Search_Assistant,
 };

@@ -158,7 +158,6 @@ const Admin_Assistant_Schema = new Schema({
     Employee_Work_Alloted:{type:Object, default:[]},
     Employee_Work_Done:{type:Object},
     Email:{
-        unique:true,
         type: String,
         required: true,
         trim:true,

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Update | GET SKY BUY</title>
+    
+    <meta name="robots" content="nofollow, noindex">
+    <link rel="shortcut icon" href="/files/img/favicon.ico" type="image/x-icon">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+     
+    <link rel="stylesheet" href="/files/css/Admin_Update.css">
+</head>
+<body>
+
+
+
+
+
+    
+    include ./Admin_Header.pug
+
+
+
+
+
+    <div class="Employee">
+        <div class="TItttt">
+
+            <div class="Titl">
+                <button type="button" onclick="window.location.replace('/admin');">Add Employee</button>
+            </div>
+            <div class="Titl">
+                <button type="button" onclick="window.location.replace('/admin/assistant/search');">Search Employee</button>
+            </div>
+            <div class="Titl A1">
+                <button type="button" onclick="window.location.replace('/admin/assistant/update');">Update Employee</button>
+            </div>
+            <div class="Titl">
+                <button type="button" onclick="window.location.replace('/admin/assistant/List');">List Employee</button>
+            </div>
+        </div>
+        <div class="line"></div>
+        
+        <div class="con">
+            <div class="Close">
+                <h3>Update Employee</h3>
+            </div>
+            
+        </div>
+        <div class="line"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="Tan">
+            
+            <div class="Div_Input">
+                <input value="#{id}" id="Acode1" class="InputText" title="ID" type="text" spellcheck="false" placeholder=" " disabled>
+                <label class="Div_Input_Label" id="Acode1_Label" for="Acode1">ID</label>
+            </div>
+            <div class="Div_Input">
+                <input value="#{createdAt}" id="createdAt" class="InputText" title="Created On" type="text" spellcheck="false" placeholder=" " disabled>
+                <label class="Div_Input_Label" id="createdAt_Label" for="createdAt">Created On</label>
+            </div>
+            <div class="Div_Input">
+                
+                <!-- <input id="Acode" class="InputText" title="Acode" type="text" spellcheck="false" placeholder=" "> -->
+                <select  id="Assistant_Type" class="InputText">
+                    <option value="#{Assistant_Type}" selected>#{Assistant_Type}</option>
+                    <option value="Seller Assistant">Seller Assistant</option>
+                    <option value="Product Assistant">Product Assistant</option>
+                    <option value="Order Assistant">Order Assistant</option>
+                    <option value="Delivery Assistant">Delivery Assistant</option>
+                    <option value="Contact us Assistant">Contact us Assistant</option>
+                    <option value="Payment Assistant">Payment Assistant</option>
+                    <option value="Complaint Assistant">Complaint Assistant</option>
+                    <option value="Analytics Assistant">Analytics Assistant</option>
+                </select>
+                <label class="Div_Input_Label" id="Assistant_Type_Label" for="Assistant_Type">Assistant Type</label>
+            </div>
+
+            <div class="Div_Input">
+                <input value="#{Acode}" id="Acode" class="InputText" title="Acode" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Acode_Label" for="Acode">Acode</label>
+            </div>
+
+            <div class="Div_Input">
+                <input value="#{Ban}" id="Ban" class="InputText" title="Ban" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Ban_Label" for="Ban">Ban</label>
+            </div>
+            <div class="Div_Input">
+                <input value="#{Verified}" id="Verified" class="InputText" title="Verified" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Verified_Label" for="Verified">Verified</label>
+            </div>
+            <div class="Div_Input">
+                <input value="#{Name}" id="Name" class="InputText" title="Name" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Name_Label" for="Name">Name</label>
+            </div>
+
+            <div class="Div_Input">
+                <input value="#{Mobile}" id="Mobile_Number" class="InputText" title="Mobile Number" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Mobile_Number_Label" for="Mobile_Number">Mobile Number</label>
+            </div>
+            <div class="Div_Input">
+                <input value="#{WhatsApp}" id="WA_Number" class="InputText" title="WhatsApp Number" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="WA_Number_Label" for="WA_Number">WhatsApp Number</label>
+            </div>
+
+            <div class="Div_Input">
+                <input value="#{Email}" id="Email" class="InputText" title="Email" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Email_Label" for="Email">Email</label>
+            </div>
+            
+            <div class="Div_Input">
+                <input value="#{Country}" id="Country" class="InputText" title="Country" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Country_Label" for="Country">Country</label>
+            </div>
+            
+            <div class="Div_Input">
+                <input value="#{State}" id="State" class="InputText" title="State" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="State_Label" for="State">State</label>
+            </div>
+            
+            <div class="Div_Input">
+                <input  value="#{Dist}" id="District" class="InputText" title="District" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="District_Label" for="District">District</label>
+            </div>
+            
+            <div class="Div_Input">
+                <input  value="#{PIN}" id="PIN" class="InputText" title="PIN" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="PIN_Label" for="PIN">PIN</label>
+            </div>
+                
+            <div class="Div_Input">
+                <input  value="#{City}" id="City_Town" class="InputText" title="City_Town" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="City_Town_Label" for="City_Town">City/Town</label>
+            </div>
+            
+            <div class="Div_Input">
+                <input value="#{Locality}" id="Locality" class="InputText" title="Locality" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Locality_Label" for="Locality">Locality</label>
+            </div>
+
+            <div class="Div_Input">
+                <input value="#{Gender}" id="Gender" class="InputText" title="Gender" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Gender_Label" for="Gender">Gender</label>
+            </div>
+
+            <div class="Div_Input">
+                <input value="#{Age}" id="AGE" class="InputText" title="AGE" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="AGE_Label" for="AGE">Age</label>
+            </div>
+
+            <div class="Div_Input">
+                <input value="#{Bank_Name}" id="Bank_Name" class="InputText" title="Bank_Name" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Bank_Name_Label" for="Bank_Name">Bank Name</label>
+            </div>
+
+            <div class="Div_Input">
+                <input value="#{Benificiary_Name}" id="Benificiary_Name" class="InputText" title="Benificiary_Name" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Benificiary_Name_Label" for="Benificiary_Name">Benificiary Name</label>
+            </div>
+
+            <div class="Div_Input">
+                <input value="#{Account_Number}" id="Account_Number" class="InputText" title="Account_Number" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="Account_Number_Label" for="Account_Number">Account Number</label>
+            </div>
+
+            <div class="Div_Input">
+                <input value="#{IFSC}" id="IFSC_Code" class="InputText" title="IFSC_Code" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="IFSC_Code_Label" for="IFSC_Code">IFSC Code</label>
+            </div>
+
+            <div class="Div_Input">
+                <input value="#{UPI}" id="UPI_Number" class="InputText" title="UPI_Number" type="text" spellcheck="false" placeholder=" ">
+                <label class="Div_Input_Label" id="UPI_Number_Label" for="UPI_Number">UPI Number</label>
+            </div>
+
+
+            <div>
+                <button id="Submitbtn" onclick="Submit();" #{Btn}>Update</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    
+    <script src="/files/js/Message.js"></script>
+    <script src="/files/js/Admin_Update.js"></script>
+</body>
+</html>
