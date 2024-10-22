@@ -9,7 +9,7 @@ const { Get_Token , Get_OTP } = require('../utils/Auth.js');
 
 async function call(){
     return await Admin_User.findById("GSB_ADMIN_RICK");
-}
+};
 
 
 const Cookie_Options_OTP = {
@@ -47,6 +47,14 @@ const GET_LOGIN_PAGE = async (req, res, next) => {
                 };
             };
         };
+        res.clearCookie("ADMIN_TOKEN",{
+            domain: process.env.PROJECT_DOMAIN,
+            path: "/",
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            signed: true,
+            sameSite: "strict",
+        });
         return res.status(200).render("Admin_Login");
 
     }catch (error) {
@@ -68,14 +76,44 @@ const GET_LOGIN_OTP_PAGE = async (req, res, next) => {
                 };
             };
         };
+        res.clearCookie("ADMIN_TOKEN",{
+            domain: process.env.PROJECT_DOMAIN,
+            path: "/",
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            signed: true,
+            sameSite: "strict",
+        });
         return res.status(200).render("Admin_Login_OTP");
 
     }catch (error) {
         next(error);
-    }
+    };
+};
+
+const ADMIN_HOME = async (req, res, next) => {
+    try {
+        const Got_User = await call();
+        const ADMIN_TOKEN = req.signedCookies.ADMIN_TOKEN;
+        const Check = Verify_Token(ADMIN_TOKEN);
+        if(Check){
+            if(Check.Admin){
+                if(Got_User.Token == Check.Token){
+                    if(Got_User._id === Check.ID){
+                        return res.status(200).render("Admin");
+                    };
+                };
+            };
+        };
+        return res.status(400).redirect("/admin/login");
+
+    }catch (error) {
+        next(error);
+    };
 };
 
 module.exports = {
     GET_LOGIN_PAGE,
-    GET_LOGIN_OTP_PAGE
+    GET_LOGIN_OTP_PAGE,
+    ADMIN_HOME,
 };

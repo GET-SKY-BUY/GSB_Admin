@@ -1,42 +1,44 @@
+require("dotenv").config();
 const { Verify_Token } = require("./JWT.js");
 const { User } = require("../Models.js");
+
+
+const { Admin_User } = require('../Models.js');
+
+async function call(){
+    return await Admin_User.findById("GSB_ADMIN_RICK");
+}
 const Verify_User_API = async ( req, res, next) => {
     try {
-        
-        let User1 = req.signedCookies.User;
-        if(!User1) {
-            return res.status(401).clearCookie("User",{path:"/"}).json({Success: "Failed" ,Message:"Unauthorized access."});
-            
+        const Got_User = await call();
+        const ADMIN_TOKEN = req.signedCookies.ADMIN_TOKEN;
+        const Check = Verify_Token(ADMIN_TOKEN);
+        let Found = false;
+        if(Check){
+            if(Check.Admin){
+                if(Got_User.Token == Check.Token){
+                    if(Got_User._id === Check.ID){
+                        Found = true;
+                    };
+                };
+            };
         };
-
-        let Verify = Verify_Token(User1);
-        if(!Verify) {
-            return res.status(401).clearCookie("User",{path:"/"}).json({Success: "Failed" ,Message:"Unauthorized access."});
-        };
         
-        // Check if the user exists
-        await User.findById(Verify.ID).then( user => {
-            if (!user) {
-                return res.status(401).clearCookie("User",{path:"/"}).json({Success: "Failed" ,Message:"Unauthorized access."});
-            };
-
-            if(!(user.LoggedIn.Token === Verify.Token)) {
-                return res.status(401).clearCookie("User",{path:"/"}).json({Success: "Failed" ,Message:"Unauthorized access."});    
-            };
-
-            if(user.Verified === "No") {
-                return res.status(401).clearCookie("User",{path:"/"}).json({Success: "Failed" ,Message:"Unauthorized access."});
-            };
-
-            if(user.Ban === "Yes") {
-                return res.status(401).clearCookie("User",{path:"/"}).json({Success: "Failed" ,Message:"Unauthorized access."});
-            };
-
-            req.User = user;
-            next();
-        }).catch((err) => {
-            next(err);
-        });
+        if(!Found){
+            res.clearCookie("ADMIN_TOKEN",{
+                domain: process.env.PROJECT_DOMAIN,
+                path: "/",
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                signed: true,
+                sameSite: "strict",
+            });
+            return res.status(400).json({
+                Status: "Failed",
+                Message: "Unauthorized access."
+            });
+        };
+        next();
     } catch (err) {
         next(err);
     };

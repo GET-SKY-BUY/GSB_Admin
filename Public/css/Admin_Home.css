@@ -1,0 +1,218 @@
+
+
+
+.Employee {
+    padding: 20px;
+    width: 90vw;
+    margin: 50px auto;
+    background-color: rgb(255, 255, 255);
+    min-height: 100px;
+    box-shadow: 0px 0px 6px rgb(175, 175, 175);
+}
+
+.TItttt{ 
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.Titl {
+    padding: 10px;
+}
+
+.Titl button{
+    padding: 6px 12px;
+    font-size: 16px;
+    /* font-weight: bold;ś */
+    background-color: transparent;
+    border: 1px;
+    cursor: pointer;
+}
+
+.Titl button:hover , .Titl button:focus{
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.con {
+    display: block;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.Tan input{
+    padding: 10px 15px;
+    position: relative;
+    top: 0px;
+
+}
+
+
+
+
+
+
+
+
+
+.InputText {
+    outline: none;
+    border: 1px solid #4f4f4f;
+    padding: 12px 14px 12px 14px;
+    width: calc(100% - 40px);
+    border-radius: 4px;
+    transition: 200ms box-shadow;
+}
+
+.Div_Input {
+    margin: 10px auto;
+    position: relative;
+    top: 0px;
+}
+
+.InputText:hover,
+.InputText:focus {
+    outline: none;
+    border: 2px solid var(--Seconday-primary-color);
+    box-shadow: 0 0 7px var(--secondaryHov-color);
+}
+
+.Div_Input_Label {
+    border-radius: 3px;
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    font-size: 13px;
+    transition: 100ms;
+    user-select: none;
+}
+
+.InputText:focus ~ .Div_Input_Label,
+.InputText:not(:placeholder-shown) ~ .Div_Input_Label {
+    transition: 100ms;
+    position: absolute;
+    left: 10px;
+    padding: 0 4px;
+    top: -4px;
+    background-color: white;
+    font-size: 11.5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+#Assistant_Type {
+    cursor: pointer;
+}
+
+
+#Submitbtn {
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid #4f4f4f;
+    padding: 12px 14px 12px 14px;
+    width: calc(100% - 40px);
+    border-radius: 4px;
+    transition: 200ms box-shadow;
+
+}
+#Submitbtn:hover {
+    background-color: #aaa;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.A1 {
+    background-color: #e2e2e2;
+}
+.A1 button{
+    font-weight: bold;
+}
+
+
+
+
+
+

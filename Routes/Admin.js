@@ -9,8 +9,11 @@ const cookieParser = require('cookie-parser');
 Admin.use(cookieParser(process.env.COOKIE_SECRET));
 
 
-const { Admin_Login , Admin_OTP }= require('../Controllers/Admin.js');
-const { GET_LOGIN_PAGE , GET_LOGIN_OTP_PAGE }= require('../Controllers_Page/Admin.js');
+const { Admin_Login , Admin_OTP , Admin_Assistant_Add }= require('../Controllers/Admin.js');
+const { GET_LOGIN_PAGE , GET_LOGIN_OTP_PAGE , ADMIN_HOME }= require('../Controllers_Page/Admin.js');
+const Verify_User_Page  = require('../utils/Verify_User_Page.js');
+const Verify_User_API  = require('../utils/Verify_User_API.js');
+
 
 // Admin Authentication Routes
 Admin.get("/login", GET_LOGIN_PAGE);
@@ -19,7 +22,8 @@ Admin.get("/login/otp", GET_LOGIN_OTP_PAGE);
 Admin.post("/login-verify-otp", Admin_OTP);
 
 // Admin Assistant Routes
-Admin.post("/add", Admin_Login);
+Admin.get("/", Verify_User_Page ,ADMIN_HOME);
+Admin.post("/assistant/add", Verify_User_API , Admin_Assistant_Add);
 Admin.post("/search", Admin_Login);
 Admin.post("/update", Admin_Login);
 

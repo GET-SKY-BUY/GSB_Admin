@@ -13,26 +13,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
      
-    <link rel="stylesheet" href="/files/css/Admin.css">
+    <link rel="stylesheet" href="/files/css/Admin_Home.css">
 </head>
 <body>
-
-
-
-
-
     
+    include ./Admin_Header.pug
     
-    
-    
-    include Header_Admin1.pug
-    
-
-
-
-
-
-
     <div class="Employee">
         <div class="TItttt">
 
@@ -40,13 +26,13 @@
                 <button type="button" onclick="window.location.replace('/admin');">Add Employee</button>
             </div>
             <div class="Titl">
-                <button type="button" onclick="window.location.replace('/admin/assistant/search');">Search Employee</button>
+                <button type="button" onclick="window.location.replace('/admin/search');">Search Employee</button>
             </div>
             <div class="Titl">
-                <button type="button" onclick="window.location.replace('/admin/assistant/update');">Update Employee</button>
+                <button type="button" onclick="window.location.replace('/admin/update');">Update Employee</button>
             </div>
             <div class="Titl">
-                <button type="button" onclick="window.location.replace('/admin/assistant/List');">List Employee</button>
+                <button type="button" onclick="window.location.replace('/admin/List');">List Employee</button>
             </div>
         </div>
         <div class="line"></div>
@@ -55,7 +41,6 @@
             <div class="Close">
                 <h3>Add Employee</h3>
             </div>
-            
         </div>
         <div class="line"></div>
 
@@ -193,9 +178,8 @@
 
 
 
-    <script src="/files/js/ClientAPI.js"></script>
-
     
-    <script src="/files/js/Admin.js"></script>
+    <script src="/files/js/Message.js"></script>
+    <script src="/files/js/Admin_Home.js"></script>
 </body>
 </html>

@@ -141,10 +141,62 @@ const Admin_User_Schema = new Schema({
             trim:true,
         }
     }
-})
+});
+
+const Admin_Assistant_Schema = new Schema({
+    _id: {
+        type:String,
+    },
+    Basic_Details:{
+        Name: {type:String},
+        Mobile: {type:String},
+        WhatsApp: {type:String},
+
+    },
+    Employee_Type:{type:String},
+    Employee_Work_Alloted:{type:Object, default:[]},
+    Employee_Work_Done:{type:Object},
+    Email:{
+        type: String,
+        required: true,
+        trim:true,
+    },
+    Password:{
+        type: String,
+        required: true,
+        trim:true,
+    },
+    Ban:{
+        type:String,
+        required: true,
+        default: "No",
+        trim:true,
+        enum: ['Yes', 'No'],
+    },
+    Verified:{
+        type:String,
+        required: true,
+        default: "No",
+        trim: true,
+        enum: ['Yes', 'No'],
+    },
+    createdAt: {
+        type: Date,
+    },
+
+    LoggedIn:{type:Object},
+    Payment:{type:Object, default:[]},
+    Auth:{type:Object},
+    Bank:{type:Object},
+    Age:{type:String},
+    Gender:{type:String},
+    Acode:{type:String},
+    Address:{type:Object},
+});
 
 const User = Model("User", UserSchema);
 const Admin_User = Model("Admin", Admin_User_Schema);
+const Assistant = Model("Assistant", Admin_Assistant_Schema);
 
 
 
@@ -153,5 +205,6 @@ const Admin_User = Model("Admin", Admin_User_Schema);
 module.exports = {
     User,
     Admin_User,
+    Assistant,
 }
 

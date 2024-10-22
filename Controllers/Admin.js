@@ -240,7 +240,25 @@ const Admin_OTP = async (req, res, next) => {
     };
 };
 
+
+const Admin_Assistant_Add = async (req, res, next) => {
+    try {
+
+        console.log("Admin_Assistant_Add");
+        return res.status(200).json({
+            Status: "Success",
+            Message: "Assistant Added.",
+        });
+        
+        
+    } catch (error) {
+        next(error);
+    }
+};
+
+
 module.exports = {
     Admin_Login,
     Admin_OTP,
+    Admin_Assistant_Add,
 };
