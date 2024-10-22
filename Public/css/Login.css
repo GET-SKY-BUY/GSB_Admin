@@ -1,0 +1,164 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+
+
+
+
+
+
+.container {
+
+    width: 100vw;
+    height: 100vh;
+
+    position: static;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("/files/img/Login_Background.webp");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.box {
+    max-width: 300px;
+    width: 100%;
+    margin: 10px;
+    
+    padding: 40px 50px;
+    box-shadow: 0 0 10px #e2e2e2;
+    background-color: rgba(255, 255, 255, 0.747);
+}
+
+
+.box h1{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 24px;
+    text-align: center;
+}
+#Form {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    width: 100% ;
+    
+}
+
+:root {
+    --primary-color: #ff914d;
+    --Seconday-primary-color: #ff6f3f;
+    --secondary-color: #ffa56d;
+    --secondaryHov-color: #ffbc92;
+    --secondaryActiv-color: #ff8e48;
+}
+
+.InputText {
+    outline: none;
+    border: 1px solid #4f4f4f;
+    padding: 12px 14px 12px 14px;
+    width: calc(100% - 32px);
+    border-radius: 4px;
+    transition: 200ms box-shadow;
+}
+
+.Div_Input {
+    margin: 8px 0;
+    position: relative;
+    top: 0px;
+    width: 100%;
+}
+
+.InputText:hover,
+.InputText:focus {
+    outline: none;
+    border: 2px solid var(--Seconday-primary-color);
+    box-shadow: 0 0 7px var(--secondaryHov-color);
+}
+
+.Div_Input_Label {
+    border-radius: 3px;
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    font-size: 13px;
+    transition: 100ms;
+    user-select: none;
+}
+
+.InputText:focus ~ .Div_Input_Label,
+.InputText:not(:placeholder-shown) ~ .Div_Input_Label {
+    transition: 100ms;
+    position: absolute;
+    left: 10px;
+    padding: 0 4px;
+    top: -4px;
+    background-color: white;
+    font-size: 11.5px;
+}
+
+#Next_DivBtn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#Next_Btn,
+#Next_Btn1 {
+    border: none;
+    transition: 200ms;
+    background-color: #0c60e9;
+    border-radius: 50px;
+    padding: 8px 20px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+}
+
+#Next_Btn:focus,
+#Next_Btn:hover,
+#Next_Btn1:focus,
+#Next_Btn1:hover {
+    background-color: #0c54c7;
+}
+
+#Create_Password {
+    padding-right: 36px;
+    width: calc(100% - 54px);
+}
+
+#ShowPassword {
+    position: absolute;
+    right: 8px;
+    top: 0px;
+    width: 25px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ShowPassword span {
+    cursor: pointer;
+    padding: 7px;
+    border-radius: 50%;
+    transition: 200ms background-color;
+    background-color: #f0f0f0;
+    font-size: 20px;
+    user-select: none;
+}
+
+#ShowPassword span:hover {
+    background-color: #cacaca;
+}

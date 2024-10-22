@@ -6,7 +6,7 @@ const messageHTML = `
         </div>
     </div>
     <div id="Loading">
-        <img src="/verified/files/Images/Loading.gif" alt="Login Gif">
+        <img src="/files/img/Loading.gif" alt="Login Gif">
     </div>
 `;
 

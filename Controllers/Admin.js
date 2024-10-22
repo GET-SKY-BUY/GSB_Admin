@@ -51,13 +51,13 @@ const Admin_Login = async (req, res, next) => {
         };
 
         const { Email, Password } = req.body;
-        if(Valid_Email(Email)){
+        if(!Valid_Email(Email)){
             return res.status(400).json({
                 Status: "Failed",
                 Message: "Invalid Email."
             });
         };
-        if(Valid_Password(Password)){
+        if(!Valid_Password(Password)){
             return res.status(400).json({
                 Status: "Failed",
                 Message: "Invalid Password."
@@ -72,8 +72,8 @@ const Admin_Login = async (req, res, next) => {
 
         
         
-        const Token = Get_Token();
-        const OTP = Get_OTP();
+        const Token = await Get_Token();
+        const OTP = await Get_OTP();
         let Status = await Send_Mail({
             from: "Admin - OTP" + "<" + process.env.MAIL_ID + ">",
             to: Got_User.Email,
@@ -92,11 +92,13 @@ const Admin_Login = async (req, res, next) => {
             Admin: false,
             Token: Token,
         });
-
-        Got_User.Auth.Token = Token;
-        Got_User.Auth.OTP_Expiry = Date.now() + 1000 * 60 * 5;
-        Got_User.Auth.OTP = OTP;
         
+        Got_User.Auth = {
+            Token : Token,
+            OTP_Expiry : Date.now() + 1000 * 60 * 5,
+            OTP : OTP,
+        }
+        // console.log(Got_User);
         await Got_User.save().then(() => {
             res.cookie("OTP_TOKEN",JWT_TOKEN,Cookie_Options_OTP);
             return res.status(200).json({
@@ -189,7 +191,7 @@ const Admin_OTP = async (req, res, next) => {
         };
 
         
-        const Token = Get_Token();
+        const Token = await Get_Token();
 
 
 
@@ -206,10 +208,6 @@ const Admin_OTP = async (req, res, next) => {
                 Message: "Internal Server Error."
             });
         };
-
-        
-
-        
         const JWT_TOKEN = Generate_Token({
             ID: "GSB_ADMIN_RICK",
             Admin: true,
@@ -244,4 +242,5 @@ const Admin_OTP = async (req, res, next) => {
 
 module.exports = {
     Admin_Login,
+    Admin_OTP,
 };

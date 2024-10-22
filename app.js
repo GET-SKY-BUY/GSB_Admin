@@ -30,6 +30,7 @@ if (NODE_ENV === 'production') {
 app.set('view engine', 'pug');
 app.set('views', [
     // path.join(__dirname, './Pug/Auth'),
+    path.join(__dirname, './Pug/Admin'),
     path.join(__dirname, './Pug/Common'),
     // path.join(__dirname, './Pug/Profile'),
 ]);
@@ -43,13 +44,13 @@ app.get("/", (req, res) => {
 });
 
 // Admin Route
-app.get("/admin", require('./Routes/Admin.js'));
+app.use("/admin", require('./Routes/Admin.js'));
 
 // Project URL
 const Project_URL = `${Protocol}://${process.env.PROJECT_DOMAIN}`;
 
 // Setup body-parser middleware for parsing JSON
-app.use(bodyParser.json()); // parse application/json
+app.use(bodyParser.json());
 
 // Setup body-parser middleware for parsing URL encoded data
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -127,8 +127,6 @@ const Admin_User_Schema = new Schema({
     },
     Token:{
         type: String,
-        required: true,
-        trim: true,
     },
     Auth:{
         OTP:{
