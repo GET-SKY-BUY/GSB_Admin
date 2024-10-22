@@ -14,6 +14,7 @@ const { GET_LOGIN_PAGE , GET_LOGIN_OTP_PAGE , ADMIN_HOME ,ADMIN_ASSISTANT_LIST ,
 const Verify_User_Page  = require('../utils/Verify_User_Page.js');
 const Verify_User_API  = require('../utils/Verify_User_API.js');
 
+Admin.use("/qr_codes", require('./Admin_QR_Codes.js'));
 
 // Admin Authentication Routes
 Admin.get("/login", GET_LOGIN_PAGE);
@@ -34,6 +35,3 @@ Admin.get("/update/", Verify_User_Page , ( req , res , next) =>{
 Admin.post("/assistant/add", Verify_User_API , Admin_Assistant_Add );
 Admin.post("/assistant/search", Verify_User_API , Admin_Search_Assistant );
 Admin.put("/assistant/update", Verify_User_API  , Admin_Assistant_Update );
-
-
-// Admin QR-Code Routes
