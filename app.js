@@ -28,17 +28,18 @@ if (NODE_ENV === 'production') {
 
 // Set the view engine to pug
 app.set('view engine', 'pug');
-// app.set('views', [
-//     path.join(__dirname, './Pug/Auth'),
-//     path.join(__dirname, './Pug/Common'),
-//     path.join(__dirname, './Pug/Profile'),
-// ]);
+app.set('views', [
+    // path.join(__dirname, './Pug/Auth'),
+    path.join(__dirname, './Pug/Common'),
+    // path.join(__dirname, './Pug/Profile'),
+]);
 
-app.get('/', (req, res) => {
-    res.status(200).json({
-        Status: "Success",
-        Message: "Welcome to the API.",
-    });
+
+app.use("/files", express.static(path.join(__dirname, './Public')));
+
+
+app.get("/", (req, res) => {
+    res.status(200).render("Home");
 });
 
 // Project URL
