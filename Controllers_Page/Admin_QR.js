@@ -5,6 +5,7 @@ const QRCode = require('qrcode');
 const ADMIN_PASS = process.env.ADMIN_PASS;
 const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
 const { Admin_User , Assistants , Qr_Codes } = require('../Models.js');
+const QR_Codes = require('../Routes/Admin_QR_Codes.js');
 
 function Product_ID() {
     const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -96,9 +97,25 @@ const QR_deleted = async ( req , res , next )=>{
     };
 };
 
+const QR_final = async ( req , res , next )=>{
+    try{
+        const Data = await Qr_Codes.findOne({_id:"GSB1234"});
+        await QR.updateOne({_id:"GSB1234"},{$set:{
+            Created_QR_Codes: [...Data.Created_QR_Codes, ...Data.Temporary_QR_Codes],
+            Temporary_QR_Codes: []
+        }}).then(()=>{
+            return res.status(200).json({Message: "Finalized"});
+        }).catch(()=>{
+            return res.status(400).json({Message: "Unable to finalize."});
+        });
+    }catch(e){
+        next(e);
+    };
+};
 
 module.exports = {
     QR_HOMEPAGE,
     QR_code_Generate,
     QR_deleted,
+    QR_final,
 }
