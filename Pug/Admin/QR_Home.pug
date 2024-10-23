@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR - Codes | GET SKY BUY</title>
+    <link rel="stylesheet" href="/files/css/QR_Home.css">
+    <meta name="robots" content="nofollow, noindex">
+    <link rel="shortcut icon" href="/files/img/favicon.ico" type="image/x-icon">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+     
+</head>
+<body>
+
+    
+    include ./Admin_Header.pug
+    
+
+    <div id="box">
+        <div class="Box">
+            
+            <h4>Enter Number of pages</h4>
+            <input type="number" id="Number_of_Pages" placeholder="Enter Number of Pages">
+            <button id="Generate_Final_QR" type="button" onclick="Generate_Final_QR();">Generate QR</button>
+        </div>
+    </div>
+    <center><h2>QR Code Page</h2></center>
+    <div class="Container">
+        <div class="Btns">
+            <div class="Title">Generated QR</div>
+            <div class="line"></div>
+            <div class="Generated_QR">#{QR_Generated}</div>
+            <div class="Bottom_Btn"><button id="Generate_New_QR" type="button" onclick="Generate_New_QR();">Generate QR codes</button></div>
+            <div class="Bottom_Btn"><a target="_blank" href="/admin/qr_code/qr-page">QR Page</a></div>
+        </div>
+        <div class="Btns">
+            <div class="Title">Active Codes</div>
+            <div class="line"></div>
+            <div class="Generated_QR">#{Active_Generated}</div>
+            <div class="Bottom_Btn"><button type="button" onclick="SeeActive();">See active codes</button></div>
+        </div>
+        <div class="Btns">
+            <div class="Title">In-Active Codes</div>
+            <div class="line"></div>
+            <div class="Generated_QR">#{Active_Codes}</div>
+            <div class="Bottom_Btn"><button type="button" onclick="SeeActive();">See active codes</button></div>
+        </div>
+        <div class="Btns">
+            <div class="Title">Temp Codes</div>
+            <div class="line"></div>
+            <div class="Generated_QR">#{Temp}</div>
+            <div class="Bottom_Btn"><button id="FinalizeQR" type="button" onclick="FinalizeQR();">Finalize QR</button></div>
+            <div class="Bottom_Btn"><button id="Delete" type="button" onclick="Delete();">Delete</button></div>
+        </div>
+    </div>
+
+
+    <section class="section">
+        <div class="Wid">
+
+            <div id="Generated_QRDiv" class="Generated_QR">
+
+                <h3>Search - Generated QR</h3>
+                <form id="Form_Generated_QR">
+                    <input type="text" id="Search_QR_CODE" placeholder="Enter 9 character Code">
+                    <button type="button" id="Search_Generated_QR" onclick="Search_Generated_QR1();">Search</button>
+                    <p id="Qr_Code_Para">Search the Code</p>
+                </form>
+            </div>
+            <hr>
+            <div id="Generated_QRDiv" class="Generated_QR">
+
+                <h3>Delete - QR Code</h3>
+                <form id="Form_Generated_QR">
+                    <input type="text" id="Delete_QRINput" placeholder="Enter 9 character Code">
+                    <button id="DeleteQR" type="button" onclick="DeleteQR1();">Delete</button>
+                    <p id="Qr_Code_Para">Delete Code</p>
+                </form>
+            </div>
+            
+        </div>
+    </section>
+    
+    <script src="/files/js/Message.js"></script>
+    <script src="/files/js/Ad_Qr_Home.js"></script>
+</body>
+</html>

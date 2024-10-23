@@ -1,0 +1,262 @@
+
+
+
+.Container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+.Btns {
+    box-shadow: 0 0 10px #eee;
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px 20px ;
+    margin: 6px;
+}
+
+.Title {
+    width: 150px;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0px;
+
+}
+
+.Generated_QR {
+    text-align: center;
+    font-size: 25px;
+}
+
+
+
+.Bottom_Btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px;
+}
+.Bottom_Btn button{
+    transition: 200ms;
+    padding: 8px 15px;
+    /* margin: 0px 5px; */
+    text-align: center;
+    font-size: 13px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    outline: none;
+    
+
+}
+.Bottom_Btn button a{
+    text-decoration: none;
+    color: white;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.Bottom_Btn button:hover, .Bottom_Btn button:focus{
+    background-color: var(--Seconday-primary-color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#box {
+    width: 100%;
+    height: 100%;
+
+
+    background-color: rgba(255, 255, 255, 0.556);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+}
+
+
+.Box {
+    position: relative;
+    bottom: 100px;
+    display: flex;
+    background-color: white;
+    box-shadow: 0 0 10px #ccc;
+    border-radius: 10px;
+    padding: 20px 30px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+
+
+
+
+#Number_of_Pages {
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+#Generate_Final_QR{
+    margin-top: 5px;
+    transition: 200ms;
+    padding: 8px 15px;
+    /* margin: 0px 5px; */
+    text-align: center;
+    font-size: 13px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    outline: none;
+
+
+}
+#Generate_Final_QR:hover, #Generate_Final_QR:focus{
+    background-color: var(--Seconday-primary-color);
+}
+
+
+
+
+
+
+
+
+
+
+.section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.Wid {
+    border-radius: 20px;
+    padding: 20px;
+    background-color: white;
+    width: 95%;
+}
+
+
+
+
+
+.Generated_QR {
+    font-size: 16px;
+    margin: 10px 0px;
+}
+#Form_Generated_QR {
+    
+    width: 100%;
+}
+
+#Generated_QR_Input {
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    /* width: 100%; */
+
+
+}
+
+
+#Form_Generated_QR button{
+    transition: 200ms;
+    padding: 8px 15px;
+    /* margin: 0px 5px; */
+    text-align: center;
+    font-size: 13px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    outline: none;
+
+
+}
+#Form_Generated_QR button:hover, #Form_Generated_QR button:focus{
+    background-color: var(--Seconday-primary-color);
+}
+
+
+#Qr_Code_Para {
+    padding: 0px;
+    margin: 0px;
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -9,5 +9,9 @@ QR_Codes.use(bodyParser.json());
 QR_Codes.use(bodyParser.urlencoded({ extended: true }));
 QR_Codes.use(cookieParser(process.env.COOKIE_SECRET));
 
+const Verify_User_Page  = require('../utils/Verify_User_Page.js');
+const Verify_User_API  = require('../utils/Verify_User_API.js');
 
-QR_Codes.get("/", );
+const { QR_HOMEPAGE } = require('../Controllers_Page/Admin_QR.js');
+
+QR_Codes.get("/", Verify_User_Page , QR_HOMEPAGE);
