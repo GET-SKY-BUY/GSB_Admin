@@ -1,6 +1,5 @@
 require('dotenv').config();
 const mongoose = require("mongoose");
-const { type } = require('os');
 const URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_SUBDOMAIN}.mongodb.net/${process.env.DB_NAME}`;
 mongoose.connect(URL);
 const db = mongoose.connection;

@@ -8,3 +8,14 @@ const Send_Mail = require('../utils/Send_Mail.js');
 const { Get_Token , Get_OTP } = require('../utils/Auth.js');
 
 
+const QR_HOMEPAGE = async ( req , res , next )=>{
+    try {
+        
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = {
+    QR_HOMEPAGE,
+}
