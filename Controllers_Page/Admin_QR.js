@@ -115,6 +115,7 @@ const QR_final = async ( req , res , next )=>{
 
 const QR_Search = async ( req , res , next )=>{
     try{
+        const Data = await Qr_Codes.findOne({_id:"GSB1234"});
         let QR1 = req.body.QR_CODE;
         if(QR1){
             QR1 = QR1.toUpperCase();
@@ -134,10 +135,34 @@ const QR_Search = async ( req , res , next )=>{
 
 const QR_Delete_QR = async ( req , res , next )=>{
     try{
+        const Data = await QR.findOne({_id:"GSB1234"});
+        let QR1 = req.body.QR_CODE;
+        if(QR1){
+            QR1 = QR1.toUpperCase();
+            let D = [];
+            let found = false;
+            for(let i = 0; i < Data.Created_QR_Codes.length; i++){
+                if(Data.Created_QR_Codes[i] == QR1){
+                    found = true;
+                };
+                D.push(Data.Created_QR_Codes[i]);
+            };
+            if(found){
+                await Qr_Codes.updateOne({_id:"GSB1234"},{$set:{Created_QR_Codes:D}}).then(()=>{
+                    return res.status(200).json({Message: "Deleted, seleted QR - Code"});
+                }).catch(()=>{
+                    return res.status(500).json({Message: "Internal server error"});
+                });
+            }else{
+                return res.status(404).json({Message: "QR Code not found"});
+            };
+        }else{
+            return res.status(400).json({Message: "Please provide the correct QR Code"});
+        };
 
     }catch(e){
         next(e);
-    }
+    };
 };
 
 module.exports = {
