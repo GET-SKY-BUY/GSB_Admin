@@ -20,7 +20,7 @@ function Product_ID() {
 
 const QR_DATA = async (TotalRequired)=>{
     let UniqueCodes = [];
-    const Data = await QR.findOne({_id:"GSB1234"});
+    const Data = await Qr_Codes.findOne({_id:"GSB1234"});
     const PresentQR = Data.Created_QR_Codes;
     for(let i = 0; i < TotalRequired; i++){
         let Code = Product_ID();
@@ -54,11 +54,40 @@ const QR_HOMEPAGE = async ( req , res , next )=>{
         });
     } catch (error) {
         next(error);
+    };
+};
+
+const QR_code_Generate = async ( req , res , next )=>{
+    try {
+        const Data = await Qr_Codes.findOne({_id:"GSB1234"});
+        if(Data.Temporary_QR_Codes.length == 0){
+            const TotalRequired = req.body.number;
+            if(TotalRequired){
+                if(TotalRequired > 0){
+                    let a = await QR_DATA(TotalRequired);
+                    await Qr_Codes.updateOne({_id:"GSB1234"},{$set:{Temporary_QR_Codes:a}}).then(()=>{
+                        return res.status(200).json({Message:"QR Codes generated successfully." ,UniqueCodes: a});
+                    }).catch(()=>{
+                        return res.status(400).json({Message: "Error"});
+                    });
+                }else{
+                    return res.status(400).json({Message: "Please provide the number of QR Codes you want to generate"});
+                }
+            }else{
+                return res.status(400).json({Message: "Please provide the number of QR Codes you want to generate"});
+            }
+        }else{
+            return res.status(400).json({Message: "What do you want to do with the previous QR Codes?"});
+        }
+    } catch (error) {
+        next(error);
     }
 };
 
 
 
+
 module.exports = {
     QR_HOMEPAGE,
+    QR_code_Generate,
 }

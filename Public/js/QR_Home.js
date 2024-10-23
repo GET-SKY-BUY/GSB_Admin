@@ -18,7 +18,7 @@ const Generate_Final_QR = async () =>{
 
         let Generate_New_QR = document.getElementById("Generate_New_QR");
         Generate_New_QR.disabled = true;
-        fetch("/admin/qr_code/generate_codes", {
+        fetch("/admin/qr_codes/generate_codes", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ const Delete = async() =>{
     Delete.disabled = true;
     Message("Please wait, this may take some time", "Success");
     document.getElementById("Loading").style.display = "flex";
-    fetch("/admin/qr_code/temp", {
+    fetch("/admin/qr_codes/temp", {
         method: "DELETE"
     }).then(res=>{
         if(res.ok){
@@ -107,7 +107,7 @@ const FinalizeQR = async() =>{
     FinalizeQR.disabled = true;
     Message("Please wait, this may take some time", "Success");
     document.getElementById("Loading").style.display = "flex";
-    await fetch("/admin/qr_code/final", {
+    await fetch("/admin/qr_codes/final", {
         method: "PUT"
     }).then(res=>{
         if(res.ok){
@@ -150,7 +150,7 @@ const Search_Generated_QR1 = async() =>{
     let Search_QR_CODE = document.getElementById("Search_QR_CODE").value;
 
     if(Search_QR_CODE.length == 9){
-        await fetch("/admin/qr_code/search", {
+        await fetch("/admin/qr_codes/search", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -204,7 +204,7 @@ const DeleteQR1 = async() =>{
     let Delete_QRINput = document.getElementById("Delete_QRINput").value;
 
     if(Delete_QRINput.length == 9){
-        await fetch("/admin/qr_code/qr-delete", {
+        await fetch("/admin/qr_codes/qr-delete", {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
