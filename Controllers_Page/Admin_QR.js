@@ -84,10 +84,21 @@ const QR_code_Generate = async ( req , res , next )=>{
     }
 };
 
-
+const QR_deleted = async ( req , res , next )=>{
+    try {
+        await Qr_Codes.updateOne({_id:"GSB1234"},{$set:{Temporary_QR_Codes:[]}}).then(()=>{
+            return res.status(200).json({Message: "Deleted"});
+        }).catch(()=>{
+            return res.status(400).json({Message: "Unable to delete"});
+        });
+    } catch (error) {
+        next(error);
+    };
+};
 
 
 module.exports = {
     QR_HOMEPAGE,
     QR_code_Generate,
+    QR_deleted,
 }
