@@ -204,6 +204,44 @@ const Admin_Assistant_Schema = new Schema({
     Address:{type:Object},
 });
 
+
+
+const Qrs = new Schema({
+    _id: {
+        type: String,
+    },
+    Created_QR_Codes: {
+        type: Object,
+        default: [],
+    },
+    Temporary_QR_Codes: {
+        type: Object,
+        default: [],
+    },
+    Active_Codes:[
+        {
+            ID: {
+                type:String,
+            },
+            Date: {
+                type:Date,
+                default: Date.now(),
+            },
+        }
+    ],
+    Not_Active_QR_Codes: {
+        type: Object,
+        default: [],
+    },
+});
+
+
+
+
+
+
+
+
 const User = Model("User", UserSchema);
 const Admin_User = Model("Admin", Admin_User_Schema);
 const Assistants = Model("Assistants", Admin_Assistant_Schema);
