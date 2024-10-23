@@ -113,9 +113,38 @@ const QR_final = async ( req , res , next )=>{
     };
 };
 
+const QR_Search = async ( req , res , next )=>{
+    try{
+        let QR1 = req.body.QR_CODE;
+        if(QR1){
+            QR1 = QR1.toUpperCase();
+            for(let i = 0; i < Data.Created_QR_Codes.length; i++){
+                if(Data.Created_QR_Codes[i] == QR1){
+                    return res.status(200).json({Message: "Found QR - Code."});
+                };
+            };
+            return res.status(404).json({Message: "Not Found"});
+        }else{
+            return res.status(400).json({Message: "Please provide the correct QR Code"});
+        }
+    }catch(e){
+        next(e);
+    };
+};
+
+const QR_Delete_QR = async ( req , res , next )=>{
+    try{
+
+    }catch(e){
+        next(e);
+    }
+};
+
 module.exports = {
     QR_HOMEPAGE,
     QR_code_Generate,
     QR_deleted,
     QR_final,
+    QR_Search,
+    QR_Delete_QR,
 }
