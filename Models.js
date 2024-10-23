@@ -245,6 +245,7 @@ const Qrs = new Schema({
 const User = Model("User", UserSchema);
 const Admin_User = Model("Admin", Admin_User_Schema);
 const Assistants = Model("Assistants", Admin_Assistant_Schema);
+const Qr_Codes = Model("Qr_Codes", Qrs);
 
 
 
@@ -254,5 +255,6 @@ module.exports = {
     User,
     Admin_User,
     Assistants,
+    Qr_Codes,
 }
 
