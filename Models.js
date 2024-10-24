@@ -184,7 +184,14 @@ const Admin_Assistant_Schema = new Schema({
         type: Date,
     },
 
-    LoggedIn:{type:Object},
+    LoggedIn:{
+        Token:{
+            type: String,
+        },
+        Created: {
+            type: Date,
+        },
+    },
     Payment:{type:Object, default:[]},
     Auth:{
         OTP: {

@@ -62,7 +62,19 @@ const Sellers_Assistant_Login_OTP = async ( req , res , next ) => {
     };
 };
 
+const Seller_Assistant_Home = async ( req , res , next ) => {
+    try {
+        const Got_User = req.User;
+
+        return res.status(200).render("Sellers_Assistant_Home");
+    } catch (error) {
+        next(error);
+    };
+};
+
+
 module.exports = {
     Sellers_Assistant_Login,
     Sellers_Assistant_Login_OTP,
+    Seller_Assistant_Home,
 };

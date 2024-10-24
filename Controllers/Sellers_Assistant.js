@@ -1,15 +1,17 @@
 require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
 
 const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
 
-const { Valid_Email, Valid_Password } = require('../utils/Validations.js');
+const { Valid_Email, Valid_Password , Valid_Mobile } = require('../utils/Validations.js');
 const { Sellers , Assistants } = require('../Models.js');
-const { Password_Compare } = require('../utils/Password.js');
+const { Password_Compare , Password_Hash } = require('../utils/Password.js');
 
 const Send_Mail  = require('../utils/Send_Mail.js');
 const { Get_Token , Get_OTP } = require('../utils/Auth.js');
 
-
+const Profile_ID = require('../utils/Profile_ID.js');
 
 
 
@@ -270,7 +272,276 @@ const SELLER_ASSISTANT_LOGIN_OTP = async ( req , res , next ) => {
     };
 };
 
+
+const SELLER_ASSISTANT_ADD_SELLER = async ( req , res , next ) => {
+
+    try {
+
+        async function deleteFiles(req) {
+            console.log("Deleting Files");
+            // console.log(req.files);
+            try {
+                let Img = path.join(__dirname, "../Sellers_Files", req.files.Img[0].filename);
+                let Shop_Img = path.join(__dirname, "../Sellers_Files", req.files.Shop_Img[0].filename);
+                await fs.unlinkSync(Img);
+                await fs.unlinkSync(Shop_Img);
+            } catch (err) {
+                next(err);
+            }
+        }
+
+        function File_Validation(req) {   
+            re = 8;
+            let Img = req.files.Img[0];
+            let Shop_Img = req.files.Shop_Img[0];
+            if(Img.size > 5242880){
+                re = 1;
+            }else if(Shop_Img.size > 5242880){
+                re = 1;
+            }else if(Img.mimetype != "image/png" && Img.mimetype != "image/jpeg" && Img.mimetype != "image/jpg" && Img.mimetype != "image/webp" && Img.mimetype != "image/heic"    ){
+                re = 1;
+            }else if(Shop_Img.mimetype != "image/png" && Shop_Img.mimetype != "image/jpeg" && Shop_Img.mimetype != "image/jpg" && Shop_Img.mimetype != "image/webp" && Shop_Img.mimetype != "image/heic"    ){
+                re = 1;
+            }else {
+                return true;
+            }
+            if (re == 1) {
+                return false;
+            }else{
+                return true;
+            }
+        };
+
+        function Valid_Data(body) {
+            let First_Name = body.First_Name;
+            let Last_Name = body.Last_Name;
+            let Mobile_Number = body.Mobile_Number;
+            let Alt_Number = body.Alt_Number;
+            let Age = body.Age;
+            let Gender = body.Gender;
+            let Email = body.Email;
+            let Landmark = body.Landmark;
+            let Locality = body.Locality;
+            let Town_City = body.Town_City;
+            let PIN_Code = body.PIN_Code;
+            let inputState = body.inputState;
+            let inputDistrict = body.inputDistrict;
+            let Country = body.Country;
+            let PAN_ID = body.PAN_ID;
+            let Aadhaar_Number = body.Aadhaar_Number;
+            let Bank_Name = body.Bank_Name;
+            let Beneficiary_Name = body.Beneficiary_Name;
+            let Account_Number = body.Account_Number;
+            let IFSC_Code = body.IFSC_Code;
+            let Shop_Name = body.Shop_Name;
+            let Shop_Contact_Number = body.Shop_Contact_Number;
+            let Worker_Number = body.Worker_Number;
+            let Shop_Category = body.Shop_Category;
+            let Shop_Location = body.Shop_Location;
+            if (First_Name.length < 3 || First_Name == null) {
+                return "Enter correct First name.";
+            }else if (Last_Name.length < 3 || Last_Name == null) {
+                return "Enter correct Last name.";
+            }else if (Mobile_Number.length != 10 || !Valid_Mobile(Mobile_Number)) {
+                return "Enter correct Mobile number.";
+            }else if (Alt_Number.length != 10 || !Valid_Mobile(Alt_Number)) {
+                return "Enter correct Alternative mobile number.";
+            }else if (Age == null || Age == "") {
+                return "Please enter correct age.";
+            }else if (Number(Age) < 16 || Number(Age) > 50) {
+                return "Age must be in between 16 to 50.";
+            }else if (Gender !== "Male" && Gender !== "Female" && Gender !== "Other") {
+                return "Please enter correct gender.";
+            }else if (!Valid_Email(Email)) {
+                return "Please enter correct Email.";
+            }else if (Landmark.length < 3 ) {
+                return "Please enter correct landmark.";
+            }else if (Locality.length < 3 ) {
+                return "Please enter correct Locality.";
+            }else if (Town_City.length < 3 ) {
+                return "Please enter correct Town/City.";
+            }else if (PIN_Code.length != 6 ) {
+                return "Please enter correct PIN code.";
+            }else if (inputState.length < 3 ) {
+                return "Please enter correct State.";
+            }else if (inputDistrict.length < 3 ) {
+                return "Please enter correct District.";
+            }else if (Country.length < 3 ) {
+                return "Please enter correct Country.";
+            }else if (PAN_ID.length < 9 ) {
+                return "Please enter correct PAN number";
+            }else if (Aadhaar_Number.length != 16 ) {
+                return "Please enter correct Aadhaar number";
+            }else if (Bank_Name.length < 5 ) {
+                return "Please enter correct Bank name.";
+            }else if (Beneficiary_Name.length < 5 ) {
+                return "Please enter valid Beneficiary name.";
+            }else if (Account_Number.length < 5 ) {
+                return "Please enter correct Account number.";
+            }else if (IFSC_Code.length < 4 ) {
+                return "Please enter correct IFSC CODE.";
+            }else if (Shop_Name.length < 5 ) {
+                return "Please enter correct Shop Name.";
+            }else if (!Valid_Mobile(Shop_Contact_Number) ) {
+                return "Please enter correct Shop contact number.";
+            }else if (!Valid_Mobile(Worker_Number) ) {
+                return "Please enter correct Worker contact number.";
+            }else if (Shop_Category.length < 5 ) {
+                return "Please enter correct shop Category.";
+            }else if (Shop_Location.length < 5 ) {
+                return "Please enter correct shop location.";
+            }else{
+                return "Valid";
+            };
+        };
+        
+        if (!File_Validation(req)) {
+            deleteFiles(req);
+            return res.status(200).json({Status:false, Message:"Please upload Valid file format."});
+        }
+        const Got_User = req.User;
+        let T = Valid_Data(req.body);
+        if (T == "Valid") {
+            
+            let body = req.body;
+            let D = {
+                First_Name: body.First_Name,
+                Last_Name: body.Last_Name,
+                Mobile_Number: body.Mobile_Number,
+                Alt_Number: body.Alt_Number,
+                Age: body.Age,
+                Gender: body.Gender,
+                Email: body.Email,
+                Landmark: body.Landmark,
+                Locality: body.Locality,
+                Town_City: body.Town_City,
+                PIN_Code: body.PIN_Code,
+                inputState: body.inputState,
+                inputDistrict: body.inputDistrict,
+                Country: body.Country,
+                PAN_ID: body.PAN_ID,
+                Aadhaar_Number: body.Aadhaar_Number,
+                Bank_Name: body.Bank_Name,
+                Beneficiary_Name: body.Beneficiary_Name,
+                Account_Number: body.Account_Number,
+                IFSC_Code: body.IFSC_Code,
+                Shop_Name: body.Shop_Name,
+                Shop_Contact_Number: body.Shop_Contact_Number,
+                Worker_Number: body.Worker_Number,
+                Shop_Category: body.Shop_Category,
+                Shop_Location: body.Shop_Location,
+            };
+            let MMMM = D.Email.trim().toLowerCase();
+            let a = await Sellers.findOne({Email:MMMM});
+            if(!a){
+
+                let _idd;
+                while(true){
+                    _idd = await Profile_ID();
+                    const Usersss = await Sellers.findOne({_id:_idd});
+                    if(!Usersss){
+                        break;
+                    }
+                    
+                }
+
+                let Pass = await Password_Hash(D.Mobile_Number);
+                let Insert = {
+                    _id: _idd,
+                    Basic_Details:{
+                        First_Name:D.First_Name,
+                        Last_Name:D.Last_Name,
+                        Mobile_Number:D.Mobile_Number,
+                        Alt_Number:D.Alt_Number,
+                        Age:D.Age,
+                        Gender:D.Gender,
+                    },
+                    Email:MMMM,
+                    Password:Pass,
+                    Ban:"No",
+                    Verified:"Yes",
+                    Product_List:[],
+                    Documents:{
+                        PAN_Number: D.PAN_ID,
+                        Aadhaar_Number: D.Aadhaar_Number,
+                        IMG: req.files.Img[0].filename,
+                    },
+                    Store:{
+                        Shop_Name: D.Shop_Name,
+                        Shop_Contact_Number: D.Shop_Contact_Number,
+                        Worker_Number: D.Worker_Number,
+                        Shop_Category: D.Shop_Category,
+                        Shop_Photo: req.files.Shop_Img[0].filename,
+                        Total_Reviews:{},
+                        Shop_Location: D.Shop_Location,
+                    },
+                    createdAt: Date(),
+                    Assistant_ID: Got_User._id,
+                    Markets: "",
+                    Bank:{
+                        Bank_Name: D.Bank_Name,
+                        Beneficiary_Name: D.Beneficiary_Name,
+                        Account_Number: D.Account_Number,
+                        IFSC_Code: D.IFSC_Code,
+                    },
+                    Address: {
+                        Landmark: D.Landmark,
+                        Locality: D.Locality,
+                        Town_City: D.Town_City,
+                        PIN_Code: D.PIN_Code,
+                        State: D.inputState,
+                        District: D.inputDistrict,
+                        Country: D.Country,
+                    },
+                    LoggedIn:{
+                        Token:"",
+                        Created: new Date(),
+                    },
+                    Auth:{
+                        Token:"",
+                        OTP:"",
+                    },
+                    Overview:{},
+                    Payment:{},
+                    DayActive:"No",
+                    Payment:[]
+                };
+                let t = new Sellers(Insert);
+                await t.save().then(async NewData=>{
+                    
+                    const List = Got_User.Employee_Work_Done;
+                    List.push({
+                        Desc: `Added new user`,
+                        Ref: NewData._id,
+                        Action:"Added",
+                        More:"",
+                        Date: Date()
+                    });
+                    await Assistants.updateOne({_id:Got_User._id}, {$set:{
+                        Employee_Work_Done: List,
+                    }});
+                    return res.status(200).json({Status:true, Message:"Added Successfully."});
+                    
+                }).catch(async ()=>{
+                    deleteFiles(req);
+                    return res.status(200).json({Status:false, Message:"Unable to create account."});
+                });
+            }else{
+                deleteFiles(req);
+                return res.status(200).json({Status:false, Message:"Already have an account."});
+            };  
+        }else{
+            deleteFiles(req);
+            return res.status(200).json({Status:false, Message:T});
+        };
+    } catch (error) {
+        deleteFiles(req);
+        next(error);
+    }
+};
+
 module.exports = {
     SELLER_ASSISTANT_LOGIN,
     SELLER_ASSISTANT_LOGIN_OTP,
+    SELLER_ASSISTANT_ADD_SELLER,
 };
