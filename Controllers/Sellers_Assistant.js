@@ -112,7 +112,7 @@ const SELLER_ASSISTANT_LOGIN = async (req, res, next) => {
         };
 
         await Search.save().then(() => {
-            res.cookie("SELLER_TOKEN", NewToken, Cookie_Options_OTP);
+            res.cookie("SELLER_OTP", NewToken, Cookie_Options_OTP);
             return res.status(200).json({
                 Status: "Success",
                 Message: "OTP Sent successfully",
