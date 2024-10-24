@@ -206,6 +206,211 @@ const Admin_Assistant_Schema = new Schema({
 
 
 
+const Seller_Schema = new Schema({
+    _id: {
+        type:String,
+    },
+    Basic_Details:{
+        First_Name: {
+            type:String,
+            required: true,
+            trim:true,
+            maxlength: 50,
+        },
+        Last_Name: {
+            type:String,
+            required: true,
+            trim:true,
+            maxlength: 50,
+        },
+        Mobile_Number: {
+            type:String,
+            required: true,
+            trim:true,
+            maxlength: 50,
+        },
+        Alt_Number: {
+            type:String,
+            required: true,
+            trim:true,
+            maxlength: 50,
+        },
+        Age: {
+            type:Number,
+            required: true,
+            min: 15,
+            max: 70,
+        },
+        Gender: {
+            required: true,
+            type: String,
+            trim: true,
+            enum: ['Male', 'Female', 'Other'],
+        },
+    },
+    Email:{
+        unique: true,
+        type: String,
+        required: true,
+        default: "Unauthorized Creation",
+        trim:true,
+        match: /.+\@.+\..+/,
+        lowercase: true,
+        maxlength: 100,
+    },
+    Password:{
+        type: String,
+        required: true,
+        default: "No Password Specified",
+        trim:true,
+    },
+    Ban:{
+        type: String,
+        required: true,
+        default: "No",
+        trim: true,
+        enum: ['Yes', 'No'],
+    },
+    Verified:{
+        type: String,
+        required: true,
+        default: "No",
+        trim: true,
+        enum: ['Yes', 'No'],
+    },
+    Product_List:[
+        {
+            type: String,
+            ref: 'Products',
+        }
+    ],
+    Documents:{
+        PAN_Number:{
+            type:String,
+            required: true,
+            trim:true,
+            maxlength: 10,
+        },
+        Aadhaar_Number:{
+            type:String,
+            required: true,
+            trim:true,
+            maxlength: 16,
+        },
+        IMG:{
+            type:String,
+            required: true,
+        },
+    },
+    Store:{
+        Shop_Name:{
+            type:String,
+            required: true,
+            trim:true,
+            maxlength: 30,
+        },
+        Shop_Contact_Number:{
+            type:String,
+            required: true,
+            trim:true,
+            maxlength: 10,
+        },
+        Worker_Number:{
+            type:String,
+            required: true,
+            trim:true,
+            maxlength: 10,
+        },
+        Shop_Category:{
+            type:String,
+            required: true,
+        },
+        Shop_Photo:{
+            type:String,
+            required: true,
+            trim:true,
+        },
+        Total_Reviews:{type:Object},
+        Shop_Location:{type:Object},
+    },
+    Market:{type:String, default:""},
+    createdAt: {
+        type: Date,
+        immutable: true,
+    },
+    DayActive:{type:String},
+    Assistant_ID:{
+        type: String,
+        ref: 'assistants',
+    },
+    Bank:{
+        Bank_Name:{
+            type:String,
+            required: true,
+        },
+        Beneficiary_Name:{
+            type:String,
+            required: true,
+        },
+        Account_Number:{
+            type:String,
+            required: true,
+        },
+        IFSC_Code:{
+            type:String,
+            required: true,
+        },
+    },
+    Address:{
+        Landmark: {
+            type:String,
+            required: true,
+        },
+        Locality: {
+            type:String,
+            required: true,
+        },
+        Town_City: {
+            type:String,
+            required: true,
+        },
+        PIN_Code: {
+            type:String,
+            required: true,
+        },
+        State: {
+            type:String,
+            required: true,
+        },
+        District: {
+            type:String,
+            required: true,
+        },
+        Country: {
+            type:String,
+            required: true,
+        },
+    },
+    LoggedIn:{type:Object},
+    Auth:{
+        OTP:{
+            type:String,
+        },
+        OTP_Expiry:{
+            type:Date,
+        },
+        Token:{
+            type:String,
+        },
+    },
+    Overview:{type:Object},
+    Payment:{type:Object},
+
+})
+
+
+
+
 const Qrs = new Schema({
     _id: {
         type: String,
@@ -246,6 +451,7 @@ const User = Model("User", UserSchema);
 const Admin_User = Model("Admin", Admin_User_Schema);
 const Assistants = Model("Assistants", Admin_Assistant_Schema);
 const Qr_Codes = Model("Qr_Codes", Qrs);
+const Sellers = Model("sellers", Seller_Schema);
 
 
 
@@ -256,5 +462,6 @@ module.exports = {
     Admin_User,
     Assistants,
     Qr_Codes,
+    Sellers,
 }
 

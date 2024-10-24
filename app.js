@@ -29,7 +29,7 @@ if (NODE_ENV === 'production') {
 // Set the view engine to pug
 app.set('view engine', 'pug');
 app.set('views', [
-    // path.join(__dirname, './Pug/Auth'),
+    path.join(__dirname, './Pug/Sellers'),
     path.join(__dirname, './Pug/Admin'),
     path.join(__dirname, './Pug/Common'),
     // path.join(__dirname, './Pug/Profile'),
@@ -45,6 +45,7 @@ app.get("/", (req, res) => {
 
 // Admin Route
 app.use("/admin", require('./Routes/Admin.js'));
+app.use("/sellers_assistant", require('./Routes/Sellers_Assistant.js'));
 
 // Project URL
 const Project_URL = `${Protocol}://${process.env.PROJECT_DOMAIN}`;
