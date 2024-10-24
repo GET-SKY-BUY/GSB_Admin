@@ -53,7 +53,7 @@ async function Login() {
         }).then(data=>{
             Message(data.Message,"Success");
             setTimeout(() => {
-                window.location.href = "/seller_assistant/login/otp";
+                window.location.href = "/sellers_assistant/login/otp";
             }, 1000);
         
         }).catch(err=>{

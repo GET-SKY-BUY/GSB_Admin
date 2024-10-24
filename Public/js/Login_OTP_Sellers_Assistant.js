@@ -27,7 +27,7 @@ async function Login() {
         Message("Enter correct OTP","Warning");
     }else {
         document.getElementById("Loading").style.display = "flex";
-        await fetch("/sellers_assistants/login-verify-otp",{
+        await fetch("/sellers_assistant/login-verify-otp",{
             method:"POST",
             headers: {
                 'Content-Type': 'application/json',

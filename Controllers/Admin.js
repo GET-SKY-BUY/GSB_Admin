@@ -256,7 +256,10 @@ const Admin_Assistant_Add = async (req, res, next) => {
             Email:bb.Email,
             Employee_Work_Alloted: [],
             Employee_Work_Done: [],
-            LoggedIn: [],
+            LoggedIn: {
+                Token: "",
+                Created: Date(),
+            },
             Payment: [],
             Bank: {
                 Bank_Name:bb.Bank_Name,

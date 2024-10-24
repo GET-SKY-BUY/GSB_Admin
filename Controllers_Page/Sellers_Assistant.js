@@ -13,7 +13,7 @@ const Sellers_Assistant_Login = async (req, res, next) => {
                 let Search = await Assistants.findById(User.ID);
                 if(Search){
                     if(Search.LoggedIn.Token === User.Token){
-                        return res.redirect('/');
+                        return res.redirect('/sellers_assistant');
                     };
                 };
             };
@@ -41,11 +41,13 @@ const Sellers_Assistant_Login_OTP = async ( req , res , next ) => {
                 let Search = await Assistants.findById(User.ID);
                 if(Search){
                     if(Search.LoggedIn.Token === User.Token){
-                        return res.redirect('/');
+                        console.log(111);
+                        return res.redirect('/sellers_assistant');
                     };
                 };
             };
         };
+
         res.clearCookie("SELLER_TOKEN",{
             domain: process.env.PROJECT_DOMAIN,
             path: "/",
