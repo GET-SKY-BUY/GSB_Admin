@@ -391,7 +391,14 @@ const Seller_Schema = new Schema({
             required: true,
         },
     },
-    LoggedIn:{type:Object},
+    LoggedIn:{
+        Token:{
+            type:String,
+        },
+        Created:{
+            type:Date,
+        },
+    },
     Auth:{
         OTP:{
             type:String,

@@ -6,8 +6,6 @@ const { Password_Hash } = require("../utils/Password.js");
 const { Valid_Email, Valid_Password } = require('../utils/Validations.js');
 const Send_Mail = require('../utils/Send_Mail.js');
 const { Get_Token , Get_OTP } = require('../utils/Auth.js');
-const { rmSync } = require('fs');
-
 async function call(){
     return await Admin_User.findById("GSB_ADMIN_RICK");
 }
