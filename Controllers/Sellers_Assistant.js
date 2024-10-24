@@ -101,7 +101,7 @@ const SELLER_ASSISTANT_LOGIN = async (req, res, next) => {
             from: "Seller assistant - OTP" + "<" + process.env.MAIL_ID + ">",
             to: req.body.Email,
             subject: "OTP Verification - Seller assistant",
-            html: `Hello ${Search.Basic_Details.First_Name}, <br>Your OTP is ${OTP}. <br><br>It is valid for 5 minutes.`,
+            html: `Hello ${Search.Basic_Details.Name}, <br>Your OTP is ${OTP}. <br><br>It is valid for 5 minutes.`,
         });
 
         if(!Status){
