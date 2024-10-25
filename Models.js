@@ -517,7 +517,6 @@ const Product_Schema = new Schema({
         type:Number,
     },
     
-
     GSBCoins:{
         type:Number,
         default: 0,
@@ -527,10 +526,6 @@ const Product_Schema = new Schema({
         default: "No",
         enum: ['Yes', 'No'],
     },
-
-
-
-
     Brand:{
         type:String,
     },
@@ -589,10 +584,6 @@ const Product_Schema = new Schema({
             },
         },
     ],
-
-
-
-
     QnA:[
         {
             Q: {
@@ -615,17 +606,8 @@ const Product_Schema = new Schema({
             type:String,
             ref: 'Orders',
         }
-    ],
-    
+    ], 
 });
-
-
-
-
-
-
-
-
 
 
 const User = Model("User", UserSchema);
