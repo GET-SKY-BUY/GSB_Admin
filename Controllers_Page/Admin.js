@@ -185,6 +185,27 @@ const ADMIN_ASSISTANT_UPDATE = async (req, res, next) => {
     };
 };
 
+const ADMIN_LOGOUT = async (req, res, next) => {
+    try{
+        const Got_User = await call();
+
+        Got_User.Token = "";
+        Got_User.save().then(() => {
+            res.clearCookie("ADMIN_TOKEN",{
+                domain: process.env.PROJECT_DOMAIN,
+                path: "/",
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                signed: true,
+                sameSite: "strict",
+            });
+            return res.status(400).redirect("/admin/login");
+        });
+    }catch (error) {
+        next(error);
+    };
+};
+
 module.exports = {
     GET_LOGIN_PAGE,
     GET_LOGIN_OTP_PAGE,
@@ -192,4 +213,5 @@ module.exports = {
     ADMIN_ASSISTANT_LIST,
     ADMIN_ASSISTANT_SEARCH,
     ADMIN_ASSISTANT_UPDATE,
+    ADMIN_LOGOUT,
 };
