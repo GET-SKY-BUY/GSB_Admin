@@ -754,10 +754,296 @@ const SELLER_ASSISTANT_CHANGE_PASSWORD = async ( req , res , next ) => {
     };
 };
 
+const SELLER_ASSISTANT_SEARCH = async ( req , res , next ) => {
+    try {
+
+        const A = req.User;
+        const Type = req.body.Type;
+        const Value = req.body.Value;
+
+        if (Type && Value) {
+            if (Type == "ID") {
+
+
+                let Data = await Sellers.find({_id:Value});
+                if(Data.length == 0){
+                    res.status(400).json({Success:"Failed", Message: "No seller found." , Sellers:"No seller found."});
+                }else{
+                    let POP = "";
+                    Data.forEach(element => {
+                        POP = `
+                            <tr>
+                                <td><a href="/sellers_assistant/update/${element._id}">${element._id}</a></td>
+                                <td>${element.Basic_Details.Mobile_Number}</td>
+                                <td>${element.Store.Shop_Name}</td>
+                                <td>${element.DayActive + "/" + element.Ban }</td>
+                            </tr>
+                        `+ POP;
+                    });
+                    
+                    const List = A.Employee_Work_Done;
+                    List.push({
+                        Desc: `Searched for a profile.`,
+                        Ref: Data[0]._id,
+                        Action:"Searched",
+                        More:"ID",
+                        Date: Date()
+                    });
+                    await Assistants.updateOne({_id:A._id}, {$set:{
+                        Employee_Work_Done: List,
+                    }}).then(()=>{
+                        res.status(200).json({Success:"Success",Sellers:POP , Message:"Success"});
+                        
+                    }).catch(()=>{
+                        res.status(400).json({Success:"Failed",Sellers:"Internal server error." , Message: "Internal server error"});
+                        
+                    });
+                };
+                
+                
+            }else if(Type == "MOB"){
+
+                let Data = await Sellers.find({"Basic_Details.Mobile_Number": Value});
+                // console.log(Data);
+
+                if(Data.length == 0){
+                    res.status(500).json({Success:"Failed",Sellers:"No seller found.",Message:"No seller found."});
+                }else{
+                    let POP = "";
+                    Data.forEach(element => {
+                        POP = `
+                            <tr>
+                                <td><a target="__blank" href="/sellers_assistant/update/${element._id}">${element._id}</a></td>
+                                <td>${element.Basic_Details.Mobile_Number}</td>
+                                <td>${element.Store.Shop_Name}</td>
+                                <td>${element.DayActive + "/" + element.Ban }</td>
+                            </tr>
+                        `+ POP;
+                    });
+                    
+                    const List = A.Employee_Work_Done;
+                    List.push({
+                        Desc: `Searched for a profile.`,
+                        Ref: Data[0]._id,
+                        Action:"Searched",
+                        More:"MOB",
+                        Date: Date()
+                    });
+                    await Assistants.updateOne({_id:A._id}, {$set:{
+                        Employee_Work_Done: List,
+                    }}).then(()=>{
+                        res.status(200).json({Success:"Success",Sellers:POP,Message:"Success"});
+                    }).catch(()=>{
+                        res.status(500).json({Success:"Failed",Sellers:"Internal server error." , Message:"Internal server error"});
+                    });
+                    
+                };
+                
+            }else if(Type == "Email"){
+
+                let Data = await Sellers.find({Email:Value});
+                if(Data.length == 0){
+                    res.status(500).json({Success:"Failed",Sellers:"No seller found." , Message:"No seller found."});
+                }else{
+                    let POP = "";
+                    Data.forEach(element => {
+                        POP = `
+                            <tr>
+                                <td><a href="/sellers_assistant/update/${element._id}">${element._id}</a></td>
+                                <td>${element.Basic_Details.Mobile_Number}</td>
+                                <td>${element.Store.Shop_Name}</td>
+                                <td>${element.DayActive + "/" + element.Ban }</td>
+                            </tr>
+                        `+ POP;
+                    });
+                    
+                    const List = A.Employee_Work_Done;
+                    List.push({
+                        Desc: `Searched for a profile.`,
+                        Ref: Data[0]._id,
+                        Action:"Searched",
+                        More:"Email",
+                        Date: Date()
+                    });
+                    await Assistants.updateOne({_id:A._id}, {$set:{
+                        Employee_Work_Done: List,
+                    }}).then(()=>{
+                        res.status(200).json({Success:"Success",Message:"Success",Sellers:POP});
+                    }).catch(()=>{
+                        res.status(500).json({Success:"Failed", Message:"Internal server error",Sellers:"Internal server error."});
+                    });
+                };
+
+
+            }else{
+                res.status(400).json({Success:"Failed", Message:"Provide mobile number or ID or Email." ,Sellers:"Provide mobile number or ID or Email."});
+
+            };
+
+        }else{
+            res.status(400).json({Success:"Failed", Message:"Provide mobile number or ID or Email." ,Sellers:"Provide mobile number or ID or Email."});
+            
+        };
+
+    } catch (error) {
+        next(error);
+    };
+};
+
+
+const SELLER_ASSISTANT_SEARCH_SHOP_STATUS = async ( req , res , next ) => {
+    try {
+        const Type = req.body.Type;
+        const Value = req.body.Value;
+        const Status = req.body.Status;
+        const A = req.User;
+        if (Type && Value && Status) {
+            if (Type == "ID") {
+                let Data = await Sellers.find({_id:Value});
+                if(Data.length == 0){
+                    res.status(400).json({Success:"Failed",Sellers:"No seller found.", Message: "No seller found."});
+                }else{
+
+                    await Sellers.updateOne({_id:Data[0]._id}, {$set:{DayActive:Status}}).then(async ()=>{
+
+                        
+                        const List = A.Employee_Work_Done;
+                        List.push({
+                            Desc: `Shop status changed`,
+                            Ref: Data[0]._id,
+                            Action:"Changed",
+                            More:Status,
+                            Date: Date()
+                        });
+                        await Assistants.updateOne({_id:A._id}, {$set:{
+                            
+                            Employee_Work_Done: List,
+                        }}).then(()=>{
+                            let POP = "";
+                            Data.forEach(element => {
+                                POP = `
+                                    <tr>
+                                        <td><a href="/sellers_assistant/update/${element._id}">${element._id}</a></td>
+                                        <td>${element.Basic_Details.Mobile_Number}</td>
+                                        <td>${element.Store.Shop_Name}</td>
+                                        <td>${Status + "/" + element.Ban }</td>
+                                    </tr>
+                                `+ POP;
+                            });
+                            res.status(200).json({Success:"Success",Message:"Success",Sellers:POP});
+                        });
+                    }).catch(()=>{
+                        res.status(500).json({Success:"Failed",Message:"Internal server error",Sellers:"Internal server error."});
+                        
+                    });
+
+                };
+                
+                
+            }else if(Type == "MOB"){
+
+                let Data = await Sellers.find({"Basic_Details.Mobile_Number": Value});
+                // console.log(Data);
+
+                if(Data.length == 0){
+                    res.status(400).json({Success:"Failed",Sellers:"No seller found.", Message: "No seller found."});
+                }else{
+
+                    await Sellers.updateOne({_id:Data[0]._id}, {$set:{DayActive:Status}}).then(async ()=>{
+
+                        
+                        const List = A.Employee_Work_Done;
+                        List.push({
+                            Desc: `Shop status changed`,
+                            Ref: Data[0]._id,
+                            Action:"Changed",
+                            More:Status,
+                            Date: Date()
+                        });
+                        await Assistants.updateOne({_id:A._id}, {$set:{
+                            
+                            Employee_Work_Done: List,
+                        }}).then(()=>{
+                            let POP = "";
+                            Data.forEach(element => {
+                                POP = `
+                                    <tr>
+                                        <td><a href="/sellers_assistant/update/${element._id}">${element._id}</a></td>
+                                        <td>${element.Basic_Details.Mobile_Number}</td>
+                                        <td>${element.Store.Shop_Name}</td>
+                                        <td>${Status + "/" + element.Ban }</td>
+                                    </tr>
+                                `+ POP;
+                            });
+                            res.status(200).json({Success:"Success",Message:"Success",Sellers:POP});
+                        });
+                    }).catch(()=>{
+                        res.status(500).json({Success:"Failed",Message:"Internal server error",Sellers:"Internal server error."});
+                        
+                    });
+                };
+                
+            }else if(Type == "Email"){
+
+                let Data = await Sellers.find({Email:Value});
+                if(Data.length == 0){
+                    res.status(400).json({Success:"Failed",Sellers:"No seller found.", Message: "No seller found."});
+                }else{
+
+                    await Sellers.updateOne({_id:Data[0]._id}, {$set:{DayActive:Status}}).then(async ()=>{
+
+                        
+                        const List = A.Employee_Work_Done;
+                        List.push({
+                            Desc: `Shop status changed`,
+                            Ref: Data[0]._id,
+                            Action:"Changed",
+                            More:Status,
+                            Date: Date()
+                        });
+                        await Assistants.updateOne({_id:A._id}, {$set:{
+                            
+                            Employee_Work_Done: List,
+                        }}).then(()=>{
+                            let POP = "";
+                            Data.forEach(element => {
+                                POP = `
+                                    <tr>
+                                        <td><a href="/sellers_assistant/update/${element._id}">${element._id}</a></td>
+                                        <td>${element.Basic_Details.Mobile_Number}</td>
+                                        <td>${element.Store.Shop_Name}</td>
+                                        <td>${Status + "/" + element.Ban }</td>
+                                    </tr>
+                                `+ POP;
+                            });
+                            res.status(200).json({Success:"Success",Message:"Success",Sellers:POP});
+                        });
+                    }).catch(()=>{
+                        res.status(500).json({Success:"Failed",Message:"Internal server error",Sellers:"Internal server error."});
+                        
+                    });
+                };
+
+
+            }else{
+                res.status(400).json({Success:"Failed", Message:"Provide mobile number or ID or Email.",Sellers:"Provide mobile number or ID or Email."});
+
+            };
+
+        }else{
+            res.status(400).json({Success:"Failed", Message:"Provide mobile number or ID or Email.",Sellers:"Provide mobile number or ID or Email."});
+            
+        };
+    } catch (error){
+        next(error);
+    };
+};
 module.exports = {
     SELLER_ASSISTANT_LOGIN,
     SELLER_ASSISTANT_LOGIN_OTP,
     SELLER_ASSISTANT_ADD_SELLER,
     SELLER_ASSISTANT_UPDATE,
     SELLER_ASSISTANT_CHANGE_PASSWORD,
+    SELLER_ASSISTANT_SEARCH,
+    SELLER_ASSISTANT_SEARCH_SHOP_STATUS,
 };

@@ -11,8 +11,8 @@ Sellers_Assistant.use(bodyParser.urlencoded({ extended: true }));
 Sellers_Assistant.use(cookieParser(process.env.COOKIE_SECRET));
 
 
-const { Sellers_Assistant_Login , Sellers_Assistant_Login_OTP , Seller_Assistant_Home , Seller_Assistant_List , Seller_Assistant_Update , Seller_Assistant_Profile } = require('../Controllers_Page/Sellers_Assistant.js');
-const { SELLER_ASSISTANT_LOGIN , SELLER_ASSISTANT_LOGIN_OTP , SELLER_ASSISTANT_ADD_SELLER , SELLER_ASSISTANT_UPDATE , SELLER_ASSISTANT_CHANGE_PASSWORD } = require('../Controllers/Sellers_Assistant.js');
+const { Sellers_Assistant_Login , Sellers_Assistant_Login_OTP , Seller_Assistant_Home , Seller_Assistant_List , Seller_Assistant_Update , Seller_Assistant_Profile , Seller_Assistant_Search } = require('../Controllers_Page/Sellers_Assistant.js');
+const { SELLER_ASSISTANT_LOGIN , SELLER_ASSISTANT_LOGIN_OTP , SELLER_ASSISTANT_ADD_SELLER , SELLER_ASSISTANT_UPDATE , SELLER_ASSISTANT_CHANGE_PASSWORD , SELLER_ASSISTANT_SEARCH , SELLER_ASSISTANT_SEARCH_SHOP_STATUS } = require('../Controllers/Sellers_Assistant.js');
 
 const Seller_Verify_User_Page = require('../utils/Seller_Verify_User_Page.js');
 const Seller_Verify_User_API = require('../utils/Seller_Verify_User_API.js');
@@ -29,6 +29,9 @@ Sellers_Assistant.get("/update/:ID", Seller_Verify_User_Page , Seller_Assistant_
 Sellers_Assistant.put("/update", Seller_Verify_User_API, SELLER_ASSISTANT_UPDATE  );
 Sellers_Assistant.get("/profile", Seller_Verify_User_Page , Seller_Assistant_Profile  );
 Sellers_Assistant.put("/change_password", Seller_Verify_User_API , SELLER_ASSISTANT_CHANGE_PASSWORD  );
+Sellers_Assistant.get("/search", Seller_Verify_User_Page , Seller_Assistant_Search  );
+Sellers_Assistant.post("/search", Seller_Verify_User_API , SELLER_ASSISTANT_SEARCH );
+Sellers_Assistant.put("/shop/status", Seller_Verify_User_API , SELLER_ASSISTANT_SEARCH_SHOP_STATUS );
 
 
 Sellers_Assistant.get("/update", async (req, res) => {

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - Seller Assistant | GET SKY BUY</title>
+    
+    <meta name="robots" content="nofollow, noindex">
+    <link rel="shortcut icon" href="/files/img/favicon.ico" type="image/x-icon">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <link rel="stylesheet" href="/files/css/Sellers_Assistant_List.css">
+</head>
+<body>
+
+
+    
+
+    include Seller_Header.pug
+
+
+    <main>
+        <div class="Center_Box">
+            <div class="Center_Box_Container">
+                <h1>Seller Search panel</h1>
+
+                <div>
+
+                    <select id="Type"  style="padding: 7px 12px; outline: none; border: 1px solid #aaa;">
+                        <option value="ID">ID</option>
+                        <option value="Email">Email</option>
+                        <option value="MOB">MOB</option>
+                    </select>
+                    <input id="Value" type="text" placeholder="Value" style="padding: 7px 12px; outline: none; border: 1px solid #aaa;">
+                    <button id="Find" onclick="Find();" type="button">Find</button>
+                </div>
+
+                <div class="Table">
+                    <table>
+                        <tr class="Headd">
+                            <th>ID</th>
+                            <th>Mobile</th>
+                            <th>Shop Name</th>
+                            <th>Open/Active</th>
+                        </tr>
+                        <tbody id="Dataa"></tbody>
+                        
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+
+    
+    
+    <script src="/files/js/Message.js"></script>
+
+    <script src="/files/js/Sellers_Assistant_Search.js"></script>
+</body>
+</html>

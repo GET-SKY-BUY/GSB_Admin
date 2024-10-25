@@ -186,8 +186,19 @@ const Seller_Assistant_Profile = async ( req , res , next ) => {
         res.status(200).render("Sellers_Assistant_Profile", send);
     } catch (error) {
         next(error);
+    };
+};
+
+
+const Seller_Assistant_Search = async ( req , res , next ) => {
+    try {
+        const Got_User = req.User;
+        return res.status(200).render("Sellers_Assistant_Search");
+    } catch ( err ) {
+        next(err);
     }
 };
+
 
 
 module.exports = {
@@ -197,4 +208,5 @@ module.exports = {
     Seller_Assistant_List,
     Seller_Assistant_Update,
     Seller_Assistant_Profile,
+    Seller_Assistant_Search,
 };
