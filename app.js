@@ -46,6 +46,7 @@ app.get("/", (req, res) => {
 // Admin Route
 app.use("/admin", require('./Routes/Admin.js'));
 app.use("/sellers_assistant", require('./Routes/Sellers_Assistant.js'));
+app.use("/sellers", require('./Routes/Sellers.js'));
 
 // Project URL
 const Project_URL = `${Protocol}://${process.env.PROJECT_DOMAIN}`;
