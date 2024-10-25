@@ -1,0 +1,64 @@
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+}
+
+.Center_Box {
+    width: 80%;
+    height: 100%;
+    padding: 20px;
+    background-color: #d9d9d9d4;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.Center_Box_Container {
+    width: 100%;
+    /* display: flex; */
+    
+}
+
+.Table {
+    width: 100%;
+    
+}
+.Table table{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #656565;
+    font-size: 14px;
+}
+.Table table tr{
+    border: 1px solid #656565;
+}
+.Table table .Headd{
+    background-color: #fdfdfd;
+}
+.Table table .Headd th{
+    font-size: 14px;
+    padding: 6px 10px;
+    border: 1px solid #656565;
+    
+}
+.Table table tr td{
+    font-size: 12px;
+    padding: 6px 10px;
+    text-align: center;
+    border: 1px solid #656565;
+    /* background-color: rgb(216, 216, 216); */
+}
+.Table table tr:nth-child(even){
+    padding: 6px 10px;
+    text-align: center;
+    border: 1px solid #656565;
+    background-color: rgb(216, 216, 216);
+}
+.Table table tr:nth-child(odd){
+    padding: 6px 10px;
+    background-color: rgb(228, 228, 228);
+    text-align: center;
+    border: 1px solid #656565;
+}

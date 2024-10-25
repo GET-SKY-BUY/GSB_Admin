@@ -73,8 +73,31 @@ const Seller_Assistant_Home = async ( req , res , next ) => {
 };
 
 
+const Seller_Assistant_List = async ( req , res , next ) => {
+    try {
+        const Got_User = req.User;
+
+        let Data = await Sellers.find();
+        let POP = "";
+        Data.forEach(element => {
+            POP = `
+                <tr>
+                    <td><a href="/seller/update/${element._id}">${element._id}</a></td>
+                    <td>${element.Basic_Details.Mobile_Number}</td>
+                    <td>${element.Store.Shop_Name}</td>
+                </tr>
+            `+ POP;
+        });
+        res.status(200).render("Sellers_Assistant_List",{Sellers:POP});
+    } catch (error) {
+        next(error);
+    };
+}
+
+
 module.exports = {
     Sellers_Assistant_Login,
     Sellers_Assistant_Login_OTP,
     Seller_Assistant_Home,
+    Seller_Assistant_List,
 };
