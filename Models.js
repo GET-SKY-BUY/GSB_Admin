@@ -457,6 +457,173 @@ const Qrs = new Schema({
 
 
 
+const Product_Schema = new Schema({
+    _id: {
+        type: String,
+    },
+    URL: {
+        type: String,
+        required: true,
+        unique: true,
+        
+    },
+    Verified:{
+        type:String,
+        required: true,
+        default: "No",
+        trim: true,
+        enum: ['Yes', 'No'],
+    },
+    Seller_ID:{
+        type: String,
+        ref: 'sellers',
+    },
+    Assistant_ID:{
+        type:String,
+        ref: 'assistants',
+    },
+    Title:{
+        type:String,
+        required: true,
+        trim:true,
+    },
+    Description:{
+        type:String,
+        required: true,
+        trim:true,
+    },
+    
+    Categories:{
+        type:String,
+    },
+    
+    Age_Group:{
+        type:String,
+    },
+    
+    Occasion:{
+        type:String,
+    },
+    
+    Gender:{
+        type:String,
+    },
+    
+    Delivery:{
+        type:Number,
+    },
+    
+    Quantity:{
+        type:Number,
+    },
+    
+
+    GSBCoins:{
+        type:Number,
+        default: 0,
+    },
+    COD:{
+        type:String,
+        default: "No",
+        enum: ['Yes', 'No'],
+    },
+
+
+
+
+    Brand:{
+        type:String,
+    },
+    Keywords:{
+        type:Object,
+    },
+    
+    Price: {
+        MRP: {
+            type:Number,
+        },
+        Selling_Price:{
+            type:Number,
+        },
+        Our_Price: {
+            type:Number,
+        },
+    },
+
+    Table:{type:Object},
+    Image_Videos:{
+        Image:{
+            type:Object,
+        },
+        Video:{
+            type:Object,
+        },
+    },
+    Reviews:[
+        {
+            Title: {
+                type:String,
+            },
+            Description: {
+                type:String,
+            },
+            Rating:{
+                type:Number,
+            },
+            Date:{
+                type:Date,
+            },
+            Verified:{
+                type:String,
+                default: "No",
+                trim: true,
+                enum: ['Yes', 'No'],
+            },
+            ID: {
+                type:String,
+                ref: "Users"
+            },
+            Order_ID: {
+                type:String,
+                ref: "Orders"
+            },
+        },
+    ],
+
+
+
+
+    QnA:[
+        {
+            Q: {
+                type:String,
+            },
+            A:{
+                type:String,
+            },
+            Date: {
+                type:Date,
+            },
+            ID: {
+                type:String,
+                ref: "Users"
+            },
+        }
+    ],
+    Orders:[
+        {
+            type:String,
+            ref: 'Orders',
+        }
+    ],
+    
+});
+
+
+
+
+
+
 
 
 
@@ -465,7 +632,8 @@ const User = Model("User", UserSchema);
 const Admin_User = Model("Admin", Admin_User_Schema);
 const Assistants = Model("Assistants", Admin_Assistant_Schema);
 const Qr_Codes = Model("Qr_Codes", Qrs);
-const Sellers = Model("sellers", Seller_Schema);
+const Sellers = Model("Sellers", Seller_Schema);
+const Products = Model("Products", Product_Schema);
 
 
 
@@ -477,5 +645,6 @@ module.exports = {
     Assistants,
     Qr_Codes,
     Sellers,
+    Products,
 }
 

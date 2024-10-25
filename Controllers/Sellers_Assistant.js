@@ -445,7 +445,7 @@ const SELLER_ASSISTANT_ADD_SELLER = async ( req , res , next ) => {
                     
                 }
 
-                let Pass = await Password_Hash(D.Mobile_Number);
+                let Pass = await Password_Hash("GSB-"+D.Mobile_Number);
                 let Insert = {
                     _id: _idd,
                     Basic_Details:{
@@ -506,6 +506,19 @@ const SELLER_ASSISTANT_ADD_SELLER = async ( req , res , next ) => {
                     DayActive:"No",
                     Payment:[]
                 };
+
+                let Sta = await Send_Mail({
+                    from: "Account Created - GSB Store" + "<" + process.env.MAIL_ID + ">",
+                    to: MMMM,
+                    subject: "Account Created - GSB Store",
+                    html: `Hello ${D.First_Name}, <br>Your account has been created successfully. <br> Your login credentials are: <br>ID: ${_idd}<br> Email: ${MMMM} <br> Password: ${"GSB-"+D.Mobile_Number} <br> Please login to your account and change your password.`,
+                    
+                });
+                if(!Sta){
+                    deleteFiles(req);
+                    return res.status(500).json({Status:"Failed", Message:"Unable to send mail."});
+                };
+
                 let t = new Sellers(Insert);
                 await t.save().then(async NewData=>{
                     
