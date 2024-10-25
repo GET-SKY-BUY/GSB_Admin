@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update - Seller Assistant | GET SKY BUY</title>
+    
+    <meta name="robots" content="nofollow, noindex">
+    <link rel="shortcut icon" href="/files/img/favicon.ico" type="image/x-icon">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+     
+    <link rel="stylesheet" href="/files/css/Sellers_Assistant_Update.css">
+</head>
+<body>
+
+
+    
+
+    include Seller_Header.pug
+
+    <main class="main">
+
+        <div class="centerMain">
+            <div class="BOxx">
+                <h2>+ Add new Seller</h2>
+                <form id="Form">
+                    <fieldset>
+                        <legend>Basic Details</legend>
+                        
+                        
+                        
+                        <div class="Div_Input">
+                            <input value="#{Email}" id="Email" class="InputText" title="Email" type="text" spellcheck="false" autocomplete="off" placeholder=" " disabled>
+                            <label class="Div_Input_Label" id="Email_Label" for="Email">Email</label>
+                        </div>
+                        
+                        <div class="Div_Input">
+                            <input value="#{ID}" id="ID" class="InputText" title="ID" type="text" spellcheck="false" autocomplete="off" placeholder=" " disabled>
+                            <label class="Div_Input_Label" id="ID_Label" for="ID">ID</label>
+                        </div>
+                        
+                        
+                        <div class="Div_Input">
+                            <input value="#{First_Name}" id="First_Name" class="InputText" title="First_Name" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="First_Name_Label" for="First_Name">First name</label>
+                        </div>
+                        
+                        
+                        
+                        
+                        <div class="Div_Input">
+                            <input value="#{Last_Name}" id="Last_Name" class="InputText" title="Last_Name" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="Last_Name_Label" for="Last_Name">Last name</label>
+                        </div>
+                        
+                        <div class="Div_Input">
+                            <input value="#{Mobile_Number}" id="Mobile_Number" class="InputText" title="Mobile_Number" type="text" spellcheck="false" autocomplete="off" placeholder=" " maxlength="10">
+                            <label class="Div_Input_Label" id="Mobile_Number_Label" for="Mobile_Number">Mobile Number</label>
+                        </div>
+                        
+                        <div class="Div_Input">
+                            <input value="#{Alt_Number}" id="Alt_Number" class="InputText" title="Alt Number" type="text" spellcheck="false" autocomplete="off" placeholder=" " maxlength="10">
+                            <label class="Div_Input_Label" id="Alt_Number_Label" for="Alt_Number">Alt Number</label>
+                        </div>
+
+                        <div class="Div_Input">
+                            <input value="#{Age}" id="Age" class="InputText" title="Age" type="number" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="Age_Label" for="Age">Age</label>
+                        </div>
+
+                        <div class="Div_Input">
+                            <select value="#{Gender}" id="Gender" class="InputText" title="Gender">
+                                | !{Gender}
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <label class="Div_Input_Label" id="Gender_Label" for="Gender">Gender</label>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </fieldset>
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <fieldset>
+                        <legend>Home Address</legend>
+                        
+                        
+
+                        
+                        <div class="Div_Input">
+                            <input value="#{Landmark}" id="Landmark" class="InputText" title="Landmark" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="Landmark_Label" for="Landmark">Landmark</label>
+                        </div>
+                        <div class="Div_Input">
+                            <input value="#{Locality}" id="Locality" class="InputText" title="Locality" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="Locality_Label" for="Locality">Locality</label>
+                        </div>
+
+                        <div class="Div_Input">
+                            <input value="#{Town_City}" id="Town_City" class="InputText" title="Town_City" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="Town_City_Label" for="Town_City">Town/City</label>
+                        </div>
+                        
+                        <div class="Div_Input">
+                            <input value="#{PIN_Code}" id="PIN_Code" class="InputText" title="PIN_Code" type="text" maxlength="6" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="PIN_Code_Label" for="PIN_Code">PIN</label>
+                        </div>
+
+
+
+
+
+                        
+                        
+                        
+                        <div class="Div_Input">
+                            <select class="InputText" id="inputState" onchange="changedState();">
+                                | !{State}
+                                <option value="Andra Pradesh">Andra Pradesh</option>
+                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                <option value="Assam">Assam</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                <option value="Goa">Goa</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Madya Pradesh">Madya Pradesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Manipur">Manipur</option>
+                                <option value="Meghalaya">Meghalaya</option>
+                                <option value="Mizoram">Mizoram</option>
+                                <option value="Nagaland">Nagaland</option>
+                                <option value="Orissa">Orissa</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Sikkim">Sikkim</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Telangana">Telangana</option>
+                                <option value="Tripura">Tripura</option>
+                                <option value="Uttaranchal">Uttaranchal</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="West Bengal">West Bengal</option>
+                                <option disabled style="background-color:#aaa; color:#fff">UNION Territories</option>
+                                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                <option value="Chandigarh">Chandigarh</option>
+                                <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                <option value="Daman and Diu">Daman and Diu</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Lakshadeep">Lakshadeep</option>
+                                <option value="Pondicherry">Pondicherry</option>
+                            </select>
+                        </div>
+                        
+                        <div class="Div_Input">
+                            <select class="InputText" id="inputDistrict">
+                                | !{District}
+                            </select>
+                        </div>
+                        
+                        
+                        <div class="Div_Input">
+                            <select class="InputText" id="Country">
+                                | !{Country}
+                                <option value="India">India</option>
+                            </select>
+                        </div>
+                        
+
+
+
+                    </fieldset>
+                    <fieldset>
+                        <legend>Documents</legend>
+
+                        <div class="Div_Input">
+                            <input value="#{PAN_Number}" id="PAN_ID" class="InputText" title="PAN_ID" type="text" spellcheck="false" autocomplete="off" placeholder=" " disabled>
+                            <label class="Div_Input_Label" id="PAN_ID_Label" for="PAN_ID">PAN ID</label>
+                        </div>
+
+                        <div class="Div_Input">
+                            <input value="#{Aadhaar_Number}" id="Aadhaar_Number" class="InputText" title="Aadhaar_Number" type="text" spellcheck="false" autocomplete="off" placeholder=" " disabled>
+                            <label class="Div_Input_Label" id="Aadhaar_Number_Label" for="Aadhaar_Number">Aadhaar Number</label>
+                        </div>
+
+                        
+                        
+                        <div class="Div_Input">
+                            <a href="#{IMG}">Owner img</a>
+                        
+                        </div>
+
+
+
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Bank Account</legend>
+                        
+
+                        
+                        <div class="Div_Input">
+                            <input value="#{Bank_Name}" id="Bank_Name" class="InputText" title="Bank_Name" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="Bank_Name_Label" for="Bank_Name">Bank Name</label>
+                        </div>
+
+
+                        <div class="Div_Input">
+                            <input value="#{Beneficiary_Name}" id="Beneficiary_Name" class="InputText" title="Beneficiary_Name" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="Beneficiary_Name_Label" for="Beneficiary_Name">Beneficiary Name</label>
+                        </div>
+
+
+                        <div class="Div_Input">
+                            <input value="#{Account_Number}" id="Account_Number" class="InputText" title="Account_Number" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="Account_Number_Label" for="Account_Number">Account Number</label>
+                        </div>
+                        <div class="Div_Input">
+                            <input value="#{IFSC_Code}" id="IFSC_Code" class="InputText" title="IFSC_Code" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="IFSC_Code_Label" for="IFSC_Code">IFSC Code</label>
+                        </div>
+
+
+
+
+                    </fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+                    <fieldset>
+                        <legend>Shop Details</legend>
+
+
+                        <div class="Div_Input">
+                            <input value="#{Shop_Name}" id="Shop_Name" class="InputText" title="Shop_Name" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="Shop_Name_Label" for="Shop_Name">Shop Name</label>
+                        </div>
+                        <div class="Div_Input">
+                            <input value="#{Shop_Contact_Number}" id="Shop_Contact_Number" class="InputText" title="Shop_Contact_Number" type="text" spellcheck="false" autocomplete="off" placeholder=" " maxlength="10">
+                            <label class="Div_Input_Label" id="Shop_Contact_Number_Label" for="Shop_Contact_Number">Shop Contact Number</label>
+                        </div>
+                        <div class="Div_Input">
+                            <input value="#{Worker_Number}" id="Worker_Number" class="InputText" title="Worker_Number" type="text" spellcheck="false" autocomplete="off" placeholder=" " maxlength="10">
+                            <label class="Div_Input_Label" id="Worker_Number_Label" for="Worker_Number">Worker_Number</label>
+                        </div>
+                        <div class="Div_Input">
+                            <input value="#{Shop_Category}" id="Shop_Category" class="InputText" title="Shop_Category" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="Shop_Category_Label" for="Shop_Category">Shop Category</label>
+                        </div>
+                        <div class="Div_Input">
+                            <input value="#{Shop_Location}" id="Shop_Location" class="InputText" title="Shop_Location" type="text" spellcheck="false" autocomplete="off" placeholder=" ">
+                            <label class="Div_Input_Label" id="Shop_Location_Label" for="Shop_Location">Shop Location</label>
+                        </div>
+
+                        
+                        <div class="Div_Input">
+                            <a href="#{Shop_IMG}">Shop Img</a>
+                        </div>
+
+                    </fieldset>
+
+                    <button id="UpdateBTN" type="button" onclick="a()">Update</button>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </form>
+            </div>
+            
+        </div>
+    </main>
+
+
+
+    
+    
+    <script src="/files/js/Message.js"></script>
+
+    <script src="/files/js/Sellers_Assistant_Update.js"></script>
+</body>
+</html>

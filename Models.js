@@ -348,7 +348,7 @@ const Seller_Schema = new Schema({
     DayActive:{type:String},
     Assistant_ID:{
         type: String,
-        ref: 'assistants',
+        ref: 'Assistants',
     },
     Bank:{
         Bank_Name:{

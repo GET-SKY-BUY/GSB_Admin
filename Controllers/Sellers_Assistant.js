@@ -524,15 +524,15 @@ const SELLER_ASSISTANT_ADD_SELLER = async ( req , res , next ) => {
                     
                 }).catch(async ()=>{
                     deleteFiles(req);
-                    return res.status(200).json({Status:false, Message:"Unable to create account."});
+                    return res.status(500).json({Status:false, Message:"Unable to create account."});
                 });
             }else{
                 deleteFiles(req);
-                return res.status(200).json({Status:false, Message:"Already have an account."});
+                return res.status(500).json({Status:false, Message:"Already have an account."});
             };  
         }else{
             deleteFiles(req);
-            return res.status(200).json({Status:false, Message:T});
+            return res.status(400).json({Status:false, Message:T});
         };
     } catch (error) {
         deleteFiles(req);
@@ -540,8 +540,224 @@ const SELLER_ASSISTANT_ADD_SELLER = async ( req , res , next ) => {
     }
 };
 
+const SELLER_ASSISTANT_UPDATE = async ( req , res , next ) => {
+    try {
+
+        const Got_User = req.User;
+        
+        function Valid_Data(body) {
+            let First_Name = body.First_Name;
+            let Last_Name = body.Last_Name;
+            let Mobile_Number = body.Mobile_Number;
+            let Alt_Number = body.Alt_Number;
+            let Age = body.Age;
+            let Gender = body.Gender;
+            let Landmark = body.Landmark;
+            let Locality = body.Locality;
+            let Town_City = body.Town_City;
+            let PIN_Code = body.PIN_Code;
+            let inputState = body.inputState;
+            let inputDistrict = body.inputDistrict;
+            let Country = body.Country;
+            let Bank_Name = body.Bank_Name;
+            let Beneficiary_Name = body.Beneficiary_Name;
+            let Account_Number = body.Account_Number;
+            let IFSC_Code = body.IFSC_Code;
+            let Shop_Name = body.Shop_Name;
+            let Shop_Contact_Number = body.Shop_Contact_Number;
+            let Worker_Number = body.Worker_Number;
+            let Shop_Category = body.Shop_Category;
+            let Shop_Location = body.Shop_Location;
+            if (First_Name.length < 3 || First_Name == null) {
+                return "Enter correct First name.";
+            }else if (Last_Name.length < 3 || Last_Name == null) {
+                return "Enter correct Last name.";
+            }else if (Mobile_Number.length != 10 || !Valid_Mobile(Mobile_Number)) {
+                return "Enter correct Mobile number.";
+            }else if (Alt_Number.length != 10 || !Valid_Mobile(Alt_Number)) {
+                return "Enter correct Alternative mobile number.";
+            }else if (Age == null || Age == "") {
+                return "Please enter correct age.";
+            }else if (Number(Age) < 16 || Number(Age) > 50) {
+                return "Age must be in between 16 to 50.";
+            }else if (Gender !== "Male" && Gender !== "Female" && Gender !== "Other") {
+                return "Please enter correct gender.";
+            }else if (Landmark.length < 3 ) {
+                return "Please enter correct landmark.";
+            }else if (Locality.length < 3 ) {
+                return "Please enter correct Locality.";
+            }else if (Town_City.length < 3 ) {
+                return "Please enter correct Town/City.";
+            }else if (PIN_Code.length != 6 ) {
+                return "Please enter correct PIN code.";
+            }else if (inputState.length < 3 ) {
+                return "Please enter correct State.";
+            }else if (inputDistrict.length < 3 ) {
+                return "Please enter correct District.";
+            }else if (Country.length < 3 ) {
+                return "Please enter correct Country.";
+            }else if (Bank_Name.length < 5 ) {
+                return "Please enter correct Bank name.";
+            }else if (Beneficiary_Name.length < 5 ) {
+                return "Please enter valid Beneficiary name.";
+            }else if (Account_Number.length < 5 ) {
+                return "Please enter correct Account number.";
+            }else if (IFSC_Code.length < 4 ) {
+                return "Please enter correct IFSC CODE.";
+            }else if (Shop_Name.length < 5 ) {
+                return "Please enter correct Shop Name.";
+            }else if (!Valid_Mobile(Shop_Contact_Number) ) {
+                return "Please enter correct Shop contact number.";
+            }else if (!Valid_Mobile(Worker_Number) ) {
+                return "Please enter correct Worker contact number.";
+            }else if (Shop_Category.length < 5 ) {
+                return "Please enter correct shop Category.";
+            }else if (Shop_Location.length < 5 ) {
+                return "Please enter correct shop location.";
+            }else{
+                return "Valid";
+            };
+        };
+        let T = Valid_Data(req.body);
+        if (T == "Valid") {
+            let body = req.body;
+            let D = {
+                First_Name: body.First_Name,
+                Last_Name: body.Last_Name,
+                Mobile_Number: body.Mobile_Number,
+                Alt_Number: body.Alt_Number,
+                Age: body.Age,
+                Gender: body.Gender,
+                Email: body.Email,
+                Landmark: body.Landmark,
+                Locality: body.Locality,
+                Town_City: body.Town_City,
+                PIN_Code: body.PIN_Code,
+                inputState: body.inputState,
+                inputDistrict: body.inputDistrict,
+                Country: body.Country,
+                PAN_ID: body.PAN_ID,
+                Aadhaar_Number: body.Aadhaar_Number,
+                Bank_Name: body.Bank_Name,
+                Beneficiary_Name: body.Beneficiary_Name,
+                Account_Number: body.Account_Number,
+                IFSC_Code: body.IFSC_Code,
+                Shop_Name: body.Shop_Name,
+                Shop_Contact_Number: body.Shop_Contact_Number,
+                Worker_Number: body.Worker_Number,
+                Shop_Category: body.Shop_Category,
+                Shop_Location: body.Shop_Location,
+            };
+            let a = await Sellers.findById(req.body.ID);
+            if(a){
+                let Insert = {
+                    Basic_Details:{
+                        First_Name:D.First_Name,
+                        Last_Name:D.Last_Name,
+                        Mobile_Number:D.Mobile_Number,
+                        Alt_Number:D.Alt_Number,
+                        Age:D.Age,
+                        Gender:D.Gender,
+                    },
+                    Store:{
+                        Shop_Name: D.Shop_Name,
+                        Shop_Contact_Number: D.Shop_Contact_Number,
+                        Worker_Number: D.Worker_Number,
+                        Shop_Category: D.Shop_Category,
+                        Shop_Photo: a.Store.Shop_Photo,
+                        Total_Reviews:a.Store.Total_Reviews,
+                        Shop_Location: D.Shop_Location,
+                    },
+                    Bank:{
+                        Bank_Name: D.Bank_Name,
+                        Beneficiary_Name: D.Beneficiary_Name,
+                        Account_Number: D.Account_Number,
+                        IFSC_Code: D.IFSC_Code,
+                    },
+                    Address: {
+                        Landmark: D.Landmark,
+                        Locality: D.Locality,
+                        Town_City: D.Town_City,
+                        PIN_Code: D.PIN_Code,
+                        State: D.inputState,
+                        District: D.inputDistrict,
+                        Country: D.Country,
+                    },
+                };
+                await Sellers.updateOne({_id:req.body.ID}, {$set:Insert}).then( async ()=>{
+
+                    const List = Got_User.Employee_Work_Done;
+                    List.push({
+                        Desc: `Modified user data`,
+                        Ref:req.body.ID,
+                        Action:"Modified",
+                        More:"",
+                        Date: Date()
+                    });
+                    await Assistants.updateOne({_id:Got_User._id}, {$set:{
+                        Employee_Work_Done: List,
+                    }});
+                    res.status(200).json({Status:true, Message:"Updated Successfully."});
+                    
+                }).catch(e=>{res.status(500).json({Status:false, Message:"Unable to update data."})});
+            }else{
+                res.status(400).json({Status:false, Message:"Wrong ID."});                  
+            };
+        }else{
+            res.status(400).json({Status:false, Message:T});
+        };
+    } catch (error) {
+        next(error);
+    };
+};
+
+const SELLER_ASSISTANT_CHANGE_PASSWORD = async ( req , res , next ) => {
+    try {
+
+        const User = req.User;
+        const {Old, New} = req.body;
+        if (Old && New) {
+            if (Valid_Password(New)) {
+                if(Valid_Password(New)){
+                    if ( await Password_Compare(Old, User.Password)) {
+                        const NewPass = await Password_Hash(New);
+
+                        const List = User.Employee_Work_Done;
+                        List.push({
+                            Desc: `Password changed`,
+                            Ref: User._id,
+                            Action:"Modified",
+                            More:"",
+                            Date: Date()
+                        });
+
+                        await Assistants.updateOne({_id:User._id}, {$set:{Password:NewPass, Employee_Work_Done: List}}).then(async ()=>{
+                            return res.status(200).json({Success:"Success", Message:"Password changed successfully."});
+                        }).catch( e =>{
+                            return res.status(500).json({Success: "Failed", Message:"Internal server error, unable to change password."});
+
+                        });
+                    }else{
+                        res.status(400).json({Success: "Failed", Message:"Old password is incorrect."});
+                    };
+                }else{
+                    res.status(400).json({Success:"Failed", Message:"Password must contain atleast 1 uppercase, 1 lowercase and 1 number"});
+                }
+            }else{
+                res.status(400).json({Success:"Failed", Message:"Password must contain atleast 1 uppercase, 1 lowercase and 1 number"});
+            };
+        }else{
+            res.status(400).json({Success:"Failed", Message:"Please enter all fields."});
+        };
+    } catch (error) {
+        next(error);
+    };
+};
+
 module.exports = {
     SELLER_ASSISTANT_LOGIN,
     SELLER_ASSISTANT_LOGIN_OTP,
     SELLER_ASSISTANT_ADD_SELLER,
+    SELLER_ASSISTANT_UPDATE,
+    SELLER_ASSISTANT_CHANGE_PASSWORD,
 };
