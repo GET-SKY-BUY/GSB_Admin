@@ -1,5 +1,6 @@
 require('dotenv').config();
-
+const path = require('path');
+const fs = require('fs');
 const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
 
 const { Sellers, Assistants } = require('../Models.js');
@@ -41,7 +42,6 @@ const Sellers_Assistant_Login_OTP = async ( req , res , next ) => {
                 let Search = await Assistants.findById(User.ID);
                 if(Search){
                     if(Search.LoggedIn.Token === User.Token){
-                        console.log(111);
                         return res.redirect('/sellers_assistant');
                     };
                 };
@@ -120,7 +120,7 @@ const Seller_Assistant_Update = async ( req , res , next ) => {
                 Country:`<option value="${Data.Address.Country}">${Data.Address.Country}</option>`,
                 PAN_Number : Data.Documents.PAN_Number,
                 Aadhaar_Number : Data.Documents.Aadhaar_Number,
-                IMG : `/seller/authorised/seller_documents/${Data.Documents.IMG}`,
+                IMG : `/sellers_assistant/authorised/seller_documents/${Data.Documents.IMG}`,
                 
                 Bank_Name: Data.Bank.Bank_Name,
                 Beneficiary_Name: Data.Bank.Beneficiary_Name,
@@ -199,6 +199,63 @@ const Seller_Assistant_Search = async ( req , res , next ) => {
     }
 };
 
+const Seller_Assistant_Shop_Status = async (req, res, next) => {
+    try {
+        return res.status(200).render("Sellers_Assistant_Shop_Status");
+    }catch(e){
+        next(e);
+    };
+};
+
+
+const Seller_Assistant_Files_View = async (req, res, next) => {
+    try {
+
+        let FileName = req.params.File;
+
+
+            
+        let IMG = path.join(__dirname, "../Sellers_Files", FileName);
+
+        if (fs.existsSync(IMG)) {
+            res.sendFile(IMG, (err) => {
+                if (err) {
+                    res.status(500).send('Error while sending the file.');
+                };
+            });
+        } else {
+            res.status(404).send('File not found.');
+        };
+    }catch (e){
+        next(e);
+    };
+};
+
+const Seller_Assistant_Logout = async ( req , res , next ) => {
+    try {
+        res.clearCookie("SELLER_TOKEN",{
+            domain: process.env.PROJECT_DOMAIN,
+            path: "/",
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            signed: true,
+            sameSite: "strict",
+        });
+
+        const User = req.User;
+
+        User.LoggedIn = {
+            Token: "",
+            Created: Date()
+        };
+        await User.save().then(()=>{
+            return res.status(200).redirect("/sellers_assistant/login");
+        });
+    }catch (error) {
+        next(error);
+    };
+};
+
 
 
 module.exports = {
@@ -209,4 +266,7 @@ module.exports = {
     Seller_Assistant_Update,
     Seller_Assistant_Profile,
     Seller_Assistant_Search,
+    Seller_Assistant_Shop_Status,
+    Seller_Assistant_Files_View,
+    Seller_Assistant_Logout,
 };
