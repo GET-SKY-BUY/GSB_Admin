@@ -32,7 +32,7 @@ app.set('views', [
     path.join(__dirname, './Pug/Sellers'),
     path.join(__dirname, './Pug/Admin'),
     path.join(__dirname, './Pug/Common'),
-    // path.join(__dirname, './Pug/Profile'),
+    path.join(__dirname, './Pug/Sellers_Store'),
 ]);
 
 // Setup static files
@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
 // Admin Route
 app.use("/admin", require('./Routes/Admin.js'));
 app.use("/sellers_assistant", require('./Routes/Sellers_Assistant.js'));
-app.use("/sellers", require('./Routes/Sellers.js'));
+app.use("/sellers_store", require('./Routes/Sellers.js'));
 
 // Project URL
 const Project_URL = `${Protocol}://${process.env.PROJECT_DOMAIN}`;

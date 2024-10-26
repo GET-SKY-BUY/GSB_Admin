@@ -628,5 +628,4 @@ module.exports = {
     Qr_Codes,
     Sellers,
     Products,
-}
-
+};
