@@ -17,6 +17,7 @@
         <div class="container">
             <div class="container2">
                 <h2 class="Heading">Sellers store</h2>
+                <h4> <a href="/sellers_store/logout">LOGOUT</a></h4>
                 <div><strong>Your Seller assistant contact number: </strong><a href="tel:+91#{Assistant_No}">+91 #{Assistant_No}</a></div>
                 <div><strong>ID: </strong> #{ID}</div>
                 <div><strong>Active Now: </strong> #{DayActive} <br> !{Active_Now}</div>
@@ -54,6 +55,19 @@
                 <div><strong>State: </strong> #{State}</div>
                 <div><strong>District: </strong> #{District}</div>
                 <div><strong>Country: </strong> #{Country}</div>
+                <hr>
+                <h4>Change your password</h4>
+                <div class="Change_Password_Box">
+                    <div id="Password_Change">
+                        <input type="password" placeholder="Old password" id="Old_Password">
+                        <input type="password" placeholder="New password"id="New_Password">
+                        <input type="password" placeholder="Confirm password"id="Confirm_Password">
+                        <button type="button" class="Active_Btn" id="Change_Password" onclick="Change_Password();">Change</button>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </main>

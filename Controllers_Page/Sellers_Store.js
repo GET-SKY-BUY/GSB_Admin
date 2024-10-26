@@ -2,6 +2,7 @@ require('dotenv').config();
 const { Verify_Token } = require("../utils/JWT.js")
 
 const { Sellers } = require("../Models.js");
+const { date } = require('zod');
 
 const Sellers_Store_Login = async ( req , res , next ) => {
     try {
@@ -80,7 +81,30 @@ const Sellers_Store_Home = async ( req , res , next ) => {
         next(error);
     };
 };
+
+const Sellers_Store_Logout = async ( req , res , next ) => {
+    try{
+        const Got_User = req.User;
+
+        Got_User.LoggedIn.Token = "";
+        Got_User.LoggedIn.Created = date();
+        await Got_User.save().then(() => {
+            res.clearCookie("SELLER_STORE",{
+                domain: process.env.PROJECT_DOMAIN,
+                path: "/",
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                signed: true,
+                sameSite: "strict",
+            });
+            return res.status(200).redirect("/sellers_store/login");
+        });
+    }catch (error){
+        next(error);
+    };
+};
 module.exports = {
     Sellers_Store_Login,
     Sellers_Store_Home,
+    Sellers_Store_Logout,
 };

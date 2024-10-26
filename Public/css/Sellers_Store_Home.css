@@ -44,7 +44,7 @@ main {
 
 
 
-#Active_Btn {
+.Active_Btn {
     transition: 200ms;
     padding: 8px 15px;
     margin: 5px 0px;
@@ -59,11 +59,25 @@ main {
     text-shadow: 0 0 2px #b3b3b3;
 
 }
-#Active_Btn:hover, #Active_Btn:focus{
+.Active_Btn:hover, .Active_Btn:focus{
     background-color: var(--Seconday-primary-color);
 }
 
 .Profile {
     width: 100px;
     
+}
+
+
+.Change_Password_Box {
+    display: block;
+    margin: 20px 0;
+}
+
+
+
+#Password_Change input{
+    outline: none;
+    padding: 6px 12px;
+    margin: 10px;
 }

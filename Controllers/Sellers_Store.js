@@ -113,7 +113,40 @@ const SELLERS_STORE_ACTIVE = async ( req , res , next ) => {
     };
 };
 
+const SELLERS_STORE_CHANGE_PASSWORD = async ( req , res , next ) => {
+    try {
+        const Got_User = req.User;
+        const { Old , New } = req.body;
+        if(!Old || !New){
+            return res.status(400).json({Status: "Failed" , Message: "Please Fill All Fields"});
+        };
+        if(!Valid_Password(Old) || !Valid_Password(New)){
+            return res.status(400).json({Status: "Failed" , Message: "Invalid Password"});
+        };
+        let Password_Check = await Password_Compare(Old , Got_User.Password);
+        if(!Password_Check){
+            return res.status(400).json({Status: "Failed" , Message: "Incorrect Password"});
+        };
+        Got_User.Password = await Password_Hash(New);
+        let sta = await Send_Mail({
+            from: `Password Changed - Sellers Store <${process.env.MAIL_ID}>`,
+            to: Got_User.Email,
+            subject: "Password Changed - Sellers Store",
+            text: `Your password has been changed at ${new Date().toDateString() + " " + new Date().toLocaleTimeString()}`,
+        });
+        if(!sta){
+            return res.status(400).json({Status: "Failed" , Message: "Failed to send mail"});
+        };``
+        await Got_User.save().then( async () => {
+            return res.status(200).json({Status: "Success" , Message: "Password Changed"});
+        });
+    } catch (error) {
+        next(error);
+    };
+};
+
 module.exports = {
     SELLERS_STORE_LOGIN,
     SELLERS_STORE_ACTIVE,
+    SELLERS_STORE_CHANGE_PASSWORD,
 };
