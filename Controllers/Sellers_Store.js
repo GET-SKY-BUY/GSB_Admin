@@ -92,6 +92,28 @@ const SELLERS_STORE_LOGIN = async ( req , res , next ) => {
     };
 };
 
+
+const SELLERS_STORE_ACTIVE = async ( req , res , next ) => {
+    try {
+        const Got_User = req.User;
+        const { Active } = req.body;
+        if(Active == "Yes"){
+            Got_User.DayActive = "No";
+        }else if (Active == "No"){
+            Got_User.DayActive = "Yes";
+        }else{
+            return res.status(400).json({Status: "Failed" , Message: "Invalid Active Status"});
+        };
+        await Got_User.save().then( async () => {
+            return res.status(200).json({Status: "Success" , Message: "Updated active status."});
+        });
+        
+    } catch (error) {
+        next(error);
+    };
+};
+
 module.exports = {
     SELLERS_STORE_LOGIN,
+    SELLERS_STORE_ACTIVE,
 };

@@ -2,14 +2,14 @@ require("dotenv").config();
 const { Verify_Token } = require("./JWT.js");
 const { Sellers , Assistants } = require("../Models.js");
 
-const SELLER_STORE_USER_PAGE = async ( req, res, next) => {
+const SELLER_STORE_USER_API = async ( req, res, next) => {
     try {
         const ADMIN_TOKEN = req.signedCookies.SELLER_STORE;
         const Check = Verify_Token(ADMIN_TOKEN);
         let Found = false;
         let Search;
         if(Check){
-            Search = await Sellers.findById(Check.ID).populate("Assistant_ID");
+            Search = await Sellers.findById(Check.ID);
             if(Search){
                 if(Search.LoggedIn.Token === Check.Token){
                     Found = true;
@@ -25,7 +25,7 @@ const SELLER_STORE_USER_PAGE = async ( req, res, next) => {
                 signed: true,
                 sameSite: "strict",
             });
-            return res.status(400).redirect("/sellers_store/login");
+            return res.status(400).json({Status: "Failed" ,Message: "Unauthorized access"});
         };
         req.User = Search;
         next();
@@ -33,4 +33,4 @@ const SELLER_STORE_USER_PAGE = async ( req, res, next) => {
         next(err);
     };
 };
-module.exports = SELLER_STORE_USER_PAGE;
+module.exports = SELLER_STORE_USER_API;
