@@ -53,7 +53,7 @@ async function Login() {
         }).then(data=>{
             Message(data.Message,"Success");
             setTimeout(() => {
-                window.location.href = "/sellers_store/login/otp";
+                location.reload();
             }, 1000);
         
         }).catch(err=>{
