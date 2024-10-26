@@ -9,9 +9,10 @@ Sellers_Store.use(cookieParser(process.env.COOKIE_SECRET));
 
 module.exports = Sellers_Store;
 
-const { Sellers_Store_Login } = require("../Controllers_Page/Sellers_Store.js");
+const { Sellers_Store_Login , Sellers_Store_Login_OTP } = require("../Controllers_Page/Sellers_Store.js");
 
 Sellers_Store.get("/login", Sellers_Store_Login );
+Sellers_Store.get("/login/otp", Sellers_Store_Login_OTP );
 
 
 
