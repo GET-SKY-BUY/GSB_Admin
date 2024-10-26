@@ -73,7 +73,7 @@ const SELLERS_STORE_LOGIN = async ( req , res , next ) => {
             from: `Login alert - Sellers Store <${process.env.MAIL_ID}>`,
             to: Email,
             subject: "Login Alert - Sellers Store",
-            text: `You have logged in to your account (${data._id}) at ${new Date().toISOString()}`,
+            text: `You have logged in to your account (${data._id}) at ${new Date().toDateString() + " " + new Date().toLocaleTimeString()}`,
         });
         if(!sta){
             return res.status(400).json({Status: "Failed" , Message: "Failed to send mail"});
