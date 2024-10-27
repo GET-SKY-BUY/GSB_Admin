@@ -47,6 +47,7 @@ app.get("/", (req, res) => {
 app.use("/admin", require('./Routes/Admin.js'));
 app.use("/sellers_assistant", require('./Routes/Sellers_Assistant.js'));
 app.use("/sellers_store", require('./Routes/Sellers.js'));
+app.use("/qr", require('./Routes/QR.js'));
 
 // Project URL
 const Project_URL = `${Protocol}://${process.env.PROJECT_DOMAIN}`;
