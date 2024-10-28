@@ -1,16 +1,36 @@
-
-
 require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
+
 const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
-
 const { Sellers, Assistants } = require('../Models.js');
-
 const { Password_Compare , Password_Hash } = require('../utils/Password.js');
-const Send_Mail  = require('../utils/Send_Mail.js');
 const { Get_Token , Get_OTP } = require('../utils/Auth.js');
 
+const Send_Mail  = require('../utils/Send_Mail.js');
+
+function URL_Generator(lengths = 21) {
+    const character = "qw-ertyuioplkjhgfdsazxcvbnm1234567890";
+    let varrr = 0, getRandom = 0, name = "";
+    while (varrr <= lengths){
+        getRandom = Math.floor(Math.random() * (character.length - 1));
+        name = name + character[getRandom];
+        varrr = varrr + 1;
+    };
+    return name;
+};
+
+function createYouTubeIframe(videoUrl) {
+    const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))([^&\n]{11})/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : null;
+    if (!videoId) {
+        return null;
+    };
+    const iframeHTML = `
+        <iframe class="IframeVideo" src="https://www.youtube.com/embed/${videoId}?rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    `;
+    return iframeHTML;
+};
 
 const { Valid_Email, Valid_Password , Valid_Mobile } = require('../utils/Validations.js');
 
@@ -23,6 +43,7 @@ const Cookie_Options_OTP = {
     signed: true,
     sameSite: "strict",
 };
+
 const Cookie_Options_Final = {
     domain: process.env.PROJECT_DOMAIN,
     path: "/",
@@ -32,7 +53,6 @@ const Cookie_Options_Final = {
     signed: true,
     sameSite: "strict",
 };
-
 
 const PRODUCTS_ASSISTANT_LOGIN = async ( req , res , next ) => {
     try {
@@ -60,8 +80,8 @@ const PRODUCTS_ASSISTANT_LOGIN = async ( req , res , next ) => {
             signed: true,
             sameSite: "strict",
         });
+        
         req.body.Email = req.body.Email.toLowerCase();
-
         if(!(Valid_Email(req.body.Email) && Valid_Password(req.body.Password))){
             return res.status(400).json({
                 Status: "Failed",
@@ -76,6 +96,7 @@ const PRODUCTS_ASSISTANT_LOGIN = async ( req , res , next ) => {
                 Message: "You don't have an account",
             });
         };
+
         if(!await Password_Compare(req.body.Password, Search.Password)){
             return res.status(401).json({
                 Status: "Failed",
@@ -172,13 +193,13 @@ const PRODUCTS_ASSISTANT_LOGIN_OTP = async ( req , res , next ) => {
         };
 
         const Recieved_OTP = req.body.OTP;
-
         if(!Recieved_OTP){
             return res.status(400).json({
                 Status: "Failed",
                 Message: "Invalid OTP",
             });
         };
+
         if(Recieved_OTP.length !== 6){
             return res.status(400).json({
                 Status: "Failed",
@@ -193,12 +214,14 @@ const PRODUCTS_ASSISTANT_LOGIN_OTP = async ( req , res , next ) => {
                 Message: "Unauthorized Access",
             });
         };
+
         if(Search.Auth.OTP !== Recieved_OTP){
             return res.status(400).json({
                 Status: "Failed",
                 Message: "Invalid OTP",
             });
         };
+
         if(Search.Auth.Token !== TokenVerify.Token){
             return res.status(401).json({
                 Status: "Failed",
@@ -213,11 +236,8 @@ const PRODUCTS_ASSISTANT_LOGIN_OTP = async ( req , res , next ) => {
             });
         }
 
-
-        
         const New_Gen_Token = await Get_Token();
 
-        
         let NewToken = Generate_Token({
             ID: Search._id,
             Token: New_Gen_Token,
@@ -244,9 +264,7 @@ const PRODUCTS_ASSISTANT_LOGIN_OTP = async ( req , res , next ) => {
             Token:`${New_Gen_Token}`,
             Created: new Date(),
         };
-            
-
-
+        
         await Search.save().then(c => {
             res.cookie("PRODUCT_TOKEN", NewToken, Cookie_Options_Final);
             res.clearCookie("PRODUCT_OTP",{
@@ -262,7 +280,6 @@ const PRODUCTS_ASSISTANT_LOGIN_OTP = async ( req , res , next ) => {
                 Message: "Logged in successful",
             });
         });
-
     } catch (error) {
         next(error);
     };
