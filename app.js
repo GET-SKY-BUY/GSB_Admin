@@ -19,7 +19,6 @@ const PORT = process.env.PORT;
 const Cookie_Secret = process.env.COOKIE_SECRET;
 const NODE_ENV = process.env.NODE_ENV;
 
-
 // Protocol 
 let Protocol = "http";
 if (NODE_ENV === 'production') {
@@ -33,6 +32,7 @@ app.set('views', [
     path.join(__dirname, './Pug/Admin'),
     path.join(__dirname, './Pug/Common'),
     path.join(__dirname, './Pug/Sellers_Store'),
+    path.join(__dirname, './Pug/Products_Assistant'),
 ]);
 
 // Setup static files
@@ -48,6 +48,7 @@ app.use("/admin", require('./Routes/Admin.js'));
 app.use("/sellers_assistant", require('./Routes/Sellers_Assistant.js'));
 app.use("/sellers_store", require('./Routes/Sellers.js'));
 app.use("/qr", require('./Routes/QR.js'));
+app.use("/products_assistant", require('./Routes/Products_Assistant.js'));
 
 // Project URL
 const Project_URL = `${Protocol}://${process.env.PROJECT_DOMAIN}`;

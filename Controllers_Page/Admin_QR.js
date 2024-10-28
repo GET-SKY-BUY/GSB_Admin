@@ -57,8 +57,8 @@ const QR_HOMEPAGE = async ( req , res , next )=>{
         const Data = await Qr_Codes.findOne({_id:"GSB1234"});
         return res.status(200).render("QR_Home",{
             QR_Generated: Data.Created_QR_Codes.length,
-            Active_Generated: Data.Not_Active_QR_Codes.length,
-            Active_Codes: Data.Active_Codes.length,
+            Active_Codes: Data.Not_Active_QR_Codes.length,
+            Active_Generated: Data.Active_Codes.length,
             Temp: Data.Temporary_QR_Codes.length,
         });
     } catch (error) {
@@ -74,7 +74,9 @@ const QR_code_Generate = async ( req , res , next )=>{
             if(TotalRequired){
                 if(TotalRequired > 0){
                     let a = await QR_DATA(TotalRequired);
-                    await Qr_Codes.updateOne({_id:"GSB1234"},{$set:{Temporary_QR_Codes:a}}).then(()=>{
+                    await Qr_Codes.updateOne({_id:"GSB1234"},{$set:{
+                        Temporary_QR_Codes:a,
+                    }}).then(()=>{
                         return res.status(200).json({Message:"QR Codes generated successfully." ,UniqueCodes: a});
                     }).catch(()=>{
                         return res.status(400).json({Message: "Error"});
@@ -110,6 +112,7 @@ const QR_final = async ( req , res , next )=>{
         const Data = await Qr_Codes.findOne({_id:"GSB1234"});
         await Qr_Codes.updateOne({_id:"GSB1234"},{$set:{
             Created_QR_Codes: [...Data.Created_QR_Codes, ...Data.Temporary_QR_Codes],
+            Not_Active_QR_Codes: [...Data.Not_Active_QR_Codes, ...Data.Temporary_QR_Codes],
             Temporary_QR_Codes: []
         }}).then(()=>{
             return res.status(200).json({Message: "Finalized"});
@@ -157,7 +160,29 @@ const QR_Delete_QR = async ( req , res , next )=>{
                 D.push(Data.Created_QR_Codes[i]);
             };
             if(found){
-                await Qr_Codes.updateOne({_id:"GSB1234"},{$set:{Created_QR_Codes:D}}).then(()=>{
+                const AA = Data.Active_Codes;
+                let foun = false;
+                for(let i = 0; i < AA.length; i++){
+                    if(AA[i] == QR1){
+                        foun = true;
+                        break;
+                    };
+                };
+                if(foun){
+                    return res.status(400).json({Message: "Cannot delete ACTIVE QR - Code"});
+                };
+
+                const BB = Data.Not_Active_QR_Codes;
+                let ReList = [];
+                for(let i = 0; i < BB.length; i++){
+                    if(BB[i] != QR1){
+                        ReList.push(BB[i]);
+                    };
+                };
+                await Qr_Codes.updateOne({_id:"GSB1234"},{$set:{
+                    Created_QR_Codes:D,
+                    Not_Active_QR_Codes:ReList
+                }}).then(()=>{
                     return res.status(200).json({Message: "Deleted, seleted QR - Code"});
                 }).catch(()=>{
                     return res.status(500).json({Message: "Internal server error"});
