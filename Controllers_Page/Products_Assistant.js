@@ -65,6 +65,14 @@ const Products_Assistant_Login_Page_OTP = async ( req , res , next ) => {
 const Product_Assistant_Home = async ( req , res , next ) => {
     try {
         
+        return res.status(200).render("Product_Assistant_Home");
+    }catch (error) {
+    };
+};
+const Product_Assistant_Add = async ( req , res , next ) => {
+    try {
+        
+        return res.status(200).render("Product_Assistant_Add");
     }catch (error) {
     };
 };
@@ -72,4 +80,6 @@ const Product_Assistant_Home = async ( req , res , next ) => {
 module.exports = {
     Products_Assistant_Login_Page,
     Products_Assistant_Login_Page_OTP,
+    Product_Assistant_Home,
+    Product_Assistant_Add,
 };
