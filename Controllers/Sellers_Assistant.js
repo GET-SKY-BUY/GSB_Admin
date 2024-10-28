@@ -43,7 +43,7 @@ const SELLER_ASSISTANT_LOGIN = async (req, res, next) => {
         if(Token){
             const User = Verify_Token(Token);
             if(User){
-                let Search = await Sellers.findById(User.ID);
+                let Search = await Assistants.findById(User.ID);
                 if(Search){
                     if(Search.LoggedIn.Token === User.Token){
                         return res.status(400).json({
@@ -132,7 +132,7 @@ const SELLER_ASSISTANT_LOGIN_OTP = async ( req , res , next ) => {
         if(Token){
             const User = Verify_Token(Token);
             if(User){
-                let Search = await Sellers.findById(User.ID);
+                let Search = await Assistants.findById(User.ID);
                 if(Search){
                     if(Search.LoggedIn.Token === User.Token){
                         return res.status(400).json({

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products assistants Login - GET SKY BUY</title>
+    <title>OTP - Product assistant - GET SKY BUY</title>
     <link rel="stylesheet" href="/files/css/Login.css">
     <link rel="shortcut icon" href="/files/img/favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,24 +15,19 @@
 <body>
     <main class="container">
         <div class="box">
-            <h1 title="Login">Products Asssistant Login</h1>
+            <h1 title="Login">OTP - Product Assistant</h1>
             <form id="Form">
                 <div  id="EmailDiv" class="Div_Input">
-                    <input id="Email" class="InputText" title="Email" type="text" spellcheck="false" placeholder=" ">
-                    <label class="Div_Input_Label" id="Email_Label" for="Email">Email</label>
-                </div>
-                <div  id="CreateDiv" class="Div_Input">
-                    <input autocomplete="off" id="Create_Password" class="InputText" title="Password" type="password" spellcheck="false" placeholder=" ">
-                    <label class="Div_Input_Label" id="Create_Password_Label" for="Create_Password">Password</label>
-                    <div id="ShowPassword"><span class="material-symbols-outlined" id="ShowClick" onclick="ShowClick(1);">visibility_off</span></div>
+                    <input id="OTP" class="InputText" title="OTP" type="text" spellcheck="false" placeholder=" ">
+                    <label class="Div_Input_Label" id="OTP_Label" for="OTP">OTP</label>
                 </div>
                 <div class="Div_Input" id="Next_DivBtn">
-                    <button id="Next_Btn" type="button" onclick="Login();">Login</button>
+                    <button id="Next_Btn" type="button" onclick="Login();">Confirm OTP</button>
                 </div>
             </form>
         </div>
     </main>
     <script src="/files/js/Message.js"></script>
-    <script src="/files/js/Login_Products_Assistant.js"></script>
+    <script src="/files/js/Login_OTP_Products_Assistant.js"></script>
 </body>
 </html>
