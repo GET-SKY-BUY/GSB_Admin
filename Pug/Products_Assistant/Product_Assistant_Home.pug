@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product assistant | GET SKY BUY</title>
+    <meta name="robots" content="nofollow, noindex">
+    <link rel="shortcut icon" href="/files/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/files/css/Product_Assistant_Home.css">
+
+
+</head>
+<body>
+    include Header_Product.pug
+
+    <main>
+        <section class="Sec">
+            <h2 class="heading1">Search for a product</h2>
+            <div class="Div_Input">
+                <select class="InputText" id="Type">
+                    <option value="">---- Select Option ----</option>
+                    <option value="ID">ID</option>
+                    <option value="Title">Title</option>
+                    <option value="URL">URL</option>
+                </select>
+                <label class="Div_Input_Label" for="Type">Search Type</label>
+            </div>
+            <div class="Div_Input">
+                <input class="InputText" id="Search" type="text" placeholder=" ">
+                <label class="Div_Input_Label" for="Search">Search</label>
+            </div>
+
+            <div class="Div_Input">
+                <button onclick="Search_Btn();" id="Search_Btn" type="button">Search</button>
+            </div>
+        </section>
+    </main>
+    
+</body>
+</html>
