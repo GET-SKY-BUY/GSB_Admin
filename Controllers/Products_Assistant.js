@@ -321,9 +321,120 @@ const PRODUCTS_ASSISTANT_SEARCH_SELLER = async ( req , res , next ) => {
 };
 
 
+const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
+    try {
+        const body = Object.assign({}, req.body);
+        const files = Object.assign({}, req.files);
+        let da = await Sellers.findOne({_id: body.ID})
+        if (da) {
+            try {
+                let k = body.Keywords;
+                const Keywords = k.split(",");
+                let l = body.Video_IDs;
+                const VideoLinks = l.split(",");
+                let T = body.Table;
+                const Table1 = T.split(",");
+                let Table = [];
+                for (let i = 0; i < Table1.length; i += 2) {
+                    Table.push([Table1[i], Table1[i + 1]]);
+                };
+                let ImageObj = [];
+                for (let index = 1; index < 8; index++) {
+                    let Image = `Image${index}`;
+                    if (files[Image] && files[Image][0]) {
+                        ImageObj.push(files[Image][0].filename);
+                    };
+                };
+                let URL_Generatora;
+                while(true){
+                    URL_Generatora = URL_Generator();
+                    let Data = await Products.findOne({URL:URL_Generator});
+                    if (!Data) {
+                        break                                                
+                    };
+                };
+                let _idd;
+                while(true){
+                    _idd = Product_ID();
+                    const Usersss = await Products.findOne({_id:_idd});
+                    if(!Usersss){
+                        break;
+                    };
+                };
+                if (body.Title.length >= 3 &&
+                    body.Description.length >= 3 &&
+                    body.Selling_Price.length >= 1 &&
+                    body.Categories.length >= 2 &&
+                    body.Age_Group.length >= 2 &&
+                    body.Occasion.length >= 2 &&
+                    body.Gender.length >= 2 &&
+                    body.Brand.length >= 1 &&
+                    body.MRP.length >= 1) {
+                    const Product = {
+                        _id: _idd,
+                        URL: URL_Generatora,
+                        Verified: "No",
+                        Seller_ID: da._id,
+                        Assitant_ID: GetUser._id,
+                        Title: body.Title,
+                        Description: body.Description,
+                        Price: {
+                            MRP: Number(body.MRP),
+                            Selling_Price: Number(body.Selling_Price),
+                            Our_Price: 0,
+                        },
+                        Categories: body.Categories,
+                        Age_Group: body.Age_Group,
+                        Occasion: body.Occasion,
+                        Gender: body.Gender,
+                        Delivery: 0,
+                        Quantity: Number(body.Quantity),
+                        Brand: body.Brand,
+                        Keywords: Keywords,
+                        Table: Table,
+                        Image_Videos: {
+                            Image: ImageObj,
+                            Video: VideoLinks,
+                        },
+                        GSBmail: 0,
+                        COD: "No",
+                        Reviews: [],
+                        QnA: [],
+                        Orders: [],
+                    };
+                    const SS = new Products(Product);
+                    await SS.save().then(async()=>{
+                        let Lisss = da.Product_List;
+                        Lisss.push(Product._id);
+                        await Seller_Profile.updateOne({_id:da._id},{$set:{
+                            Product_List:Lisss,
+                        }});
+                        return res.status(200).json({Message:"Successfully added."});
+                    }).catch(async ()=>{
+                        await deleteFiles(files);
+                        return res.status(400).json({Message:"Unable to add product."});
+                    });
+                }else{
+                    await deleteFiles(files);
+                    return res.status(400).json({Message:"Unauthorised access."});
+                };
+            }catch(error) {
+                await deleteFiles(files);
+                return res.status(400).json({Message:"Enable to add product."});
+            };
+        }else{
+            await deleteFiles(files);
+            return res.status(400).json({Message:"Invalid file format or size."});
+        };
+    } catch (error) {
+        next(error);
+    };
+};
+
 
 module.exports = {
     PRODUCTS_ASSISTANT_LOGIN,
     PRODUCTS_ASSISTANT_LOGIN_OTP,
     PRODUCTS_ASSISTANT_SEARCH_SELLER,
+    PRODUCTS_ASSISTANT_ADD_PRODUCT,
 };

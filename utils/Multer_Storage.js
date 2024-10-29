@@ -72,10 +72,10 @@ const Product_Upload = multer({
     storage: Product_Storage,
     limits: { fileSize: 1024 * 1024 * 5 },
     fileFilter: function (req, file, cb) {
-        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/webp' || file.mimetype === 'image/jpg') {
+        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/webp' || file.mimetype === 'image/jpg' || file.mimetype === "image/heic") {
             cb(null, true);
         } else {
-            cb(new Error('Only .jpg , .jpeg , .webp and .png files are allowed!'), false);
+            cb(new Error('Only .jpg , .jpeg , .heic , .webp and .png files are allowed!'), false);
         };
     }
 }).fields([
