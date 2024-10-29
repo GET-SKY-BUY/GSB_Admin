@@ -1,6 +1,7 @@
 
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 // Multer Storage for Seller Profile
 const Sellers_Files = path.join(__dirname, '../Sellers_Files');
@@ -97,6 +98,16 @@ const Multer_Storage_Product_Images = async (req, res, next) => {
             next();
         });
     } catch (error) {
+        async function deleteFiles(files) {
+            for (let i = 1; i <= 7; i++) {
+                let filename = files[`Image${i}`]?.[0]?.filename; // Use optional chaining to avoid errors
+                if (filename) {
+                    let ImgPath = path.join(__dirname, "../Uploaded_Product_Images", filename);
+                    await fs.unlinkSync(ImgPath);
+                };
+            };
+        };
+        deleteFiles(req.files);
         next(error);
     };
 };

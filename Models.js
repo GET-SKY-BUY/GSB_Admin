@@ -609,6 +609,14 @@ const Product_Schema = new Schema({
     ], 
 });
 
+const categorySchema = new Schema({
+    _id: {
+        type: String,
+    },
+    Categories: {
+        type: Array,
+    },
+});
 
 const User = Model("User", UserSchema);
 const Admin_User = Model("Admin", Admin_User_Schema);
@@ -616,6 +624,7 @@ const Assistants = Model("Assistants", Admin_Assistant_Schema);
 const Qr_Codes = Model("Qr_Codes", Qrs);
 const Sellers = Model("Sellers", Seller_Schema);
 const Products = Model("Products", Product_Schema);
+const Categories = Model("Categories", categorySchema);
 
 
 
@@ -628,4 +637,5 @@ module.exports = {
     Qr_Codes,
     Sellers,
     Products,
+    Categories,
 };
