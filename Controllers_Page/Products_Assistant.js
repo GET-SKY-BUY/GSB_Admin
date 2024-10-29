@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
 
-const { Sellers, Assistants } = require('../Models.js');
+const { Sellers , Assistants } = require('../Models.js');
 
 const Products_Assistant_Login_Page = async ( req , res , next ) => {
     try {

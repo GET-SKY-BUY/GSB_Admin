@@ -285,7 +285,45 @@ const PRODUCTS_ASSISTANT_LOGIN_OTP = async ( req , res , next ) => {
     };
 };
 
+
+
+const PRODUCTS_ASSISTANT_SEARCH_SELLER = async ( req , res , next ) => {
+    try {
+        const body = req.body;
+        let Type = body.Type;
+        let Value = body.Value;
+        if (Type && Value) {
+            let data;
+            if (Type == "Email") {
+                data = await Sellers.findOne({Email:Value.toLowerCase()});
+            }else if (Type == "Mobile") {
+                data = await Sellers.findOne({"Basic_Details.Mobile_Number":Value});
+            }else if (Type == "ID") {
+                data = await Sellers.findById(Value);
+            };
+            if (data) {
+                
+                return res.status(200).json({
+                    Message:"Seller found.",
+                    ID:data._id,
+                    Name:`${data.Basic_Details.First_Name} ${data.Basic_Details.Last_Name}`,
+                    Mobile_Number:data.Basic_Details.Mobile_Number,
+                    Email:data.Email,
+                    Store_Name:data.Store.Shop_Name,
+                });
+            };  
+            return res.status(400).json({Message:"Seller not found."});
+        };
+        return res.status(400).json({Message:"Enter all the fields."});
+    } catch (error) {
+        next(error);
+    };
+};
+
+
+
 module.exports = {
     PRODUCTS_ASSISTANT_LOGIN,
     PRODUCTS_ASSISTANT_LOGIN_OTP,
+    PRODUCTS_ASSISTANT_SEARCH_SELLER,
 };

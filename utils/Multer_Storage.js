@@ -43,6 +43,68 @@ const Multer_Storage_Seller_Profile = async (req, res, next) => {
     };
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+const Product_Storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../Uploaded_Product_Images'));
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + ' - ' + file.originalname);
+    },
+});
+
+
+
+const Product_Upload = multer({ 
+    storage: Product_Storage,
+    limits: { fileSize: 1024 * 1024 * 5 },
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/webp' || file.mimetype === 'image/jpg') {
+            cb(null, true);
+        } else {
+            cb(new Error('Only .jpg , .jpeg , .webp and .png files are allowed!'), false);
+        };
+    }
+}).fields([
+    { name: 'Image1', maxCount: 1 },
+    { name: 'Image2', maxCount: 1 },
+    { name: 'Image3', maxCount: 1 },
+    { name: 'Image4', maxCount: 1 },
+    { name: 'Image5', maxCount: 1 },
+    { name: 'Image6', maxCount: 1 },
+    { name: 'Image7', maxCount: 1 }
+]);
+
+
+const Multer_Storage_Product_Images = async (req, res, next) => {
+    try {
+        Product_Upload(req, res, (error) => {
+            if (error) {
+                return next(error);
+            }
+            next();
+        });
+    } catch (error) {
+        next(error);
+    };
+};
+
+
+
+
 module.exports = {
     Multer_Storage_Seller_Profile,
+    Multer_Storage_Product_Images,
 }

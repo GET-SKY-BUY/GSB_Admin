@@ -1,20 +1,4 @@
 
-document.getElementById("Cloose").addEventListener("click", () => {
-    document.getElementById("Message").style.display = "none";
-});
-
-function Message(n, W) {
-    let TextMessage = document.getElementById("TextMessage");
-    document.getElementById("Message").style.display = "flex";
-    document.getElementById("MainMsg").innerHTML = n;
-    if(W=="Warning"){
-        TextMessage.style.backgroundColor = "#ffbebe";
-        
-    }else if (W == "Success") {
-        TextMessage.style.backgroundColor = "#b7ffc4";
-    }
-}
-
 
 function Search_Seller(){
     let Type = document.getElementById("Type").value;
@@ -30,23 +14,22 @@ function Search_Seller(){
     let Search_Seller = document.getElementById("Search_Seller");
     Search_Seller.disabled = true;
     let Loading = document.getElementById("Loading");
-    Loading.style,display = "flex";
+    Loading.style.display = "flex";
     
     document.getElementById("MainAddProduct").style.display = "none";
-    fetch("/product/search/seller", {
+    fetch("/products_assistant/search/seller", {
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({ Type: Type, Value: Value }), 
         method: "POST"
     }).then(res => {
+        
+        Loading.style.display = "none";
+        
+        Search_Seller.disabled = false;
         if (res.status == 200) {
             return res.json();
-        }else if(res.status == 307){
-            Message("Unauthorized access.", "Warning");
-            setTimeout(() => {
-                location.reload();
-            }, 1000);
         }else {
             return res.json().then(Error_Data => {
                 const error = new Error(Error_Data.Message);
@@ -55,9 +38,7 @@ function Search_Seller(){
             });
         };
     }).then(data=>{
-        Message("Seller found.", "Success");
-        Loading.style,display = "none";
-        Search_Seller.disabled = false;
+        Message(data.Message, "Success");
         let ID = document.getElementById("ID");
         ID.innerHTML = "<b>ID: </b>" + data.ID;
         let Name = document.getElementById("Name");
@@ -73,8 +54,6 @@ function Search_Seller(){
         
         document.getElementById("FinalDiv").innerHTML= `<button onclick="FinalSubmitBtn(${data.ID});" id="FinalSubmitBtn" type="button">Add the product</button>`;
     }).catch(error=>{
-        Loading.style,display = "none";
-        Search_Seller.disabled = false;
         if(error.Message){
             Message(error.Message, "Warning");
         }else{
@@ -424,10 +403,18 @@ function FinalSubmitBtn(n){
         Message("Please enter all the key values of the table.", "Warning");
         return;
     };
+
+    if(document.getElementById("Product_ID").value.length < 5){
+        document.getElementById("Loading").style.display = "none";
+        document.getElementById("FinalSubmitBtn").disabled = false;
+        Message("Please enter a valid Product ID.", "Warning");
+        return;
+    };
     
     
     let Send = {
         ID: n,
+        Product_ID: document.getElementById("Product_ID").value,
         Categories: Categories,
         Age_Group: Age_Group,
         Occasion: Occasion,
@@ -452,53 +439,28 @@ function FinalSubmitBtn(n){
         const element = Image_IDs[index];
         formData.append(element, document.getElementById(element).files[0]);
     };
-    fetch("/product/add",{
+    fetch("/products_assistant/add",{
         method: "POST",
         body: formData
     }).then(res=>{
+        
+        document.getElementById("Loading").style.display = "none";
+        document.getElementById("FinalSubmitBtn").disabled = false;
         if(res.status == 200){
             return res.json();
-        }else if(res.status == 307){
-            Message("Unauthorized access.", "Warning");
-            setTimeout(() => {
-                location.reload();
-            }, 1000);
-        }else{
-            return res.json().then(Error_Data => {
-                const error = new Error(Error_Data.Message);
-                error.Message = Error_Data.Message;
-                throw error;
-            });
         }
+        return res.json().then(Error_Data => {
+            const error = new Error(Error_Data.Message);
+            error.Message = Error_Data.Message;
+            throw error;
+        });
     }).then(data=>{
-        document.getElementById("Loading").style.display = "none";
-        document.getElementById("FinalSubmitBtn").disabled = false;
         Message(data.Message, "Success");
     }).catch(error=>{
-        document.getElementById("Loading").style.display = "none";
-        document.getElementById("FinalSubmitBtn").disabled = false;
         if(error.Message){
             Message(error.Message, "Warning");
         }else{
             Message("An error occurred.", "Warning");
         };
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
+};
