@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
 
-const { Sellers , Assistants, Categories } = require('../Models.js');
+const { Sellers , Assistants, Categories , Products } = require('../Models.js');
 
 const Products_Assistant_Login_Page = async ( req , res , next ) => {
     try {
@@ -94,9 +94,33 @@ const Product_Assistant_Add = async ( req , res , next ) => {
     };
 };
 
+const Product_Assistant_List = async ( req , res , next ) => {
+    try {
+        let data = await Products.find({});
+        let List = "";
+        for (let i = 0; i < data.length; i++) {
+            let Element = data[i];
+            let a =`<tr>
+                    <td><a href="/products_assistant/update/${Element._id}">${Element._id}</a></td>
+                    <td>${Element.Title}</td>
+                    <td>${Element.Price.Our_Price}</td>
+                    <td>${Element.Verified}</td>
+                </tr>`;
+            List = List + a;
+        };
+
+        return res.status(200).render("Product_Assistant_List",{
+            List:List,
+        });
+    } catch (error) {
+        next(error);
+    };
+};
+
 module.exports = {
     Products_Assistant_Login_Page,
     Products_Assistant_Login_Page_OTP,
     Product_Assistant_Home,
     Product_Assistant_Add,
+    Product_Assistant_List,
 };

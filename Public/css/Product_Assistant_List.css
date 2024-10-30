@@ -1,0 +1,36 @@
+
+.Sec {
+    margin: 30px auto;
+    margin-bottom: 100px;
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0.753);
+    border-radius: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px #aaa;
+    padding: 20px;
+}
+
+.Table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    
+}
+.Headddddddd {
+    font-weight: bold;
+}
+.Table tr td{
+    border: 1px solid #b7b7b7;
+    padding: 6px;
+    font-size: 14px;
+}
+.Table tr {
+    max-height: 50px;
+}
+.Table tr td:nth-child(4){
+    width: 150px;
+}
+
+body {
+    min-width: 600px;
+}

@@ -11,7 +11,7 @@ Products_Assistant.use(bodyParser.urlencoded({ extended: true }));
 Products_Assistant.use(cookieParser(process.env.COOKIE_SECRET));
 
 
-const { Products_Assistant_Login_Page , Products_Assistant_Login_Page_OTP , Product_Assistant_Home , Product_Assistant_Add } = require("../Controllers_Page/Products_Assistant.js");
+const { Products_Assistant_Login_Page , Products_Assistant_Login_Page_OTP , Product_Assistant_Home , Product_Assistant_Add , Product_Assistant_List } = require("../Controllers_Page/Products_Assistant.js");
 const { PRODUCTS_ASSISTANT_LOGIN , PRODUCTS_ASSISTANT_LOGIN_OTP , PRODUCTS_ASSISTANT_SEARCH_SELLER , PRODUCTS_ASSISTANT_ADD_PRODUCT } = require("../Controllers/Products_Assistant.js");
 
 const Product_Verify_Page = require("../utils/Product_Verify_Page.js");
@@ -29,4 +29,9 @@ Products_Assistant.get("/", Product_Verify_Page ,  Product_Assistant_Home );
 Products_Assistant.get("/add", Product_Verify_Page , Product_Assistant_Add );
 Products_Assistant.post("/search/seller", Product_Verify_API , PRODUCTS_ASSISTANT_SEARCH_SELLER );
 Products_Assistant.post("/add", Product_Verify_API , Multer_Storage_Product_Images , Product_Image_Processing , PRODUCTS_ASSISTANT_ADD_PRODUCT );
+Products_Assistant.get("/list", Product_Verify_Page , Product_Assistant_List );
 
+
+Products_Assistant.get("/update",async (req, res)=>{
+    res.status(307).redirect("/products_assistant");
+});
