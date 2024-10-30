@@ -98,16 +98,7 @@ const Multer_Storage_Product_Images = async (req, res, next) => {
             next();
         });
     } catch (error) {
-        async function deleteFiles(files) {
-            for (let i = 1; i <= 7; i++) {
-                let filename = files[`Image${i}`]?.[0]?.filename; // Use optional chaining to avoid errors
-                if (filename) {
-                    let ImgPath = path.join(__dirname, "../Uploaded_Product_Images", filename);
-                    await fs.unlinkSync(ImgPath);
-                };
-            };
-        };
-        deleteFiles(req.files);
+        req.Delete_Product_Images = req.files;
         next(error);
     };
 };

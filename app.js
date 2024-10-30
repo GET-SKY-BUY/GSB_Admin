@@ -111,7 +111,24 @@ app.use((req, res, next) => {
 });
 
 // Error handling middleware
-app.use((err, req, res, next) => {
+app.use(async(err, req, res, next) => {
+    if(req.Delete_Product_Images){
+        if(req.Converted_Product_Images){
+            for(let i = 0; i < req.Converted_Product_Images.length; i++){
+                let ImgPath = path.join(__dirname, "../Converted_Images", req.Converted_Product_Images[i]);
+                await fs.unlinkSync(ImgPath);
+            };
+        };
+
+        const files = Object.assign({}, req.Delete_Product_Images);
+        for (let index = 1; index < 8; index++) {
+            let Image = `Image${index}`;
+            if (files[Image] && files[Image][0]) {
+                const inputPath = path.join(__dirname, './Uploaded_Product_Images', files[Image][0].filename);
+                fs.unlinkSync(inputPath);
+            };
+        };
+    };
     const File_Path = path.join(__dirname, './Logs', 'error.log');
     fs.appendFile( File_Path, err.stack , (err) => {
         if (err) {

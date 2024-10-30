@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
-const { Sellers, Assistants } = require('../Models.js');
+const { Sellers, Assistants, Products , Qr_Codes } = require('../Models.js');
 const { Password_Compare , Password_Hash } = require('../utils/Password.js');
 const { Get_Token , Get_OTP } = require('../utils/Auth.js');
 
@@ -31,6 +31,8 @@ function createYouTubeIframe(videoUrl) {
     `;
     return iframeHTML;
 };
+
+
 
 const { Valid_Email, Valid_Password , Valid_Mobile } = require('../utils/Validations.js');
 
@@ -322,111 +324,157 @@ const PRODUCTS_ASSISTANT_SEARCH_SELLER = async ( req , res , next ) => {
 
 
 const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
+    
+    async function deleteFiles(files) {
+        for(let i = 0; i < files.length; i++){
+
+            let ImgPath = path.join(__dirname, "../Converted_Images", files[i]);
+            // console.log(ImgPath);
+            await fs.unlinkSync(ImgPath);
+        };
+    };
     try {
+
+
+
+
+        const Got_User = req.User;
+        // console.log(req.processedImages);
+        
         const body = Object.assign({}, req.body);
-        const files = Object.assign({}, req.files);
         let da = await Sellers.findOne({_id: body.ID})
         if (da) {
-            try {
-                let k = body.Keywords;
-                const Keywords = k.split(",");
-                let l = body.Video_IDs;
-                const VideoLinks = l.split(",");
-                let T = body.Table;
-                const Table1 = T.split(",");
-                let Table = [];
-                for (let i = 0; i < Table1.length; i += 2) {
-                    Table.push([Table1[i], Table1[i + 1]]);
+        
+            let k = body.Keywords;
+            const Keywords = k.split(",");
+            let l = body.Video_IDs;
+            const VideoLinks = l.split(",");
+            let T = body.Table;
+            const Table1 = T.split(",");
+            let Table = [];
+            for (let i = 0; i < Table1.length; i += 2) {
+                Table.push([Table1[i], Table1[i + 1]]);
+            };
+            
+            let URL_Generatora;
+            while(true){
+                URL_Generatora = URL_Generator();
+                let Data = await Products.findOne({URL:URL_Generator});
+                if (!Data) {
+                    break                                                
                 };
-                let ImageObj = [];
-                for (let index = 1; index < 8; index++) {
-                    let Image = `Image${index}`;
-                    if (files[Image] && files[Image][0]) {
-                        ImageObj.push(files[Image][0].filename);
-                    };
+            };
+            let _idd;
+            req.body.Product_ID = req.body.Product_ID.toUpperCase().trim();
+            
+            const Usersss = await Products.findById(req.body.Product_ID);
+            if(Usersss){
+                
+                await deleteFiles(req.processedImages);
+                return res.status(400).json({Message:"Product ID already exists."});
+            };
+
+            const Q = await Qr_Codes.findById("GSB1234");
+            const CO = Q.Not_Active_QR_Codes;
+            const COAC = Q.Active_Codes;
+            let New_Active = [];
+            for (let i = 0; i < COAC.length -1 ; i++) {
+                if (COAC[i] == req.body.Product_ID) {
+                    
+                    await deleteFiles(req.processedImages);
+                    return res.status(400).json({Message:"Product ID is already Active."});
                 };
-                let URL_Generatora;
-                while(true){
-                    URL_Generatora = URL_Generator();
-                    let Data = await Products.findOne({URL:URL_Generator});
-                    if (!Data) {
-                        break                                                
-                    };
+                New_Active.push(COAC[i]);
+            };
+            New_Active.push(req.body.Product_ID);
+            
+            let New_Non_Active = [];
+            let Found = false;
+            for (let i = 0; i < CO.length -1 ; i++) {
+                if (CO[i] == req.body.Product_ID) {
+                    Found = true;
+                    continue;
                 };
-                let _idd;
-                while(true){
-                    _idd = Product_ID();
-                    const Usersss = await Products.findOne({_id:_idd});
-                    if(!Usersss){
-                        break;
-                    };
+                New_Non_Active.push(CO[i]);
+            };
+            if (!Found) {
+                
+                await deleteFiles(req.processedImages);
+                return res.status(400).json({Message:"Product ID is not valid."});
+            };
+
+            Q.Not_Active_QR_Codes = New_Non_Active;
+            Q.Active_Codes = New_Active;
+
+            _idd = req.body.Product_ID;
+
+
+            
+            
+            if (body.Title.length >= 3 &&
+                body.Product_ID.length >= 3 &&
+                body.Description.length >= 3 &&
+                body.Selling_Price.length >= 1 &&
+                body.Categories.length >= 1 &&
+                body.Age_Group.length >= 1 &&
+                body.Occasion.length >= 1 &&
+                body.Gender.length >= 2 &&
+                body.Brand.length >= 1 &&
+                body.MRP.length >= 1) {
+                const Product = {
+                    _id: _idd,
+                    URL: URL_Generatora,
+                    Verified: "No",
+                    Seller_ID: da._id,
+                    Assitant_ID: Got_User._id,
+                    Title: body.Title,
+                    Description: body.Description,
+                    Price: {
+                        MRP: Number(body.MRP),
+                        Selling_Price: Number(body.Selling_Price),
+                        Our_Price: 0,
+                    },
+                    Categories: body.Categories,
+                    Age_Group: body.Age_Group,
+                    Occasion: body.Occasion,
+                    Gender: body.Gender,
+                    Delivery: 0,
+                    Quantity: Number(body.Quantity),
+                    Brand: body.Brand,
+                    Keywords: Keywords,
+                    Table: Table,
+                    Image_Videos: {
+                        Image: req.processedImages,
+                        Video: VideoLinks,
+                    },
+                    GSBCoins: 0,
+                    COD: "No",
+                    Reviews: [],
+                    QnA: [],
+                    Orders: [],
                 };
-                if (body.Title.length >= 3 &&
-                    body.Description.length >= 3 &&
-                    body.Selling_Price.length >= 1 &&
-                    body.Categories.length >= 2 &&
-                    body.Age_Group.length >= 2 &&
-                    body.Occasion.length >= 2 &&
-                    body.Gender.length >= 2 &&
-                    body.Brand.length >= 1 &&
-                    body.MRP.length >= 1) {
-                    const Product = {
-                        _id: _idd,
-                        URL: URL_Generatora,
-                        Verified: "No",
-                        Seller_ID: da._id,
-                        Assitant_ID: GetUser._id,
-                        Title: body.Title,
-                        Description: body.Description,
-                        Price: {
-                            MRP: Number(body.MRP),
-                            Selling_Price: Number(body.Selling_Price),
-                            Our_Price: 0,
-                        },
-                        Categories: body.Categories,
-                        Age_Group: body.Age_Group,
-                        Occasion: body.Occasion,
-                        Gender: body.Gender,
-                        Delivery: 0,
-                        Quantity: Number(body.Quantity),
-                        Brand: body.Brand,
-                        Keywords: Keywords,
-                        Table: Table,
-                        Image_Videos: {
-                            Image: ImageObj,
-                            Video: VideoLinks,
-                        },
-                        GSBmail: 0,
-                        COD: "No",
-                        Reviews: [],
-                        QnA: [],
-                        Orders: [],
-                    };
-                    const SS = new Products(Product);
-                    await SS.save().then(async()=>{
-                        let Lisss = da.Product_List;
-                        Lisss.push(Product._id);
-                        await Seller_Profile.updateOne({_id:da._id},{$set:{
-                            Product_List:Lisss,
-                        }});
+                const SS = new Products(Product);
+                await SS.save().then(async()=>{
+                    let Lisss = da.Product_List;
+                    Lisss.push(Product._id);
+                    da.Product_List = Lisss;
+                    await da.save().then(()=>{
                         return res.status(200).json({Message:"Successfully added."});
-                    }).catch(async ()=>{
-                        await deleteFiles(files);
-                        return res.status(400).json({Message:"Unable to add product."});
                     });
-                }else{
-                    await deleteFiles(files);
-                    return res.status(400).json({Message:"Unauthorised access."});
-                };
-            }catch(error) {
-                await deleteFiles(files);
-                return res.status(400).json({Message:"Enable to add product."});
+                }).catch(async ()=>{
+                    await deleteFiles(req.processedImages);
+                    return res.status(400).json({Message:"Unable to add product."});
+                });
+            }else{
+                await deleteFiles(req.processedImages);
+                return res.status(400).json({Message:"Unauthorised access."});
             };
         }else{
-            await deleteFiles(files);
+            await deleteFiles(req.processedImages);
             return res.status(400).json({Message:"Invalid file format or size."});
         };
     } catch (error) {
+        await deleteFiles(req.processedImages);
         next(error);
     };
 };
