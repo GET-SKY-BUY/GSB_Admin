@@ -117,10 +117,113 @@ const Product_Assistant_List = async ( req , res , next ) => {
     };
 };
 
+const Product_Assistant_Logout = async ( req , res , next ) => {
+    try {
+        res.clearCookie("PRODUCT_TOKEN",{
+            domain: process.env.PROJECT_DOMAIN,
+            path: "/",
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            signed: true,
+            sameSite: "strict",
+        });
+
+        const User = req.User;
+
+        User.LoggedIn = {
+            Token: "",
+            Created: Date()
+        };
+        await User.save().then(()=>{
+            return res.status(200).redirect("/products_assistant/login");
+        });
+        
+    } catch (error) {
+        next(error);
+    };
+};
+
+const Product_Assistant_Update = async ( req , res , next ) => {
+    try {
+        const Got_User = req.User;
+        const ID = req.params.ID;
+        let data = await Products.findById(ID).populate("Seller_ID").exec();
+        if(data){
+            let a;
+            let Table = data.Table;
+            let Table1 = "";
+            let i = 0;
+            for (i = 0; i < Table.length; i++) {
+                let Key = Table[i][0];
+                let Val = Table[i][1];
+                a = `
+                    <div class="Table_Main_Box">
+
+                        <div class="Div_Input2">
+                            <input value="${Key}" class="InputText2" id="Key${i}" title="Key" type="text" placeholder=" ">
+                            <label class="Div_Input_Label2" for="Key${i}">Key</label>
+                        </div>
+                        <div class="Div_Input2">
+                            <input value="${Val}" class="InputText2" id="Value${i}" title="Value" type="text" placeholder=" ">
+                            <label class="Div_Input_Label2" for="Value${i}">Value</label>
+                        </div>
+                    </div>`;
+                Table1 = Table1 + a;
+            };
+            let Image = data.Image_Videos.Image;
+            let Image1 = "";
+            let x = 0;
+            for (let i = 0; i < Image.length; i++) {
+                let a = `
+                    <div id="DivImage${i}">
+                        <img src="/products/img/${Image[i]}" alt="Image" class="Images_Videos">
+                        <button class="DeleteImage" type="button" onclick="DeleteImage('${Image[i]}',${i})">Delete</button>
+                    </div>
+                `;
+                x = i+1;
+                Image1 = Image1 + a;
+            };
+
+            
+            let Videos = data.Image_Videos.Video;
+            let video1 = "";
+            let y = 0;
+            // console.log(Videos);
+            if (Videos.length > 0 && Videos[0] != "") {
+                for (let i = 0; i < Videos.length; i++) {
+                    y++;
+                    let iframe = createYouTubeIframe(Videos[i]);
+                    video1 = video1 + `<div id="DivVideo${i}">`  + iframe + 
+                    `<button class="DeleteVideos" type="button" onclick="DeleteVideos('${Videos[i]}',${i})">Delete</button> </div>`;
+                }
+            }
+            if(process.env.NODE_ENV == "development"){
+                data["Protocol"] = "http";
+            }else{
+                data["Protocol"] = "https";
+            }
+            data["Domain"] = process.env.PROJECT_DOMAIN;
+            data["N"] = i-1;
+            data["Image_Len"] = x;
+            data["Video_Len"] = y;
+            data["B"] = Table1;
+            data["Images"] = Image1;
+            data["Videos"] = video1;
+            return res.status(200).render("Product_Assistant_Update", data);
+        }else{
+            return res.status(404).send("Product not found.");
+        }
+    }catch (error) {
+        next(error);
+    };
+};
+
 module.exports = {
     Products_Assistant_Login_Page,
     Products_Assistant_Login_Page_OTP,
     Product_Assistant_Home,
     Product_Assistant_Add,
     Product_Assistant_List,
+    Product_Assistant_Logout,
+    Product_Assistant_Update,
 };

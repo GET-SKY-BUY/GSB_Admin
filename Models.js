@@ -490,7 +490,7 @@ const Product_Schema = new Schema({
     },
     Seller_ID:{
         type: String,
-        ref: 'sellers',
+        ref: 'Sellers',
     },
     Assistant_ID:{
         type:String,

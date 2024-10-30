@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product add | GET SKY BUY</title>
+    <meta name="robots" content="nofollow, noindex">
+    <link rel="shortcut icon" href="/files/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/files/css/Product_Assistant_Update.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    
+
+</head>
+<body>
+    include Header_Product.pug
+
+    
+    <main>
+        <section class="Sec">
+
+
+            <div id="MainAddProduct">
+                <p><b>Product for this user: #{_id}</b></p>
+                
+                <p><b>Product Link:</b> <a target="__blank" href="#{Protocol}://#{Domain}/products/s/#{URL}">#{Protocol}://#{Domain}/products/s/#{URL}</a></p>
+
+                <p><b>Verified: </b>#{Verified}</p>
+                <hr>
+                <p><b>Owner name: </b>#{Seller_ID.Basic_Details.First_Name + " " + Seller_ID.Basic_Details.Last_Name}</p>
+                <p><b>Owner Number: </b>#{Seller_ID.Basic_Details.Mobile_Number}</p>
+                <p><b>Owner Email: </b>#{Seller_ID.Email}</p>
+                <div class="Div_Input1">
+                    <select class="InputText1 Input_Select" id="Categories">
+                        <option value="#{Categories}">#{Categories}</option>
+                        <option disabled>---- Select Option ----</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Home">Home</option>
+                        <option value="Appliances">Appliances</option>
+                        <option value="Books">Books</option>
+                        <option value="Toys">Toys</option>
+                        <option value="Others">Others</option>
+                    </select>
+                    <label class="Div_Input_Label1" for="Categories">Categories</label>
+                </div>
+
+                
+                <div class="Div_Input1">
+                    <select class="InputText1 Input_Select" id="Gender">
+                        <option value="#{Gender}">#{Gender}</option>
+                        <option disabled>---- Select Gender ----</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Both">Both</option>
+                    </select>
+                    <label class="Div_Input_Label1" for="Gender">Gender</label>
+                </div>
+
+                <div class="Div_Input1">
+                    <select class="InputText1 Input_Select" id="Age_Group">
+                        
+                        <option value="#{Age_Group}">#{Age_Group}</option>
+                        <option disabled>---- Select Age Group ----</option>
+                        <option value="Universal">Universal</option>
+                        <option value="Kids">Kids</option>
+                        <option value="Teens">Teens</option>
+                        <option value="Adults">Adults</option>
+                        <option value="Aged">Aged</option>
+                    </select>
+                    <label class="Div_Input_Label1" for="Age_Group">Age group</label>
+                </div>
+                
+                <div class="Div_Input1">
+                    <select class="InputText1 Input_Select" id="Occasion">
+                        <option value="#{Occasion}">#{Occasion}</option>
+                        <option disabled>---- Select Occasion ----</option>
+                        <option value="Universal">Universal</option>
+                        <option value="Casual">Casual</option>
+                        <option value="Formal">Formal</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Party">Party</option>
+                        <option value="Office">Office</option>
+                    </select>
+                    <label class="Div_Input_Label1" for="Occasion">Occasion</label>
+                </div>
+
+
+                <div class="Div_Input1">
+                    <input value="#{Title}" class="InputText1" id="Title" title="Title" type="text" placeholder=" ">
+                    <label class="Div_Input_Label1" for="Title">Title</label>
+                </div>
+                <div class="Div_Input1">
+                    <textarea class="InputText1" id="Description" placeholder=" ">#{Description}</textarea>
+                    <label class="Div_Input_Label1" for="Description">Description</label>
+                </div>
+
+                <div class="Div_Input1">
+                    <input value="#{Price.MRP}" class="InputText1" id="MRP" title="MRP" type="text" placeholder=" ">
+                    <label class="Div_Input_Label1" for="MRP">MRP</label>
+                </div>
+
+                <div class="Div_Input1">
+                    <input value="#{Price.Selling_Price}" class="InputText1" id="Seller_Selling_Price" title="Seller selling price" type="text" placeholder=" ">
+                    <label class="Div_Input_Label1" for="Seller_Selling_Price">Seller selling price</label>
+                </div>
+
+
+                <div class="Div_Input1">
+                    <input value="#{Keywords.join(', ')}" class="InputText1" id="Keywords" title="Keywords" type="text" placeholder=" ">
+                    <label class="Div_Input_Label1" for="Keywords">Keywords</label>
+                </div>
+
+
+                
+
+
+                <div class="Div_Input1">
+                    <input value="#{Brand}" class="InputText1" id="Brand" title="Brand" type="text" placeholder=" ">
+                    <label class="Div_Input_Label1" for="Brand">Brand</label>
+                </div>
+
+
+                
+
+                
+
+
+                <div class="Div_Input1">
+                    <input value="#{Quantity}" min="1" class="InputText1" id="Quantity" title="Quantity" type="text" placeholder=" ">
+                    <label class="Div_Input_Label1" for="Quantity">Quantity</label>
+                </div>
+
+
+                
+
+
+
+                <h4>Table of content</h4>
+                
+
+                <div id="Table">
+
+                    | !{B}
+
+
+                    
+                    
+                </div>
+
+                <div id="Btnnnnnn">
+                    <button id="AddMore" onclick="AddMore(#{N});" type="button">Add More</button>
+                </div>
+
+
+
+
+                <div>
+
+                    <div id="CenterBox1111">
+                        <div class="CenterBox1111111111">
+
+                            <h4>Image/Video</h4>
+                            <div id="Add_ImageDiv">
+                                <button onclick="Add_Image(#{Image_Len});" id="Add_Image" type="button">Image</button>
+                            </div>
+                            <div id="Add_VideoDiv">
+                                <button onclick="Add_Video(#{Video_Len});" id="Add_Video" type="button">Video</button>
+                            </div>
+                            <button id="Cancel" type="button">Cancel</button>
+                        </div>
+                    </div>
+
+                    <h4>Images/Video Section</h4>
+                    <div class="III" id="III">
+                        | !{Images}
+                        | !{Videos}
+                    </div>
+                    <button onclick="Add_Image_Video_Btn();" type="button" id="Add_Image_Video_Btn">Add Image/Video</button>
+                    <div id="Images_Video">
+                        
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+                <div id="FinalDiv">
+                    <button onclick="FinalSubmitBtn('#{_id}');" id="FinalSubmitBtn" type="button">Update the product</button>
+                </div>
+
+            </div>
+
+
+
+        </section>
+    </main>
+    <script src="/files/js/Message.js"></script>
+    <script src="/files/js/Product_Assistant_Update.js"></script>
+</body>
+</html>

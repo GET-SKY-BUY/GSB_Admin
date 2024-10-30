@@ -37,6 +37,7 @@ app.set('views', [
 
 // Setup static files
 app.use("/files", express.static(path.join(__dirname, './Public')));
+app.use("/products/img/", express.static(path.join(__dirname, './Converted_Images')));
 
 // Home route
 app.get("/", (req, res) => {

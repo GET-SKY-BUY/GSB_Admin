@@ -510,10 +510,15 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
     };
 };
 
+const PRODUCTS_ASSISTANT_UPDATE = async ( req , res , next ) => {
+
+};
+
 
 module.exports = {
     PRODUCTS_ASSISTANT_LOGIN,
     PRODUCTS_ASSISTANT_LOGIN_OTP,
     PRODUCTS_ASSISTANT_SEARCH_SELLER,
     PRODUCTS_ASSISTANT_ADD_PRODUCT,
+    PRODUCTS_ASSISTANT_UPDATE,
 };
