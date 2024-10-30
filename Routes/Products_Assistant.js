@@ -31,7 +31,7 @@ Products_Assistant.post("/search/seller", Product_Verify_API , PRODUCTS_ASSISTAN
 Products_Assistant.post("/add", Product_Verify_API , Multer_Storage_Product_Images , Product_Image_Processing , PRODUCTS_ASSISTANT_ADD_PRODUCT );
 Products_Assistant.get("/list", Product_Verify_Page , Product_Assistant_List );
 Products_Assistant.get("/update/:ID", Product_Verify_Page , Product_Assistant_Update );
-Products_Assistant.post("/update", Product_Verify_Page , PRODUCTS_ASSISTANT_UPDATE );
+Products_Assistant.post("/update", Product_Verify_API , Multer_Storage_Product_Images , Product_Image_Processing , PRODUCTS_ASSISTANT_UPDATE );
 
 Products_Assistant.get("/logout", Product_Verify_Page , Product_Assistant_Logout );
 

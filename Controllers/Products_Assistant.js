@@ -511,7 +511,85 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
 };
 
 const PRODUCTS_ASSISTANT_UPDATE = async ( req , res , next ) => {
+    
+    async function deleteFiles(files) {
+        for(let i = 0; i < files.length; i++){
 
+            let ImgPath = path.join(__dirname, "../Converted_Images", files[i]);
+            // console.log(ImgPath);
+            await fs.unlinkSync(ImgPath);
+        };
+    };
+    try {
+
+
+
+
+        const Got_User = req.User;
+        const body = Object.assign({}, req.body);
+        let Prod = await Products.findById(body.ID)
+        if (Prod) {
+        
+
+
+
+
+
+
+            
+
+            if (body.Title.length >= 3 &&
+                body.Product_ID.length >= 3 &&
+                body.Description.length >= 3 &&
+                body.Selling_Price.length >= 1 &&
+                body.Categories.length >= 1 &&
+                body.Age_Group.length >= 1 &&
+                body.Occasion.length >= 1 &&
+                body.Gender.length >= 2 &&
+                body.Brand.length >= 1 &&
+                body.MRP.length >= 1) {
+                
+                    
+                    
+                await Products.updateOne({_id: Prod._id},{ $set: {
+
+                            
+                    Categories: body.Categories,
+                    Gender: body.Gender,
+                    Verified: "No",
+                    Occasion: body.Occasion,
+                    Age_Group: body.Age_Group,
+                    Title: body.Title,
+                    Description: body.Description,
+                    Price: {
+                        MRP: Number(body.MRP),
+                        Selling_Price: Number(body.Selling_Price),
+                        Our_Price: Prod.Price.Our_Price,
+                    },
+                    Keywords: Keywords,
+                    Brand: body.Brand,
+                    Table: Table,
+                    Image_Videos: {
+                        Image: Final_Image,
+                        Video: New___VIDEO,
+                    },
+
+                    
+                }}).then(async()=>{
+                    return res.status(200).json({Message:"Updated successfully."});
+                })
+            }else{
+                await deleteFiles(req.processedImages);
+                return res.status(400).json({Message:"Unauthorised access."});
+            };
+        }else{
+            await deleteFiles(req.processedImages);
+            return res.status(400).json({Message:"Product ID."});
+        };
+    } catch (error) {
+        await deleteFiles(req.processedImages);
+        next(error);
+    };
 };
 
 
