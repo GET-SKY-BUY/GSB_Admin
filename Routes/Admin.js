@@ -28,11 +28,10 @@ Admin.get("/", Verify_User_Page , ADMIN_HOME);
 Admin.get("/list", Verify_User_Page , ADMIN_ASSISTANT_LIST);
 Admin.get("/search", Verify_User_Page , ADMIN_ASSISTANT_SEARCH);
 Admin.get("/update/:ID", Verify_User_Page , ADMIN_ASSISTANT_UPDATE);
-Admin.get("/update/", Verify_User_Page , ( req , res , next) =>{
-    res.redirect("/admin/search");
-});
 Admin.get("/logout/", Verify_User_Page , ADMIN_LOGOUT );
-
 Admin.post("/assistant/add", Verify_User_API , Admin_Assistant_Add );
 Admin.post("/assistant/search", Verify_User_API , Admin_Search_Assistant );
 Admin.put("/assistant/update", Verify_User_API  , Admin_Assistant_Update );
+Admin.get("/update/", Verify_User_Page , ( req , res , next) =>{
+    res.redirect("/admin/search");
+});

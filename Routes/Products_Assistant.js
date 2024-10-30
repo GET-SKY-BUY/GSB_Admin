@@ -24,7 +24,6 @@ Products_Assistant.get("/login", Products_Assistant_Login_Page );
 Products_Assistant.post("/login", PRODUCTS_ASSISTANT_LOGIN );
 Products_Assistant.get("/login/otp", Products_Assistant_Login_Page_OTP );
 Products_Assistant.post("/login-verify-otp", PRODUCTS_ASSISTANT_LOGIN_OTP );
-
 Products_Assistant.get("/", Product_Verify_Page ,  Product_Assistant_Home );
 Products_Assistant.get("/add", Product_Verify_Page , Product_Assistant_Add );
 Products_Assistant.post("/search/seller", Product_Verify_API , PRODUCTS_ASSISTANT_SEARCH_SELLER );
@@ -32,9 +31,7 @@ Products_Assistant.post("/add", Product_Verify_API , Multer_Storage_Product_Imag
 Products_Assistant.get("/list", Product_Verify_Page , Product_Assistant_List );
 Products_Assistant.get("/update/:ID", Product_Verify_Page , Product_Assistant_Update );
 Products_Assistant.post("/update", Product_Verify_API , Multer_Storage_Product_Images , Product_Image_Processing , PRODUCTS_ASSISTANT_UPDATE );
-
 Products_Assistant.get("/logout", Product_Verify_Page , Product_Assistant_Logout );
-
 Products_Assistant.get("/update",async (req, res)=>{
     res.status(307).redirect("/products_assistant");
 });

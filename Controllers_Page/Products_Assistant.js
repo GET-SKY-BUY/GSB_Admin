@@ -5,6 +5,19 @@ const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
 
 const { Sellers , Assistants, Categories , Products } = require('../Models.js');
 
+function createYouTubeIframe(videoUrl) {
+    const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))([^&\n]{11})/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : null;
+    if (!videoId) {
+        return null;
+    };
+    const iframeHTML = `
+        <iframe class="IframeVideo" src="https://www.youtube.com/embed/${videoId}?rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    `;
+    return iframeHTML;
+};
+
+
 const Products_Assistant_Login_Page = async ( req , res , next ) => {
     try {
         const Token = req.signedCookies.PRODUCT_TOKEN;
@@ -209,10 +222,24 @@ const Product_Assistant_Update = async ( req , res , next ) => {
             data["B"] = Table1;
             data["Images"] = Image1;
             data["Videos"] = video1;
+            let qa = await Categories.findById("GSB-Categories");
+            if(!qa){
+                let b = new Categories({
+                    _id: "GSB-Categories",
+                    Categories: [],
+                });
+                await b.save();
+                return res.status(404).send("Please try again");
+            };
+            let AA = "";
+            qa.Categories.forEach(element => {
+                AA += `<option value="${element}">${element}</option>`;
+            });
+            data["Categories_List"] = AA;
             return res.status(200).render("Product_Assistant_Update", data);
         }else{
             return res.status(404).send("Product not found.");
-        }
+        };
     }catch (error) {
         next(error);
     };

@@ -35,10 +35,7 @@ Sellers_Assistant.get("/shop/status", Seller_Verify_User_Page , Seller_Assistant
 Sellers_Assistant.put("/shop/status", Seller_Verify_User_API , SELLER_ASSISTANT_SEARCH_SHOP_STATUS );
 Sellers_Assistant.get("/authorised/seller_documents/:File", Seller_Verify_User_Page , Seller_Assistant_Files_View );
 Sellers_Assistant.get("/logout", Seller_Verify_User_Page , Seller_Assistant_Logout );
-
-
+Sellers_Assistant.get("/issue", (req, res)=>{res.status(404).send("Coming soon")});
 Sellers_Assistant.get("/update", async (req, res) => {
     res.status(301).redirect("/sellers_assistant/search");
 });
-
-Sellers_Assistant.get("/issue", (req, res)=>{res.status(404).send("Coming soon")});
