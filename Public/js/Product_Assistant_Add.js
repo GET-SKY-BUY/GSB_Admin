@@ -395,6 +395,11 @@ function FinalSubmitBtn(n){
         }
         x++;
     };
+    if (Video_IDs.length == 1) {
+        if(Video_IDs[0] == ""){
+            Video_IDs = [];
+        };
+    };
     if (One != 1) {
         return;
     }

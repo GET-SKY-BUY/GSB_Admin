@@ -348,7 +348,7 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
             let k = body.Keywords;
             const Keywords = k.split(",");
             let l = body.Video_IDs;
-            const VideoLinks = l.split(",");
+            let VideoLinks = l.split(",");
             let T = body.Table;
             const Table1 = T.split(",");
             let Table = [];
@@ -422,8 +422,25 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
             _idd = req.body.Product_ID;
 
 
-            
-            
+            function CheckURL(videoUrl) {
+                const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))([^&\n]{11})/);
+                const videoId = videoIdMatch ? videoIdMatch[1] : null;
+                if (!videoId) {
+                    return null;
+                };
+                return videoUrl;
+            };
+            if(VideoLinks.length > 0){
+                if(VideoLinks[0] == ''){
+                    VideoLinks = [];
+                };
+            };
+            VideoLinks.forEach(async element => {
+                if (CheckURL(element)) {
+                    await deleteFiles(req.processedImages);
+                    return res.status(400).json({Message:"Invalid Youtube URL."});
+                };
+            });
             if (body.Title.length >= 3 &&
                 body.Product_ID.length >= 3 &&
                 body.Description.length >= 3 &&
