@@ -467,6 +467,20 @@ const Product_Schema = new Schema({
         unique: true,
         
     },
+    Varieties:[
+        {
+            _id: false,
+            Type: {
+                trim: true,
+                type: String,
+                maxlength: 15,
+            },
+            Quantity:{
+                type:Number,
+                min: 1,
+            },
+        },
+    ],
     Verified:{
         type:String,
         required: true,
@@ -512,11 +526,7 @@ const Product_Schema = new Schema({
     Delivery:{
         type:Number,
     },
-    
-    Quantity:{
-        type:Number,
-    },
-    
+
     GSBCoins:{
         type:Number,
         default: 0,

@@ -139,6 +139,26 @@ function TableInput() {
         index++;
     };
     return jsonResult;
+};
+
+function Var() {
+    const jsonResult = [];
+    let index = 0;
+    while (document.getElementById(`V_Type${index}`) && document.getElementById(`V_Qty${index}`)) {
+        const key = document.getElementById(`V_Type${index}`).value;
+        const Value = document.getElementById(`V_Qty${index}`).value;
+        if (key == "") {
+            Message("Input fields can not be empty", "Warning");
+            return null;
+        };
+        let New = {
+            Type: key,
+            Quantity: Value
+        };
+        jsonResult.push(New);
+        index++;
+    };
+    return jsonResult;
 }
 
 
@@ -321,22 +341,6 @@ function FinalSubmitBtn(n){
         return;
     }
     
-    let Quantity = document.getElementById("Quantity").value;
-    try {
-        if(Quantity == "" || Number(Quantity) < 1){
-            document.getElementById("Loading").style.display = "none";
-            document.getElementById("FinalSubmitBtn").disabled = false;
-            Message("Please enter a valid Quantity.", "Warning");
-            return;
-        }
-        Quantity = Number(Quantity);
-    } catch (error) {
-        document.getElementById("Loading").style.display = "none";
-        document.getElementById("FinalSubmitBtn").disabled = false;
-        Message("Please enter a valid Quantity.", "Warning");
-        return;
-        
-    }
     
     
 
@@ -403,6 +407,14 @@ function FinalSubmitBtn(n){
         Message("Please enter all the key values of the table.", "Warning");
         return;
     };
+    let zz1 = Var();
+    if(!zz1){
+        
+        document.getElementById("Loading").style.display = "none";
+        document.getElementById("FinalSubmitBtn").disabled = false;
+        Message("Please enter all the key values of the Varieties.", "Warning");
+        return;
+    };
 
     if(document.getElementById("Product_ID").value.length < 5){
         document.getElementById("Loading").style.display = "none";
@@ -425,8 +437,8 @@ function FinalSubmitBtn(n){
         Selling_Price: Seller_Selling_Price,
         Keywords: Keywords,
         Brand: Brand,
-        Quantity: Quantity,
         Table: zz,
+        Varieties: JSON.stringify({A:zz1}),
         Video_IDs: Video_IDs,
     };
     let formData = new FormData();
@@ -464,3 +476,24 @@ function FinalSubmitBtn(n){
         };
     });
 };
+
+
+
+
+function V_BTN(n){
+    let NewElement = document.createElement("div");
+    NewElement.innerHTML = `
+        <div class="Div_Input2">
+            <input class="InputText2" id="V_Type${n+1}" title="Varities type" type="text" placeholder=" ">
+            <label class="Div_Input_Label2" for="V_Type${n+1}">Type</label>
+        </div>
+        <div class="Div_Input2">
+            <input class="InputText2" id="V_Qty${n+1}" title="Quantities" type="number" placeholder=" ">
+            <label class="Div_Input_Label2" for="V_Qty${n+1}">Quantity</label>
+        </div>
+    `;
+    document.getElementById("Varities_Box").appendChild(NewElement);
+    document.getElementById("Varities_Btn_Box").innerHTML = `
+        <button type="button" id="V_BTN" onclick="V_BTN(${n+1});">Add more</button>
+    `;
+}

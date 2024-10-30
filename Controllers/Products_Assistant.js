@@ -355,6 +355,18 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
             for (let i = 0; i < Table1.length; i += 2) {
                 Table.push([Table1[i], Table1[i + 1]]);
             };
+            let Varieties = [];
+            // console.log(body.Varieties);
+            let V = JSON.parse(body.Varieties);
+            V = V.A;
+            for (let i = 0; i < V.length; i++) {
+                Varieties.push({
+                    Type: V[i].Type,
+                    Quantity: Number(V[i].Quantity),
+                });
+            };
+
+            // console.log(Varieties);
             
             let URL_Generatora;
             while(true){
@@ -364,6 +376,7 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
                     break                                                
                 };
             };
+
             let _idd;
             req.body.Product_ID = req.body.Product_ID.toUpperCase().trim();
             
@@ -378,7 +391,7 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
             const CO = Q.Not_Active_QR_Codes;
             const COAC = Q.Active_Codes;
             let New_Active = [];
-            for (let i = 0; i < COAC.length -1 ; i++) {
+            for (let i = 0; i < COAC.length; i++) {
                 if (COAC[i] == req.body.Product_ID) {
                     
                     await deleteFiles(req.processedImages);
@@ -390,7 +403,7 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
             
             let New_Non_Active = [];
             let Found = false;
-            for (let i = 0; i < CO.length -1 ; i++) {
+            for (let i = 0; i < CO.length; i++) {
                 if (CO[i] == req.body.Product_ID) {
                     Found = true;
                     continue;
@@ -434,6 +447,7 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
                         Selling_Price: Number(body.Selling_Price),
                         Our_Price: 0,
                     },
+                    Varieties: Varieties,
                     Categories: body.Categories,
                     Age_Group: body.Age_Group,
                     Occasion: body.Occasion,
