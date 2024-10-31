@@ -190,7 +190,7 @@ const Product_Assistant_Update = async ( req , res , next ) => {
                 let a = `
                     <div id="DivImage${i}">
                         <img src="/products/img/${Image[i]}" alt="Image" class="Images_Videos">
-                        <button class="DeleteImage" type="button" onclick="DeleteImage('${Image[i]}',${i})">Delete</button>
+                        <button class="DeleteImage" type="button" onclick="DeleteImage('${Image[i]}',${i},'${data._id}')">Delete</button>
                     </div>
                 `;
                 x = i+1;
@@ -207,7 +207,7 @@ const Product_Assistant_Update = async ( req , res , next ) => {
                     y++;
                     let iframe = createYouTubeIframe(Videos[i]);
                     video1 = video1 + `<div id="DivVideo${i}">`  + iframe + 
-                    `<button class="DeleteVideos" type="button" onclick="DeleteVideos('${Videos[i]}',${i})">Delete</button> </div>`;
+                    `<button class="DeleteVideos" type="button" onclick="DeleteVideos('${Videos[i]}',${i},'${data._id}')">Delete</button> </div>`;
                 }
             }
             if(process.env.NODE_ENV == "development"){

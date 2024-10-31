@@ -12,7 +12,7 @@ Products_Assistant.use(cookieParser(process.env.COOKIE_SECRET));
 
 
 const { Products_Assistant_Login_Page , Products_Assistant_Login_Page_OTP , Product_Assistant_Home , Product_Assistant_Add , Product_Assistant_List , Product_Assistant_Logout , Product_Assistant_Update } = require("../Controllers_Page/Products_Assistant.js");
-const { PRODUCTS_ASSISTANT_LOGIN , PRODUCTS_ASSISTANT_LOGIN_OTP , PRODUCTS_ASSISTANT_SEARCH_SELLER , PRODUCTS_ASSISTANT_ADD_PRODUCT , PRODUCTS_ASSISTANT_UPDATE } = require("../Controllers/Products_Assistant.js");
+const { PRODUCTS_ASSISTANT_LOGIN , PRODUCTS_ASSISTANT_LOGIN_OTP , PRODUCTS_ASSISTANT_SEARCH_SELLER , PRODUCTS_ASSISTANT_ADD_PRODUCT , PRODUCTS_ASSISTANT_UPDATE , PRODUCTS_ASSISTANT_UPDATE_DELETE , PRODUCTS_ASSISTANT_UPDATE_DELETE_VIDEOS } = require("../Controllers/Products_Assistant.js");
 
 const Product_Verify_Page = require("../utils/Product_Verify_Page.js");
 const Product_Verify_API = require("../utils/Product_Verify_API.js");
@@ -31,6 +31,8 @@ Products_Assistant.post("/add", Product_Verify_API , Multer_Storage_Product_Imag
 Products_Assistant.get("/list", Product_Verify_Page , Product_Assistant_List );
 Products_Assistant.get("/update/:ID", Product_Verify_Page , Product_Assistant_Update );
 Products_Assistant.post("/update", Product_Verify_API , Multer_Storage_Product_Images , Product_Image_Processing , PRODUCTS_ASSISTANT_UPDATE );
+Products_Assistant.delete("/update", Product_Verify_API , PRODUCTS_ASSISTANT_UPDATE_DELETE );
+Products_Assistant.delete("/update/vid", Product_Verify_API , PRODUCTS_ASSISTANT_UPDATE_DELETE_VIDEOS );
 Products_Assistant.get("/logout", Product_Verify_Page , Product_Assistant_Logout );
 Products_Assistant.get("/update",async (req, res)=>{
     res.status(307).redirect("/products_assistant");

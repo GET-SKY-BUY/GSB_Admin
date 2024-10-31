@@ -349,7 +349,7 @@ function FinalSubmitBtn(n){
     let One = 1;
     let x = 1;
     let Image_IDs = [];
-    const maxSize = 3 * 1024 * 1024; 
+    const maxSize = 5 * 1024 * 1024; 
     while(document.getElementById(`Image${x}`)){
         if(document.getElementById(`Image${x}`).files[0]){
             if(document.getElementById(`Image${x}`).files[0].size > maxSize){

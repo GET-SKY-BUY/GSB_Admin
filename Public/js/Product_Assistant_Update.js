@@ -116,48 +116,105 @@ function CheckURL(videoUrl) {
 
 
 
-let Imagesaaaaa = [];
 
-
-function DeleteImage(n, i) {
-    if (n) {
-        Imagesaaaaa.push(n);
-        
-        let III = document.getElementById(`III`);
-        let INLEN = III.getElementsByTagName("img").length - 1;
-        // if (INLEN <= 1) {
-        //     INLEN = 1;
-        // }
-        let Z = `<button onclick="Add_Image(${INLEN});" id="Add_Image" type="button">Image</button>`
-        document.getElementById("Add_ImageDiv").innerHTML = Z;
-        document.getElementById(`DivImage${i}`).remove();
+function DeleteImage(n, i, A) {
+    if(!confirm("Are you sure you want to delete this image?")){
         return;
     };
-    Message("Unauthorized access.", "Warning");
+    if (n) {
+        document.getElementById("Loading").style.display = "flex";
+
+        fetch("/products_assistant/update", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                ID: A,
+                Image: n
+            })
+        }).then(res => {
+            
+            document.getElementById("Loading").style.display = "none";
+            if (res.status == 200) {
+                return res.json();
+            } else {
+                return res.json().then(Error_Data => {
+                    const error = new Error(Error_Data.Message);
+                    error.Message = Error_Data.Message;
+                    throw error;
+                });
+            }
+        }).then(data => {
+            Message(data.Message, "Success");
+            let III = document.getElementById(`III`);
+            let INLEN = III.getElementsByTagName("img").length - 1;
+            // if (INLEN <= 1) {
+            //     INLEN = 1;
+            // }
+            let Z = `<button onclick="Add_Image(${INLEN});" id="Add_Image" type="button">Image</button>`
+            document.getElementById("Add_ImageDiv").innerHTML = Z;
+            document.getElementById(`DivImage${i}`).remove();
+
+        }).catch(error => {
+            if (error.Message) {
+                Message(error.Message, "Warning");
+            } else {
+                Message("An error occurred.", "Warning");
+            };
+        });
+    };
 }
 
-let Videosaaaa = [];
-function DeleteVideos(n, i) {
-    if (n) {
-        Videosaaaa.push(n);
-        
-        let III = document.getElementById(`III`);
-        let INLEN = III.getElementsByTagName("iframe").length - 1;
-
-        let Z = `<button onclick="Add_Video(${INLEN});" id="Add_Video" type="button">Video</button>`;
-        document.getElementById("Add_VideoDiv").innerHTML = Z;
-        document.getElementById(`DivVideo${i}`).remove();
+function DeleteVideos(n, i, A) {
+    if(!confirm("Are you sure you want to delete this video?")){
         return;
     };
-    Message("Unauthorized access.", "Warning");
+    if (n) {
+        
+        
+        document.getElementById("Loading").style.display = "flex";
+        fetch("/products_assistant/update/vid", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                ID: A,
+                Video: n
+            })
+        }).then(res => {
+            
+            document.getElementById("Loading").style.display = "none";
+            if (res.status == 200) {
+                return res.json();
+            } else {
+                return res.json().then(Error_Data => {
+                    const error = new Error(Error_Data.Message);
+                    error.Message = Error_Data.Message;
+                    throw error;
+                });
+            }
+        }).then(data => {
+            Message(data.Message, "Success");
+
+            let III = document.getElementById(`III`);
+            let INLEN = III.getElementsByTagName("iframe").length - 1;
+    
+            let Z = `<button onclick="Add_Video(${INLEN});" id="Add_Video" type="button">Video</button>`;
+            document.getElementById("Add_VideoDiv").innerHTML = Z;
+            document.getElementById(`DivVideo${i}`).remove();
+    
+        }).catch(error => {
+            if (error.Message) {
+                Message(error.Message, "Warning");
+            } else {
+                Message("An error occurred.", "Warning");
+            };
+        }
+        );
+    };
 }
-
-if(Videosaaaa.length > 0){
-    Videosaaaa = Videosaaaa.toString();
-
-}
-
-
 
 
 
@@ -266,23 +323,6 @@ function FinalSubmitBtn(n){
         Message("Please enter a valid Brand.", "Warning");
         return;
     }
-    let Quantity = document.getElementById("Quantity").value;
-    try {
-        if(Quantity == "" || Number(Quantity) < 1){
-            document.getElementById("Loading").style.display = "none";
-            document.getElementById("FinalSubmitBtn").disabled = false;
-            Message("Please enter a valid Quantity.", "Warning");
-            return;
-        }
-        Quantity = Number(Quantity);
-    } catch (error) {
-        document.getElementById("Loading").style.display = "none";
-        document.getElementById("FinalSubmitBtn").disabled = false;
-        Message("Please enter a valid Quantity.", "Warning");
-        return;
-        
-    }
-    
     
 
 
@@ -292,7 +332,7 @@ function FinalSubmitBtn(n){
     let INLEN = III.getElementsByTagName("img").length+1;
     let x = INLEN;
     let Image_IDs = [];
-    const maxSize = 1 * 1024 * 1024;
+    const maxSize = 5 * 1024 * 1024;
     
     while(document.getElementById(`Image${x}`)){
         if(document.getElementById(`Image${x}`).files[0]){
@@ -371,11 +411,8 @@ function FinalSubmitBtn(n){
         Selling_Price: Seller_Selling_Price,
         Keywords: Keywords,
         Brand: Brand,
-        Quantity: Quantity,
         Table: zz,
         Video_IDs: Video_IDs,
-        Videosaaaa: Videosaaaa,
-        Imagesaaaaa: Imagesaaaaa,
     };
     let formData = new FormData();
     for (let key in Send) {
@@ -393,11 +430,6 @@ function FinalSubmitBtn(n){
     }).then(res=>{
         if(res.status == 200){
             return res.json();
-        }else if(res.status == 307){
-            Message("Unauthorized access.", "Warning");
-            setTimeout(() => {
-                location.reload();
-            }, 1000);
         }else{
             return res.json().then(Error_Data => {
                 const error = new Error(Error_Data.Message);
@@ -409,7 +441,7 @@ function FinalSubmitBtn(n){
         document.getElementById("Loading").style.display = "none";
         document.getElementById("FinalSubmitBtn").disabled = false;
         Message(data.Message, "Success");
-        location.reload();
+        // location.reload();
     }).catch(error=>{
         document.getElementById("Loading").style.display = "none";
         document.getElementById("FinalSubmitBtn").disabled = false;

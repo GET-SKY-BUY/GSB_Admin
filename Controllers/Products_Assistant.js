@@ -436,7 +436,7 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
                 };
             };
             VideoLinks.forEach(async element => {
-                if (CheckURL(element)) {
+                if (!CheckURL(element)) {
                     await deleteFiles(req.processedImages);
                     return res.status(400).json({Message:"Invalid Youtube URL."});
                 };
@@ -512,6 +512,17 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
 
 const PRODUCTS_ASSISTANT_UPDATE = async ( req , res , next ) => {
     
+    // return res.status(200).json({Message:"Updated ___ successfully."});
+
+    function CheckURL(videoUrl) {
+        const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))([^&\n]{11})/);
+        const videoId = videoIdMatch ? videoIdMatch[1] : null;
+        if (!videoId) {
+            return null;
+        };
+        return videoUrl;
+    };
+
     async function deleteFiles(files) {
         for(let i = 0; i < files.length; i++){
 
@@ -527,19 +538,69 @@ const PRODUCTS_ASSISTANT_UPDATE = async ( req , res , next ) => {
 
         const Got_User = req.User;
         const body = Object.assign({}, req.body);
+        
         let Prod = await Products.findById(body.ID)
         if (Prod) {
-        
+            let New___VIDEO = Prod.Image_Videos.Video;
+            let New_IMG = Prod.Image_Videos.Image;
+            
+            
+            
+            let NEW_IMG = req.processedImages;
+            let Img = Prod.Image_Videos.Image;
 
-
-
-
-
+            if(NEW_IMG.length > 0){
+                New_IMG = [];
+                if(NEW_IMG.length + Img.length < 8){
+                    New_IMG = [...Img, ...NEW_IMG];
+                }else{
+                    await deleteFiles(req.processedImages);
+                    return res.status(400).json({Message:"Maximum 7 images allowed."});
+                };
+            };
 
             
+            let l = body.Video_IDs;
+            let VideoLinks = l.split(",");
+            
+            if(VideoLinks.length > 0){
+                if(VideoLinks[0] == ''){
+                    VideoLinks = [];
+                };
+            };
+            VideoLinks.forEach(async element => {
+                if (!CheckURL(element)) {
+                    await deleteFiles(req.processedImages);
+                    return res.status(400).json({Message:"Invalid Youtube URL."});
+                };
+            });
+            if(VideoLinks.length > 0){
+                if(Prod.Image_Videos.Video.length < 3){
+                    New___VIDEO = [];
+                    if(VideoLinks.length + Prod.Image_Videos.Video.length > 3){
+                        await deleteFiles(req.processedImages);
+                        return res.status(400).json({Message:"Maximum 3 videos allowed."});
+                    }else{
+                        New___VIDEO = [...Prod.Image_Videos.Video, ...VideoLinks];
+                    }
+                };
+            };
 
+
+
+
+            let k = body.Keywords;
+            const Keywords = k.split(",");
+            let T = body.Table;
+            const Table1 = T.split(",");
+            let Table = [];
+            for (let i = 0; i < Table1.length; i += 2) {
+                Table.push([Table1[i], Table1[i + 1]]);
+            };
+            
+            
+            
             if (body.Title.length >= 3 &&
-                body.Product_ID.length >= 3 &&
                 body.Description.length >= 3 &&
                 body.Selling_Price.length >= 1 &&
                 body.Categories.length >= 1 &&
@@ -570,7 +631,7 @@ const PRODUCTS_ASSISTANT_UPDATE = async ( req , res , next ) => {
                     Brand: body.Brand,
                     Table: Table,
                     Image_Videos: {
-                        Image: Final_Image,
+                        Image: New_IMG,
                         Video: New___VIDEO,
                     },
 
@@ -592,6 +653,71 @@ const PRODUCTS_ASSISTANT_UPDATE = async ( req , res , next ) => {
     };
 };
 
+const PRODUCTS_ASSISTANT_UPDATE_DELETE = async ( req , res , next ) => {
+    try {
+        const body = req.body;
+        let Prod = await Products.findById(body.ID);
+        if (Prod) {
+            let Found = false;
+            const Img = Prod.Image_Videos.Image;
+            let A = [];
+            for (let i = 0; i < Img.length; i++) {
+                if(Img[i] == body.Image){
+                    let ImgPath = path.join(__dirname, "../Converted_Images", Img[i]);
+                    await fs.unlinkSync(ImgPath);
+                    Found = true;
+                    continue;
+                };
+                A.push(Img[i]);
+            };
+            
+            if(Found){
+                Prod.Image_Videos.Image = A;
+                await Prod.save().then(()=>{
+                    return res.status(200).json({Message:"Deleted successfully."});
+                });
+                return;
+            };
+            return res.status(400).json({Message:"Image not Found."});
+        }else{
+            return res.status(400).json({Message:"Incorrect Product ID."});
+        };
+    } catch (error) {
+        next(error);
+    };
+};
+const PRODUCTS_ASSISTANT_UPDATE_DELETE_VIDEOS = async ( req , res , next ) => {
+    try {
+        const body = req.body;
+        let Prod = await Products.findById(body.ID);
+        if (Prod) {
+            let Found = false;
+            const Img = Prod.Image_Videos.Video;
+            let A = [];
+            for (let i = 0; i < Img.length; i++) {
+                if(Img[i] == body.Video){
+                    Found = true;
+                    continue;
+                };
+                A.push(Img[i]);
+            };
+            
+            if(Found){
+                Prod.Image_Videos.Video = A;
+                await Prod.save().then(()=>{
+                    return res.status(200).json({Message:"Deleted successfully."});
+                });
+                return;
+            };
+            return res.status(400).json({Message:"Image not Found."});
+        }else{
+            return res.status(400).json({Message:"Incorrect Product ID."});
+        };
+    } catch (error) {
+        next(error);
+    };
+};
+
 
 module.exports = {
     PRODUCTS_ASSISTANT_LOGIN,
@@ -599,4 +725,6 @@ module.exports = {
     PRODUCTS_ASSISTANT_SEARCH_SELLER,
     PRODUCTS_ASSISTANT_ADD_PRODUCT,
     PRODUCTS_ASSISTANT_UPDATE,
+    PRODUCTS_ASSISTANT_UPDATE_DELETE,
+    PRODUCTS_ASSISTANT_UPDATE_DELETE_VIDEOS,
 };
