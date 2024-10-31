@@ -1,0 +1,200 @@
+main {
+    width: 100%;
+    margin: 50px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 90%;
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.664);
+}
+.container2 {
+    width: 100%;
+    
+}
+
+.Heading {
+    padding: 0px;
+    margin: 0px;
+}
+
+
+.second-big-box {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin: 20px auto;
+
+}
+
+.firstbox {
+    /* border: 1px solid #ff0000; */
+    width: 280px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #aaa;
+}
+
+.firstbox ul {
+    background-color: rgba(255, 255, 255, 0.911);
+    list-style: none;
+    padding: 10px;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.firstbox ul li{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+    
+}
+.ChangeBTn{
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    margin: 4px;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    /* border: 1px solid #aaa; */
+    box-shadow: 0 0 4px #252525;
+    background-color: rgba(231, 231, 231, 0.714);
+    transition: 200ms;
+}
+
+
+
+
+
+
+
+
+
+.secondbox {
+    /* border: 1px solid #aaa; */
+    width: calc(100% - 290px);
+}
+
+.secondbox2 {
+    
+    background-color: rgba(255, 255, 255, 0.911);
+    
+    padding: 20px;
+    margin: 0px;
+    border-radius: 10px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; */
+}
+.secondbox2 h4{
+    margin: 0px;
+    padding: 10px 0px;
+}
+
+.Profile_Account {
+    display: flex;
+    justify-content: left;
+    height: 60px;
+}
+
+.Profile_Banner {
+    height: 100%;
+    
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+.Profile_Banner span{
+    font-size: 14px;
+    font-weight: bold;
+    width: 100%;
+    text-align: left;
+}
+
+
+
+.tableData {
+    width: 100%;
+    margin: 10px 0px;
+    
+}
+.tableDatatable {
+    font-size: 14px;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0px;
+}
+
+.tableDatatable tr > :nth-child(1){
+    width: 120px;
+    font-weight: bold;
+}
+.tableDatatable tr td{
+    padding: 8px;
+}
+
+
+
+
+
+#My_work {
+    display: none;
+}
+#Edit_profile {
+    display: none;
+}
+
+
+
+
+#Password_Change input{
+    outline: none;
+    padding: 6px 12px;
+    margin: 10px;
+}
+
+
+@media screen  and (max-width: 660px) {
+    .second-big-box {
+        flex-direction: column;
+    }    
+    .firstbox {
+        margin: 10px auto;
+    }
+    .secondbox {
+        width: 100%;
+        margin: 10px auto;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

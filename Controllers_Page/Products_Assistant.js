@@ -273,6 +273,36 @@ const Product_Assistant_Update = async ( req , res , next ) => {
     };
 };
 
+const Product_Assistant_Profile = async ( req , res , next ) => {
+    try {
+        const User = req.User;
+        
+        let DateCreated = User.createdAt.toDateString();
+
+        const Address = `${User.Address.Locality},<br>${User.Address.PIN}, ${User.Address.City_Town},<br> ${User.Address.Dist},<br> ${User.Address.State}, ${User.Address.Country}`;
+        const Bank = `${User.Bank.Bank_Name},<br> ${User.Bank.Account_Number},<br> ${User.Bank.IFSC},<br> ${User.Bank.Benificiary_Name},<br> ${User.Bank.UPI}`;
+        const send = {
+            _id: User._id,
+            Email: User.Email,
+            Name: User.Basic_Details.Name,
+            Mobile: User.Basic_Details.Mobile,
+            WhatsApp: User.Basic_Details.WhatsApp,
+            Employee_Type: User.Employee_Type,
+            Ban: User.Ban,
+            Verified: User.Verified,
+            DateCreated: DateCreated,
+            Gender: User.Gender,
+            Age: User.Age,
+            Acode: User.Acode,
+            Address: Address,
+            Bank: Bank,
+        };
+        res.status(200).render("Product_Assistant_Profile", send);
+    } catch (error) {
+        next(error);
+    };
+};
+
 module.exports = {
     Products_Assistant_Login_Page,
     Products_Assistant_Login_Page_OTP,
@@ -281,4 +311,5 @@ module.exports = {
     Product_Assistant_List,
     Product_Assistant_Logout,
     Product_Assistant_Update,
+    Product_Assistant_Profile,
 };

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | GET SKY BUY</title>
+    <meta name="robots" content="nofollow, noindex">
+    <link rel="shortcut icon" href="/files/img/favicon.ico" type="image/x-icon">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+     
+    <link rel="stylesheet" href="/files/css/Product_Assistant_Profile.css">
+</head>
+<body>
+    include Header_Product.pug
+
+
+    <main>
+        <div class="container">
+            <div class="container2">
+
+
+
+                
+                <h2 class="Heading">My Profile (Product Assistant)</h2>
+                <div class="second-big-box">
+                    <div class="firstbox">
+                        <ul>
+                            <li>
+                                <button class="ChangeBTn" id="ChangeBTn0" onclick="display('My_profile');" title="My profile" type="button">My profile</button>
+                            </li>
+                            <li>
+                                <button class="ChangeBTn" id="ChangeBTn1" onclick="display('My_work');" title="My work" type="button">My work</button>
+                            </li>
+                            <li>
+                                <button class="ChangeBTn" id="ChangeBTn2" onclick="display('Edit_profile');" title="Edit profile" type="button">Edit profile</button>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="secondbox">
+                        <div class="secondbox2" id="My_profile">
+                            <h4>My profile</h4>
+
+                            <div class="Profile_Account">
+                                <img height="100%" src="/files/img/Profile_Icon.png" alt="Profile icon">
+                                <div class="Profile_Banner">
+                                    <span>#{Email}</span>
+                                    <span>#{Name}</span>
+                                </div>
+                            </div>
+
+                            <div class="tableData">
+
+                                <table class="tableDatatable">
+                                    <tr>
+                                        <td>ID:</td>
+                                        <td>#{_id}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Name:</td>
+                                        <td>#{Name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile:</td>
+                                        <td>#{Mobile}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>WhatsApp:</td>
+                                        <td>#{WhatsApp}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Employee:</td>
+                                        <td>#{Employee_Type}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ban:</td>
+                                        <td>#{Ban}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Verified:</td>
+                                        <td>#{Verified}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Joined:</td>
+                                        <td>#{DateCreated}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Age:</td>
+                                        <td>#{Age}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gender:</td>
+                                        <td>#{Gender}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acode:</td>
+                                        <td>#{Acode}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address:</td>
+                                        <td>!{Address}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bank:</td>
+                                        <td>!{Bank}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="secondbox2" id="My_work">
+                            <h4>My work</h4>
+                            <div class="Profile_Account">
+                                <img height="100%" src="/files/img/Profile_Icon.png" alt="Profile icon">
+                                <div class="Profile_Banner">
+                                    <span>#{Email}</span>
+                                    <span>#{Name}</span>
+                                </div>
+                            </div>
+                            <div>
+                                <center> Coming Soon</center>
+                            </div>
+                        </div>
+
+                        <div class="secondbox2" id="Edit_profile">
+                            <h4>Edit profile</h4>
+                            <div class="Profile_Account">
+                                <img height="100%" src="/files/img/Profile_Icon.png" alt="Profile icon">
+                                <div class="Profile_Banner">
+                                    <span>#{Email}</span>
+                                    <span>#{Name}</span>
+                                </div>
+                            </div>
+                            <div id="Password_Change">
+                                <input type="password" placeholder="Old password" id="Old_Password">
+                                <input type="password" placeholder="New password"id="New_Password">
+                                <input type="password" placeholder="Confirm password"id="Confirm_Password">
+                                <button type="button" id="Change_Password" onclick="Change_Password();">Change</button>
+
+                            </div>
+                            <div>                                
+                                <center>Only password can be changed - Rest of the things will be coming Soon</center>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+    </main>
+    <script src="/files/js/Message.js"></script>
+    <script src="/files/js/Product_Assistant_Profile.js"></script>
+</body>
+</html>

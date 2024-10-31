@@ -731,6 +731,37 @@ const PRODUCTS_ASSISTANT_UPDATE_DELETE_VIDEOS = async ( req , res , next ) => {
     };
 };
 
+const PRODUCTS_ASSISTANT_CHANGE_PASSWORD = async ( req , res , next ) => {
+    try {
+        const User = req.User;
+        const {Old, New} = req.body;
+        if (Old && New) {
+            if (Valid_Password(New)) {
+                if(Valid_Password(Old)){
+                    if (await Password_Compare(Old, User.Password)) {
+                        const NewPass = await Password_Hash(New);
+                        await Assistants.updateOne({_id:User._id}, {$set:{Password:NewPass}}).then(async ()=>{
+
+                            res.status(200).json({ Message:"Password changed successfully." });
+                        }).catch(()=>{
+                            res.status(400).json({ Message:"Internal server error, unable to change password." });
+                        });
+                    }else{
+                        res.status(400).json({ Message:"Old password is incorrect." });
+                    };
+                }else{
+                    res.status(400).json({ Message:"Password must be atleast 8 characters long, with special character and lower - upper case." });
+                }
+            }else{
+                res.status(400).json({ Message:"Password must contain atleast 1 uppercase, 1 lowercase, 1 number and 1 special character." });
+            };
+        }else{
+            res.status(400).json({ Message:"Please enter all fields." });
+        };
+    } catch (error) {
+        next(error);
+    };
+};
 
 module.exports = {
     PRODUCTS_ASSISTANT_LOGIN,
@@ -740,4 +771,5 @@ module.exports = {
     PRODUCTS_ASSISTANT_UPDATE,
     PRODUCTS_ASSISTANT_UPDATE_DELETE,
     PRODUCTS_ASSISTANT_UPDATE_DELETE_VIDEOS,
+    PRODUCTS_ASSISTANT_CHANGE_PASSWORD,
 };
