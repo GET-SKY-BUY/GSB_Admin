@@ -610,3 +610,43 @@
 
 
 
+.Varities_Box {
+    margin: 10px 0px;
+}
+
+
+
+
+
+
+#V_BTN {
+    width: 200px;
+    display: block;
+    padding: 10px 15px;
+    border: none;
+    background-color: orange;
+    cursor: pointer;
+    outline: none;
+    transition: 200ms;
+    border-radius: 50px;
+    font-size: 15px;
+}
+
+#V_BTN:hover {
+    background-color: rgb(233, 151, 0);
+
+}
+#V_BTN:focus {
+    background-color: rgb(233, 151, 0);
+
+}
+
+
+
+
+
+
+
+
+
+

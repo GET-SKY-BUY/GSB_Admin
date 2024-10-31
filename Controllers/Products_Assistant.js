@@ -600,6 +600,18 @@ const PRODUCTS_ASSISTANT_UPDATE = async ( req , res , next ) => {
             
             
             
+            let Varieties = [];
+            // console.log(body.Varieties);
+            let V = JSON.parse(body.Varieties);
+            V = V.A;
+            for (let i = 0; i < V.length; i++) {
+                Varieties.push({
+                    Type: V[i].Type,
+                    Quantity: Number(V[i].Quantity),
+                });
+            };
+
+
             if (body.Title.length >= 3 &&
                 body.Description.length >= 3 &&
                 body.Selling_Price.length >= 1 &&
@@ -634,6 +646,7 @@ const PRODUCTS_ASSISTANT_UPDATE = async ( req , res , next ) => {
                         Image: New_IMG,
                         Video: New___VIDEO,
                     },
+                    Varieties: Varieties,
 
                     
                 }}).then(async()=>{

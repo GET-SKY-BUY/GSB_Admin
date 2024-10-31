@@ -162,6 +162,31 @@ const Product_Assistant_Update = async ( req , res , next ) => {
         const ID = req.params.ID;
         let data = await Products.findById(ID).populate("Seller_ID").exec();
         if(data){
+
+            let Var = data.Varieties;
+
+            let Varieties = "";
+
+            for (let i = 0; i < Var.length; i++) {
+
+
+
+                Varieties += `
+                    <div>
+                        <div class="Div_Input2">
+                            <input value="${Var[i].Type}" class="InputText2" id="V_Type${i}" title="Varities type" type="text" placeholder=" ">
+                            <label class="Div_Input_Label2" for="V_Type${i}">Type</label>
+                        </div>
+                        <div class="Div_Input2">
+                            <input value="${Var[i].Quantity}" class="InputText2" id="V_Qty${i}" title="Quantities" type="number" placeholder=" ">
+                            <label class="Div_Input_Label2" for="V_Qty${i}">Quantity</label>
+                        </div>
+                    </div>
+                
+                `;
+
+            };
+
             let a;
             let Table = data.Table;
             let Table1 = "";
@@ -169,6 +194,7 @@ const Product_Assistant_Update = async ( req , res , next ) => {
             for (i = 0; i < Table.length; i++) {
                 let Key = Table[i][0];
                 let Val = Table[i][1];
+
                 a = `
                     <div class="Table_Main_Box">
 
@@ -236,6 +262,8 @@ const Product_Assistant_Update = async ( req , res , next ) => {
                 AA += `<option value="${element}">${element}</option>`;
             });
             data["Categories_List"] = AA;
+            data["Varieties1"] = Varieties;
+            data["V_BTN"] = data.Varieties.length - 1;
             return res.status(200).render("Product_Assistant_Update", data);
         }else{
             return res.status(404).send("Product not found.");

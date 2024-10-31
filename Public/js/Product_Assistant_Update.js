@@ -205,6 +205,7 @@ function DeleteVideos(n, i, A) {
             document.getElementById("Add_VideoDiv").innerHTML = Z;
             document.getElementById(`DivVideo${i}`).remove();
     
+            
         }).catch(error => {
             if (error.Message) {
                 Message(error.Message, "Warning");
@@ -219,9 +220,45 @@ function DeleteVideos(n, i, A) {
 
 
 
+function V_BTN(n){
+    let NewElement = document.createElement("div");
+    NewElement.innerHTML = `
+        <div class="Div_Input2">
+            <input class="InputText2" id="V_Type${n+1}" title="Varities type" type="text" placeholder=" ">
+            <label class="Div_Input_Label2" for="V_Type${n+1}">Type</label>
+        </div>
+        <div class="Div_Input2">
+            <input class="InputText2" id="V_Qty${n+1}" title="Quantities" type="number" placeholder=" ">
+            <label class="Div_Input_Label2" for="V_Qty${n+1}">Quantity</label>
+        </div>
+    `;
+    document.getElementById("Varities_Box").appendChild(NewElement);
+    document.getElementById("Varities_Btn_Box").innerHTML = `
+        <button type="button" id="V_BTN" onclick="V_BTN(${n+1});">Add more</button>
+    `;
+}
 
 
 
+function Var() {
+    const jsonResult = [];
+    let index = 0;
+    while (document.getElementById(`V_Type${index}`) && document.getElementById(`V_Qty${index}`)) {
+        const key = document.getElementById(`V_Type${index}`).value;
+        const Value = document.getElementById(`V_Qty${index}`).value;
+        if (key == "") {
+            Message("Input fields can not be empty", "Warning");
+            return null;
+        };
+        let New = {
+            Type: key,
+            Quantity: Value
+        };
+        jsonResult.push(New);
+        index++;
+    };
+    return jsonResult;
+}
 
 
 
@@ -271,6 +308,15 @@ function FinalSubmitBtn(n){
         document.getElementById("Loading").style.display = "none";
         document.getElementById("FinalSubmitBtn").disabled = false;
         Message("Please select a Occasion.", "Warning");
+        return;
+    };
+    
+    let zz1 = Var();
+    if(!zz1){
+        
+        document.getElementById("Loading").style.display = "none";
+        document.getElementById("FinalSubmitBtn").disabled = false;
+        Message("Please enter all the key values of the Varieties.", "Warning");
         return;
     };
     let Title = document.getElementById("Title").value;
@@ -382,7 +428,7 @@ function FinalSubmitBtn(n){
         }
         x++;
     };
-    console.log(Video_IDs);
+    // console.log(Video_IDs);
     
     if (One != 1) {
         return;
@@ -413,6 +459,7 @@ function FinalSubmitBtn(n){
         Brand: Brand,
         Table: zz,
         Video_IDs: Video_IDs,
+        Varieties: JSON.stringify({A:zz1}),
     };
     let formData = new FormData();
     for (let key in Send) {
@@ -441,7 +488,9 @@ function FinalSubmitBtn(n){
         document.getElementById("Loading").style.display = "none";
         document.getElementById("FinalSubmitBtn").disabled = false;
         Message(data.Message, "Success");
-        // location.reload();
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
     }).catch(error=>{
         document.getElementById("Loading").style.display = "none";
         document.getElementById("FinalSubmitBtn").disabled = false;
