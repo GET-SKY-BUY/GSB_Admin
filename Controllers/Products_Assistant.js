@@ -392,14 +392,17 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
             const COAC = Q.Active_Codes;
             let New_Active = [];
             for (let i = 0; i < COAC.length; i++) {
-                if (COAC[i] == req.body.Product_ID) {
+                if (COAC[i].ID == req.body.Product_ID) {
                     
                     await deleteFiles(req.processedImages);
                     return res.status(400).json({Message:"Product ID is already Active."});
                 };
                 New_Active.push(COAC[i]);
             };
-            New_Active.push(req.body.Product_ID);
+            New_Active.push({
+                ID: req.body.Product_ID,
+                Date: new Date(),
+            });
             
             let New_Non_Active = [];
             let Found = false;
@@ -419,8 +422,9 @@ const PRODUCTS_ASSISTANT_ADD_PRODUCT = async ( req , res , next ) => {
             Q.Not_Active_QR_Codes = New_Non_Active;
             Q.Active_Codes = New_Active;
 
+            Q.save();
+            
             _idd = req.body.Product_ID;
-
 
             function CheckURL(videoUrl) {
                 const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))([^&\n]{11})/);

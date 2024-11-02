@@ -439,6 +439,7 @@ const Qrs = new Schema({
     },
     Active_Codes:[
         {
+            _id: false,
             ID: {
                 type:String,
             },
