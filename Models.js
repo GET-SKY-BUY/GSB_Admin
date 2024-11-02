@@ -629,6 +629,15 @@ const categorySchema = new Schema({
     },
 });
 
+const Search_History_Schema = new Schema({
+    Search_History: {
+        type: String,
+    },
+    Showed_Products: {
+        type: Object,
+    },
+});
+
 const User = Model("User", UserSchema);
 const Admin_User = Model("Admin", Admin_User_Schema);
 const Assistants = Model("Assistants", Admin_Assistant_Schema);
@@ -636,6 +645,7 @@ const Qr_Codes = Model("Qr_Codes", Qrs);
 const Sellers = Model("Sellers", Seller_Schema);
 const Products = Model("Products", Product_Schema);
 const Categories = Model("Categories", categorySchema);
+const Searched_History = Model("Searched_Panel", Search_History_Schema);
 
 
 
@@ -649,4 +659,5 @@ module.exports = {
     Sellers,
     Products,
     Categories,
+    Searched_History,
 };

@@ -15,6 +15,7 @@ const Verify_User_Page  = require('../utils/Verify_User_Page.js');
 const Verify_User_API  = require('../utils/Verify_User_API.js');
 
 Admin.use("/qr_codes", require('./Admin_QR_Codes.js'));
+Admin.use("/verify_products", require('./Admin_Verify_Products.js'));
 
 // Admin Authentication Routes
 Admin.get("/login", GET_LOGIN_PAGE);
