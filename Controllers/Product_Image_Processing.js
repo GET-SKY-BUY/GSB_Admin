@@ -16,7 +16,7 @@ async function processImage(fileName) {
             fit: 'contain',
             background: { r: 255, g: 255, b: 255, alpha: 1 }
         }).flatten({ background: { r: 255, g: 255, b: 255, alpha: 1 } });
-        await image.toFormat('webp', { quality: 100 }).toFile(outputFilePath);
+        await image.toFormat('webp', { quality: 95 }).toFile(outputFilePath);
 
         return String(path.basename(outputFilePath));
     } catch (error) {
