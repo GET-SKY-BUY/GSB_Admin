@@ -241,7 +241,7 @@ const Product_Assistant_Update = async ( req , res , next ) => {
             }else{
                 data["Protocol"] = "https";
             }
-            data["Domain"] = `pssvd9k9-80.inc1.devtunnels.ms`;
+            data["Domain"] = `pssvd9k9-82.inc1.devtunnels.ms`;
             data["N"] = i-1;
             data["Image_Len"] = x;
             data["Video_Len"] = y;
