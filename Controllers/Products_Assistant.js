@@ -633,7 +633,6 @@ const PRODUCTS_ASSISTANT_UPDATE = async ( req , res , next ) => {
                             
                     Categories: body.Categories,
                     Gender: body.Gender,
-                    Verified: "No",
                     Occasion: body.Occasion,
                     Age_Group: body.Age_Group,
                     Title: body.Title,

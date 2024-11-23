@@ -160,6 +160,8 @@ header {
 @media screen and (max-width:450px) {
     header {
         height: fit-content;
+        position:initial;
+        
     }
     .Container {
         width: 99%;
