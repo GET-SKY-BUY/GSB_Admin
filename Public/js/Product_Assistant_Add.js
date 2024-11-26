@@ -52,7 +52,7 @@ function Search_Seller(){
         document.getElementById("UL").style.display = "block";
         document.getElementById("MainAddProduct").style.display = "block";
         
-        document.getElementById("FinalDiv").innerHTML= `<button onclick="FinalSubmitBtn(${data.ID});" id="FinalSubmitBtn" type="button">Add the product</button>`;
+        document.getElementById("FinalDiv").innerHTML= `<button onclick="FinalSubmitBtn('${data.ID}');" id="FinalSubmitBtn" type="button">Add the product</button>`;
     }).catch(error=>{
         if(error.Message){
             Message(error.Message, "Warning");
@@ -421,13 +421,6 @@ function FinalSubmitBtn(n){
         return;
     };
 
-    if(document.getElementById("Product_ID").value.length < 5){
-        document.getElementById("Loading").style.display = "none";
-        document.getElementById("FinalSubmitBtn").disabled = false;
-        Message("Please enter a valid Product ID.", "Warning");
-        return;
-    };
-    
     
     let Send = {
         ID: n,
