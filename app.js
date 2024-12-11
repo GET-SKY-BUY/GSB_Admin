@@ -33,6 +33,7 @@ app.set('views', [
     path.join(__dirname, './Pug/Common'),
     path.join(__dirname, './Pug/Sellers_Store'),
     path.join(__dirname, './Pug/Products_Assistant'),
+    path.join(__dirname, './Pug/Contact_Us'),
 ]);
 
 // Setup static files
@@ -50,6 +51,18 @@ app.use("/sellers_assistant", require('./Routes/Sellers_Assistant.js'));
 app.use("/sellers_store", require('./Routes/Sellers.js'));
 app.use("/qr", require('./Routes/QR.js'));
 app.use("/products_assistant", require('./Routes/Products_Assistant.js'));
+app.use("/contact_us", require('./Routes/Contact_Us.js'));
+
+
+app.get("/analytics", (req, res) => {
+    res.status(404).send("<h2>Coming soon <a href='/'>Go to Home</a></h2>");
+});
+app.get("/complaint", (req, res) => {
+    res.status(404).send("<h2>Coming soon <a href='/'>Go to Home</a></h2>");
+});
+app.get("/payment", (req, res) => {
+    res.status(404).send("<h2>Coming soon <a href='/'>Go to Home</a></h2>");
+});
 
 // Project URL
 const Project_URL = `${Protocol}://${process.env.PROJECT_DOMAIN}`;
