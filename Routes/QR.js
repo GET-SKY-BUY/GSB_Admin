@@ -8,5 +8,6 @@ QR.use(bodyParser.urlencoded({ extended: true }));
 QR.use(cookieParser(process.env.COOKIE_SECRET));
 module.exports = QR;
 
-const { QR_ID } = require("../Controllers_Page/QR.js");
+const { QR_ID , QR_Update } = require("../Controllers_Page/QR.js");
 QR.get("/:ID", QR_ID );
+QR.put("/update", QR_Update );

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#{ID} - QR Code | GSB - Workspace</title>
+    
+    <link rel="shortcut icon" href="/files/img/favicon.ico" type="image/x-icon">
+    <style>body{font-family: Arial, Helvetica, sans-serif;} main{display: flex; justify-content: center; align-items: center; flex-direction: column;}</style>
+</head>
+<body>
+    <main>
+        <a href="#{Link}" target="_blank">Product Link - #{Title}</a>
+        <div><b>ID:</b> #{ID}</div>
+        <div>!{Varieties}</div>
+    </main>
+    <script>function Change(n,m){var v=document.getElementById(m).value;var x=document.getElementById(m).value=prompt("Enter new value for "+n+" : ",v);if(x==null||x==""){document.getElementById(m).value=v;}var data={ID:"#{ID}",Variety_Type:n,Value:x};fetch("/qr/update",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)}).then(res=>{if(res.ok){alert("Updated Successfully");}else{alert("Failed to update");};});};</script>
+</body>
+</html>
