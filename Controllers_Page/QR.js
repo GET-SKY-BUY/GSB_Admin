@@ -48,10 +48,10 @@ const QR_ID = async ( req , res , next ) => {
 
         const Product_Found = await Products.findById(ID);
 
-        // console.log(Product_Found);
-        
         if(!Product_Found){
-            return res.status(404).send("PRODUCT NOT FOUND...: " + ID);
+            return res.status(404).json({
+                Message:"PRODUCT NOT FOUND"
+            });
         };
 
         let Var = Product_Found.Varieties;
