@@ -638,6 +638,158 @@ const Search_History_Schema = new Schema({
     },
 });
 
+
+
+
+
+const Orders_Schema = new Schema({
+    _id: {
+        type: String,
+    },
+    Connection_ID: {
+        type: String,
+    },
+    User_ID: {
+        type: String,
+        ref: 'Users',
+    },
+    Completed:{
+        type: Boolean,
+        default: false,
+    },
+    Status:{
+        type: String,
+    },
+    Payment_Type: {
+        type: String,
+        enum: ['COD', 'Prepaid'],
+    },
+    Payment_Info:{
+        Order_ID: {
+            type: String,
+        },
+        Payment_ID: {
+            type: String,
+        },
+        Payment_Success: {
+            type: Boolean,
+        },
+        Payment_Status: {
+            type: String,
+        },
+    },
+    Return_Refund:{
+        Request_Type: {
+            type: String
+        },
+        Accepted: {
+            type: Boolean
+        },
+        Reason: {
+            type: String
+        },
+        Refund_Amount: {
+            type: String
+        },
+        Completed: {
+            type: Boolean
+        },
+    },
+    Product: {
+        Product_ID: {
+            type: String,
+            ref: 'Products',
+        },
+        Title: {
+            type: String,
+        },
+        Price: {
+            MRP: {
+                type: Number,
+            },
+            Selling_Price: {
+                type: Number,
+            },
+            Our_Price: {
+                type: Number,
+            }
+        },
+        Delivery: {
+            type: Number,
+        }
+    },
+    Variety: {
+        type: String,
+    },
+    Quantity: {
+        type: Number,
+    },
+    Address: {
+        type: Object,
+    },
+    GSB_Coins:{
+        type: Object,
+    },
+    Total_Bill: {
+        type: Object,
+    },
+    
+    createdAt: {
+        type: Date,
+        default: new Date(),
+    },
+})
+
+const Contact_Us_Schema = new Schema({
+    _id: {
+        type: String,
+    },
+    User: {
+        type: String,
+        ref: 'Users',
+    },
+    Email: {
+        type: String,
+    },
+    Name: {
+        type: String,
+    },
+    Contact_Number: {
+        type: String,
+    },
+    WhatsAppNumber: {
+        type: String,
+    },
+    Gender: {
+        type: String,
+    },
+    Reason: {
+        type: String,
+        maxlength: 1000,
+    },
+    Managing_By: {
+        ID: {
+            type: String,
+        },
+        Problem: {
+            type: String,
+            maxlength: 1000,
+        }
+    },
+    Solved: {
+        type: Boolean,
+        default: false,
+    },
+    createdAt: {
+        type: Date,
+        default: new Date(),
+    },
+});
+
+
+
+
+
 const User = Model("User", UserSchema);
 const Admin_User = Model("Admin", Admin_User_Schema);
 const Assistants = Model("Assistants", Admin_Assistant_Schema);
@@ -646,6 +798,8 @@ const Sellers = Model("Sellers", Seller_Schema);
 const Products = Model("Products", Product_Schema);
 const Categories = Model("Categories", categorySchema);
 const Searched_History = Model("Searched_Panel", Search_History_Schema);
+const Orders = Model("Orders", Orders_Schema);
+const Contact_Us = Model("Contact_Us", Contact_Us_Schema);
 
 
 
@@ -660,4 +814,6 @@ module.exports = {
     Products,
     Categories,
     Searched_History,
+    Orders,
+    Contact_Us,
 };

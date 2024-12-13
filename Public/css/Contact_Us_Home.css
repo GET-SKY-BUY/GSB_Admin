@@ -1,0 +1,76 @@
+table {
+    background-color: #fff;
+    border-collapse: collapse;
+    width: 98%;
+    margin: 50px auto;
+    font-size: 12px;
+    
+}
+table td{
+    padding: 10px 5px;
+    text-align: center;
+    border: 1px solid #a3a3a3;
+}
+
+tr:nth-child(odd) {
+    background-color: #9a9a9a99;
+}
+tr:nth-child(even) {
+    background-color: #ededed;
+}
+
+.UL {
+    background-color: #fff;
+    width: 90%;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 20px;
+    font-size: 15px;
+    list-style-type: none;
+
+}
+.UL li {
+    padding: 5px 8px ;
+}
+
+textarea {
+    width: 90%;
+    height: 100px;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 10px;
+    width: 100%;
+    border: 1px solid #a3a3a3;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.BT {
+    padding: 6px 10px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #a3a3a3;
+    background-color: #fff;
+    transition: 200ms;
+    cursor: pointer;
+    margin: 10px 0px;
+}
+
+.BT:hover {
+    background-color: var(--primary-color);
+}
+
+.Close_Ticket {
+    width: 100%;
+    display: block;
+    padding: 6px 10px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #a3a3a3;
+    background-color: #ffeaea;
+    transition: 200ms;
+    cursor: pointer;
+}
+.Close_Ticket:hover {
+    background-color: var(--primary-color);
+}

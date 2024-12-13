@@ -3,10 +3,12 @@
 const Send_Mail  = require('../utils/Send_Mail.js');
 
 const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
-const { Sellers, Assistants, Products , Qr_Codes } = require('../Models.js');
+const { Sellers, Assistants, Products , Qr_Codes , Contact_Us } = require('../Models.js');
 const { Password_Compare , Password_Hash } = require('../utils/Password.js');
 const { Get_Token , Get_OTP } = require('../utils/Auth.js');
 const { Valid_Email, Valid_Password , Valid_Mobile } = require('../utils/Validations.js');
+
+// const { Verify_Token , Generate_Token } = require('../utils/JWT.js');
 
 const Cookie_Options_OTP = {
     domain: process.env.PROJECT_DOMAIN,
@@ -262,10 +264,121 @@ const Contact_Us_LOGIN_OTP = async ( req , res , next ) => {
 
 
 
+const Contact_Us_Select = async ( req , res , next ) => {
+    try {
+        const User = req.User;
+        const ID = req.body.ID;
+
+        let Search = await Contact_Us.findById(ID);
+
+        if(Search.Managing_By.ID === ""){
+            Search.Managing_By.ID = User._id;
+            await Search.save();
+            return res.status(200).json({
+                Status: "Success",
+                Message: "Selected",
+            });
+        };
+
+        return res.status(400).json({
+            Status: "Failed",
+            Message: "Already Selected",
+        });
+
+    } catch ( error ) {
+        next( error );
+    };
+};
+
+const Contact_Us_Problem = async ( req , res , next ) => {
+    try {
+
+        const User = req.User;
+
+        const ID = req.body.ID;
+        const Text = req.body.Text;
+
+        if(Text === "" || Text.length < 5){
+            return res.status(400).json({
+                Status: "Failed",
+                Message: "Problem must be atleast 5 characters long",
+            });
+        };
+
+        let Search = await Contact_Us.findById(ID);
+
+        if(Search.Managing_By.ID === User._id){
+            Search.Managing_By.Problem = Text;
+            
+            let UpdatedContact = await Search.save();
+            
+            return res.status(200).json({
+                Status: "Success",
+                Message: "Problem Updated",
+            });
+        };
+
+        return res.status(400).json({
+            Status: "Failed",
+            Message: "You are not managing this contact",
+        });
+
+    } catch ( error ){
+        next( error );
+    };
+};
+
+
+const Contact_Us_Close = async ( req , res , next ) => {
+    try {
+
+        const User = req.User;
+
+        const ID = req.body.ID;
+
+        let Search = await Contact_Us.findById(ID);
+
+        if(Search.Solved){
+            return res.status(400).json({
+                Status: "Failed",
+                Message: "Contact is solved",
+            });
+        };
+
+        if(Search.Managing_By.ID === User._id){
+            Search.Solved = true;
+            await Search.save();
+            return res.status(200).json({
+                Status: "Success",
+                Message: "Contact Closed",
+            });
+        };
+
+        await Send_Mail({
+            from: "Contact Closed" + "<" + process.env.MAIL_ID + ">",
+            to: Search.Email,
+            subject: "Contact Closed",
+            html: `Hello ${Search.Name}, <br>Your contact has been closed. If you want further request you can contact to us via WhatsApp <a href="https://wa.me/+919332525641">Message us on WhatsApp</a>`,
+        })
+
+        return res.status(400).json({
+            Status: "Failed",
+            Message: "You are not managing this contact",
+        });
+
+    } catch ( error ) {
+        next( error );
+    };
+};
+
+
 
 
 
 module.exports = {
     Contact_Us_LOGIN,
     Contact_Us_LOGIN_OTP,
+    Contact_Us_Select,
+    Contact_Us_Problem,
+    Contact_Us_Close,
 };
