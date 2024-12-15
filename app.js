@@ -35,6 +35,7 @@ app.set('views', [
     path.join(__dirname, './Pug/Products_Assistant'),
     path.join(__dirname, './Pug/Contact_Us'),
     path.join(__dirname, './Pug/Order'),
+    path.join(__dirname, './Pug/Delivery'),
 ]);
 
 // Setup static files
@@ -54,6 +55,7 @@ app.use("/qr", require('./Routes/QR.js'));
 app.use("/products_assistant", require('./Routes/Products_Assistant.js'));
 app.use("/contact_us", require('./Routes/Contact_Us.js'));
 app.use("/order", require('./Routes/Order.js'));
+app.use("/delivery", require('./Routes/Delivery.js'));
 
 
 app.get("/analytics", (req, res) => {
