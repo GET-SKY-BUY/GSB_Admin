@@ -34,6 +34,7 @@ app.set('views', [
     path.join(__dirname, './Pug/Sellers_Store'),
     path.join(__dirname, './Pug/Products_Assistant'),
     path.join(__dirname, './Pug/Contact_Us'),
+    path.join(__dirname, './Pug/Order'),
 ]);
 
 // Setup static files
