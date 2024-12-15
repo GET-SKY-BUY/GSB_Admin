@@ -12,7 +12,7 @@ Orders_Route.use(cookieParser(process.env.COOKIE_SECRET));
 const { Orders_Login_Page , Orders_Login_Page_OTP } = require("../Controllers_Page/Orders.js");
 
 const { Orders_Login , Order_Login_OTP } = require("../Controllers/Orders.js");
-// , Orders_Login_Page_OTP , Orders_Home , Orders_By_Id , Orders_By_Selected , Orders_Profile , Orders_Search 
+//  Orders_Home , Orders_By_Id , Orders_By_Selected , Orders_Profile , Orders_Search 
 
 
 Orders_Route.get("/login" , Orders_Login_Page );

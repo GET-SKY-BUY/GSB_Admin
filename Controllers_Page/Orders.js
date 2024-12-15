@@ -66,6 +66,6 @@ const Orders_Login_Page_OTP = async ( req , res , next ) => {
     };
 };
 module.exports = {
-    Orders_Login_Page: Orders_Login_Page,
+    Orders_Login_Page,
     Orders_Login_Page_OTP,
 };
