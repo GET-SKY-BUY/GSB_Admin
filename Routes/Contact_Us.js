@@ -11,7 +11,7 @@ Contact_Us.use(bodyParser.json());
 Contact_Us.use(bodyParser.urlencoded({ extended: true }));
 Contact_Us.use(cookieParser(process.env.COOKIE_SECRET));
 
-const { Contact_Us_Login_Page , Contact_Us_Login_Page_OTP , Contact_Us_Home , Contact_Us_By_Id , Contact_Us_By_Selected } = require("../Controllers_Page/Contact_Us.js");
+const { Contact_Us_Login_Page , Contact_Us_Login_Page_OTP , Contact_Us_Home , Contact_Us_By_Id , Contact_Us_By_Selected , Contact_Us_Profile , Contact_Us_Search } = require("../Controllers_Page/Contact_Us.js");
 
 const { Contact_Us_LOGIN , Contact_Us_LOGIN_OTP , Contact_Us_Select , Contact_Us_Problem , Contact_Us_Close } = require("../Controllers/Contact_Us.js");
 
@@ -28,3 +28,5 @@ Contact_Us.post("/select", Contact_Us_API , Contact_Us_Select );
 Contact_Us.get("/id/:ID", Contact_Us_Verify_Page , Contact_Us_By_Id  );
 Contact_Us.post("/problem", Contact_Us_API , Contact_Us_Problem );
 Contact_Us.patch("/close", Contact_Us_API , Contact_Us_Close );
+Contact_Us.get("/profile", Contact_Us_Verify_Page , Contact_Us_Profile );
+Contact_Us.get("/search", Contact_Us_Verify_Page , Contact_Us_Search );

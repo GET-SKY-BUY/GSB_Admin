@@ -52,6 +52,7 @@ app.use("/sellers_store", require('./Routes/Sellers.js'));
 app.use("/qr", require('./Routes/QR.js'));
 app.use("/products_assistant", require('./Routes/Products_Assistant.js'));
 app.use("/contact_us", require('./Routes/Contact_Us.js'));
+app.use("/order", require('./Routes/Order.js'));
 
 
 app.get("/analytics", (req, res) => {

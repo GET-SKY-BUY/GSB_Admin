@@ -109,8 +109,6 @@ const Contact_Us_By_Selected = async ( req , res , next ) => {
 
         let LIST = "";
 
-        
-
         for( let i = 0 ; i < Unsolved_Contact.length ; i++ ){
 
             
@@ -188,13 +186,49 @@ const Contact_Us_By_Id = async ( req , res , next ) => {
         next( error );
     };
 };
-// const Contact_Us_Login_Page = async ( req , res , next ) => {
-//     try {
 
-//     } catch ( error ) {
-//         next( error );
-//     };
-// };
+
+const Contact_Us_Profile = async ( req , res , next ) => {
+    try {
+        const User = req.User;
+        
+        let DateCreated = User.createdAt.toDateString();
+
+        const Address = `${User.Address.Locality},<br>${User.Address.PIN}, ${User.Address.City_Town},<br> ${User.Address.Dist},<br> ${User.Address.State}, ${User.Address.Country}`;
+        const Bank = `${User.Bank.Bank_Name},<br> ${User.Bank.Account_Number},<br> ${User.Bank.IFSC},<br> ${User.Bank.Benificiary_Name},<br> ${User.Bank.UPI}`;
+        const send = {
+            _id: User._id,
+            Email: User.Email,
+            Name: User.Basic_Details.Name,
+            Mobile: User.Basic_Details.Mobile,
+            WhatsApp: User.Basic_Details.WhatsApp,
+            Employee_Type: User.Employee_Type,
+            Ban: User.Ban,
+            Verified: User.Verified,
+            DateCreated: DateCreated,
+            Gender: User.Gender,
+            Age: User.Age,
+            Acode: User.Acode,
+            Address: Address,
+            Bank: Bank,
+        };
+        res.status(200).render("Contact_Us_Profile", send);
+
+    } catch ( error ) {
+        next( error );
+    };
+};
+
+
+const Contact_Us_Search = async ( req , res , next ) => {
+    try {
+
+
+        
+    } catch ( error ) {
+        next( error );
+    };
+};
 
 module.exports = {
     Contact_Us_Login_Page,
@@ -202,4 +236,6 @@ module.exports = {
     Contact_Us_Home,
     Contact_Us_By_Id,
     Contact_Us_By_Selected,
+    Contact_Us_Profile,
+    Contact_Us_Search,
 };
